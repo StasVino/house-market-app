@@ -10,6 +10,14 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [listings, setListings] = useState(null);
   const [changeDetails, setChangeDetails] = useState(false);
+  const { user } = useSelector((state) => state.auth);
+
+  const [formData, setFormData] = useState({
+    name: user.name,
+    email: user.email,
+  });
+
+  const { name, email } = formData;
 
   const navigate = useNavigate();
 

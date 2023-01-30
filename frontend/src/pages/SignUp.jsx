@@ -23,7 +23,7 @@ function SignUP() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    console.log(password2);
     if (password !== password2) {
       toast.error("Passwords do not match");
     } else {
@@ -107,9 +107,9 @@ function SignUP() {
             />
           </div>
 
-          <div className="signUBar">
-            <p className="signUnText">Sign In</p>
-            <button className="signUnButton">
+          <div className="signUpBar">
+            <p className="signUpText">Sign Up</p>
+            <button className="signUpButton">
               <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
             </button>
           </div>

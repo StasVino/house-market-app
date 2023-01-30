@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../features/auth/authSlice";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 function Signin() {
@@ -10,6 +12,8 @@ function Signin() {
     password: "",
   });
   const { email, password } = formData;
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -17,6 +21,25 @@ function Signin() {
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email,
+      password,
+    };
+    dispatch(login(userData))
+      .unwrap()
+      .then((user) => {
+        // NOTE: by unwrapping the AsyncThunkAction we can navigate the user after
+        // getting a good response from our API or catch the AsyncThunkAction
+        // rejection to show an error message
+        toast.success(`Logged in as ${user.name}`);
+        navigate("/");
+      })
+      .catch(toast.error);
   };
 
   return (
