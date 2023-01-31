@@ -30,6 +30,7 @@ function Signin() {
       email,
       password,
     };
+
     dispatch(login(userData))
       .unwrap()
       .then((user) => {
@@ -49,7 +50,7 @@ function Signin() {
           <p className="pageHeader">Welcome Back!</p>
         </header>
         <main>
-          <form action="">
+          <form onSubmit={onSubmit}>
             <input
               type="email"
               className="emailInput"

@@ -69,7 +69,25 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid email or password");
   }
 });
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
 
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  if (ticket.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("Not Authorized");
+  }
+
+  const updatedUser = await user.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+
+  res.status(200).json(updatedTicket);
+});
 // @desc get current a user
 // @route /api/users/me
 // @access Public
@@ -91,5 +109,6 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  updateUser,
   getMe,
 };
