@@ -70,19 +70,17 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const { name, email } = req.body;
 
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
+  // Find if email already exists
+  const user = await User.findOne({ email });
+
+  if (user) {
+    res.status(400);
+    throw new Error("Email already exists");
   }
 
-  if (ticket.user.toString() !== req.user.id) {
-    res.status(401);
-    throw new Error("Not Authorized");
-  }
-
-  const updatedUser = await user.findByIdAndUpdate(req.params.id, req.body, {
+  const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {
     new: true,
   });
 

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { register } from "../features/auth/authSlice";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
+import Spinner from "../components/Spinner";
 
 function SignUP() {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,11 +20,10 @@ function SignUP() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(password2);
     if (password !== password2) {
       toast.error("Passwords do not match");
     } else {
@@ -51,6 +51,10 @@ function SignUP() {
       [e.target.id]: e.target.value,
     }));
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
