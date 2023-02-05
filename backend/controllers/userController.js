@@ -86,7 +86,7 @@ const updateUser = asyncHandler(async (req, res) => {
     new: true,
   });
 
-  res.status(200).json(updatedTicket);
+  res.status(200).json(updatedUser);
 });
 // @desc get current a user
 // @route /api/users/me
