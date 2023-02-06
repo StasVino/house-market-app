@@ -11,6 +11,7 @@ const register = async (userData) => {
   return response.data;
 };
 const login = async (userData) => {
+  console.log(userData);
   const response = await axios.post(API_URL + "login", userData);
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
@@ -20,6 +21,7 @@ const login = async (userData) => {
 
 const update = async (userData) => {
   const response = await axios.put(API_URL + "update", userData);
+
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }

@@ -75,11 +75,6 @@ const updateUser = asyncHandler(async (req, res) => {
   // Find if email already exists
   const user = await User.findOne({ email });
 
-  if (user) {
-    res.status(400);
-    throw new Error("Email already exists");
-  }
-
   const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {
     new: true,
   });

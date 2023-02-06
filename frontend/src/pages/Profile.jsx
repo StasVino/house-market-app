@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../features/auth/authSlice";
+import { logout, update } from "../features/auth/authSlice";
 //import ListingItem from "../components/ListingItem";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
@@ -24,8 +24,20 @@ function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
+    // NOTE: we can unwrap our AsyncThunkACtion here so no need for isError and
+    // isSuccess state
+    const userData = {
+      name,
+      email,
+    };
+
+    dispatch(update(userData))
+      .unwrap()
+      .then(() => {
+        toast.success(`User details changed - ${user.name}`);
+      })
+      .catch(toast.error);
   };
 
   const onChange = (e) => {
@@ -59,7 +71,7 @@ function Profile() {
               setChangeDetails((prevState) => !prevState);
             }}
           >
-            {changeDetails ? "done" : "change"}
+            {changeDetails ? "done" : "change name"}
           </p>
         </div>
         <div className="profileCard">
@@ -76,9 +88,8 @@ function Profile() {
               type="email"
               id="email"
               className={!changeDetails ? "profileEmail" : "profileEmailActive"}
-              disabled={!changeDetails}
+              disabled={true}
               value={email}
-              onChange={onChange}
             />
           </form>
         </div>
