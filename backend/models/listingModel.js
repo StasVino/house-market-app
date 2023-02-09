@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const houseSchema = mongoose.Schema(
+const listingSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -14,7 +14,7 @@ const houseSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      required: [true, "Please provide your name"],
+      required: [true, "Please provide the name of the house you wish to list"],
     },
     bedrooms: {
       type: Number,
@@ -28,7 +28,7 @@ const houseSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    parking: {
+    furnished: {
       type: Boolean,
       required: true,
     },
@@ -54,4 +54,4 @@ const houseSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Ticket", ticketSchema);
+module.exports = mongoose.model("Listing", listingSchema);

@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { v4 as uuidv4 } from "uuid";
+import { createListing } from "../features/listings/listingSlice";
 import Spinner from "../components/Spinner";
 
 function CreateListing() {
   // eslint-disable-next-line
+  const { user } = useSelector((state) => state.auth);
+  const [email] = useState(user.email);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",
@@ -18,7 +21,6 @@ function CreateListing() {
     offer: false,
     regularPrice: 0,
     discountedPrice: 0,
-    images: {},
   });
 
   const {
@@ -32,12 +34,41 @@ function CreateListing() {
     offer,
     regularPrice,
     discountedPrice,
-    images,
   } = formData;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
+
+    if (discountedPrice >= regularPrice) {
+      setLoading(false);
+      toast.error("Discounted price needs to be less than regular price");
+      return;
+    }
+    dispatch(
+      createListing({
+        type,
+        name,
+        bedrooms,
+        bathrooms,
+        parking,
+        furnished,
+        address,
+        offer,
+        regularPrice,
+        discountedPrice,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        // We got a good response so navigate the user
+        navigate("/listing");
+        toast.success("New listing created!");
+      })
+      .catch(toast.error);
   };
   const onMutate = (e) => {
     let boolean = null;
@@ -257,20 +288,6 @@ function CreateListing() {
             </>
           )}
 
-          <label className="formLabel">Images</label>
-          <p className="imagesInfo">
-            The first image will be the cover (max 6).
-          </p>
-          <input
-            className="formInputFile"
-            type="file"
-            id="images"
-            onChange={onMutate}
-            max="6"
-            accept=".jpg,.png,.jpeg"
-            multiple
-            required
-          />
           <button type="submit" className="primaryButton createListingButton">
             Create Listing
           </button>

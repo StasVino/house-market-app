@@ -1,0 +1,86 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import listingService from "./listingService";
+// NOTE: use a extractErrorMessage function to save some repetition
+import { extractErrorMessage } from "../../utils";
+
+const initialState = {
+  listings: null,
+  listing: null,
+};
+
+export const createListing = createAsyncThunk(
+  "listings/create",
+  async (listingData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await listingService.createListing(listingData, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
+// Get user listings
+export const getListings = createAsyncThunk(
+  "listings/getAll",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await listingService.getListings(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
+// Get user listing
+export const getListing = createAsyncThunk(
+  "listings/get",
+  async (listingId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await listingService.getListing(listingId, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
+// Close listig
+export const closeListing = createAsyncThunk(
+  "listings/close",
+  async (listingId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await listingService.closeListing(listingId, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+export const listingSlice = createSlice({
+  name: "listinig",
+  initialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(getListings.pending, (state) => {
+        // NOTE: clear single listing on listings page, this replaces need for
+        // loading state on individual listing
+        state.listing = null;
+      })
+      .addCase(getListings.fulfilled, (state, action) => {
+        state.listings = action.payload;
+      })
+      .addCase(getListing.fulfilled, (state, action) => {
+        state.listing = action.payload;
+      })
+      .addCase(closeListing.fulfilled, (state, action) => {
+        state.listing = action.payload;
+        state.listings = state.listings.map((listing) =>
+          listing._id === action.payload._id ? action.payload : listing
+        );
+      });
+  },
+});
+
+export default listingSlice.reducer;
