@@ -5,6 +5,6 @@ import listingReducer from "../features/listings/listingSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    listinigs: listingReducer,
+    listings: listingReducer,
   },
 });
