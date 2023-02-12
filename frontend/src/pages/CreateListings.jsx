@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,7 +8,6 @@ import Spinner from "../components/Spinner";
 function CreateListing() {
   // eslint-disable-next-line
   const { user } = useSelector((state) => state.auth);
-  const [email] = useState(user.email);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",

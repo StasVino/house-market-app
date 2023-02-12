@@ -9,7 +9,7 @@ const Listing = require("../models/listingModel");
 // @route   GET /api/listing
 // @access  Private
 const getListings = asyncHandler(async (req, res) => {
-  const listings = await Ticket.find({ user: req.user.id });
+  const listings = await Listing.find({ user: req.user.id });
 
   res.status(200).json(listings);
 });
@@ -33,12 +33,12 @@ const getListing = asyncHandler(async (req, res) => {
   res.status(200).json(listing);
 });
 
-// @desc    Create new ticket
-// @route   POST /api/tickets
+// @desc    Create new listing
+// @route   POST /api/listings
 // @access  Private
 const createListing = asyncHandler(async (req, res) => {
   const {
-    status,
+    type,
     name,
     bedrooms,
     bathrooms,
@@ -49,14 +49,14 @@ const createListing = asyncHandler(async (req, res) => {
     RegularPrice,
     DiscountedPrice,
   } = req.body;
-
+  console.log(req.body);
   if (!name || !adress) {
     res.status(400);
     throw new Error("Please enter a name and adress");
   }
 
   const listing = await Listing.create({
-    status,
+    type,
     name,
     bedrooms,
     bathrooms,

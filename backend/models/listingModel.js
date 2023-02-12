@@ -7,7 +7,7 @@ const listingSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-    status: {
+    type: {
       type: String,
       required: [true, "Sell or Rent?"],
       enum: ["Sell", "Rent"],
@@ -42,11 +42,11 @@ const listingSchema = mongoose.Schema(
     },
     RegularPrice: {
       type: Number,
-      required: [true, "Please provide your name"],
+      required: [true, "Please provide the lising price"],
     },
     DiscountedPrice: {
       type: Number,
-      required: [true, "Please provide your name"],
+      required: [true, "Please provide the discounted listing price"],
     },
   },
   {

@@ -15,6 +15,7 @@ export const createListing = createAsyncThunk(
       const token = thunkAPI.getState().auth.user.token;
       return await listingService.createListing(listingData, token);
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
   }
@@ -46,7 +47,7 @@ export const getListing = createAsyncThunk(
   }
 );
 
-// Close listig
+// Close listing
 export const closeListing = createAsyncThunk(
   "listings/close",
   async (listingId, thunkAPI) => {
@@ -59,7 +60,7 @@ export const closeListing = createAsyncThunk(
   }
 );
 export const listingSlice = createSlice({
-  name: "listinig",
+  name: "listing",
   initialState,
   extraReducers: (builder) => {
     builder

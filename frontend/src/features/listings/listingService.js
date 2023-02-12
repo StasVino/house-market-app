@@ -11,7 +11,6 @@ const createListing = async (listingData, token) => {
   };
 
   const response = await axios.post(API_URL, listingData, config);
-
   return response.data;
 };
 
