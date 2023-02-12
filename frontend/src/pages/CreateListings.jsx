@@ -64,7 +64,7 @@ function CreateListing() {
       .unwrap()
       .then(() => {
         // We got a good response so navigate the user
-        navigate("/listing");
+        navigate("/profile");
         toast.success("New listing created!");
       })
       .catch(toast.error);

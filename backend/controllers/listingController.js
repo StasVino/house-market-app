@@ -44,13 +44,13 @@ const createListing = asyncHandler(async (req, res) => {
     bathrooms,
     parking,
     furnished,
-    adress,
+    address,
     offer,
-    RegularPrice,
-    DiscountedPrice,
+    regularPrice,
+    discountedPrice,
   } = req.body;
-  console.log(req.body);
-  if (!name || !adress) {
+
+  if (!name || !address) {
     res.status(400);
     throw new Error("Please enter a name and adress");
   }
@@ -62,12 +62,14 @@ const createListing = asyncHandler(async (req, res) => {
     bathrooms,
     parking,
     furnished,
-    adress,
+    address,
     offer,
-    RegularPrice,
-    DiscountedPrice,
+    regularPrice,
+    discountedPrice,
     user: req.user.id,
   });
+  console.log("sherry");
+  console.log(listing);
   res.status(201).json(listing);
 });
 

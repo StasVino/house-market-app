@@ -10,7 +10,7 @@ const listingSchema = mongoose.Schema(
     type: {
       type: String,
       required: [true, "Sell or Rent?"],
-      enum: ["Sell", "Rent"],
+      enum: ["sell", "rent"],
     },
     name: {
       type: String,
@@ -32,7 +32,7 @@ const listingSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    adress: {
+    address: {
       type: String,
       required: [true, "Please provide the adress of the house"],
     },
@@ -40,11 +40,11 @@ const listingSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    RegularPrice: {
+    regularPrice: {
       type: Number,
       required: [true, "Please provide the lising price"],
     },
-    DiscountedPrice: {
+    discountedPrice: {
       type: Number,
       required: [true, "Please provide the discounted listing price"],
     },
