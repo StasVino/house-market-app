@@ -19,6 +19,7 @@ function Category() {
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {};
+
   if (!listings) {
     return <Spinner />;
   }
