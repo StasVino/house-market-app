@@ -42,8 +42,8 @@ const getListing = async (listingId, token) => {
   return response.data;
 };
 
-// Close listing
-const closeListing = async (listingId, token) => {
+// Update listing
+const updateListing = async (listingId, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -52,17 +52,34 @@ const closeListing = async (listingId, token) => {
 
   const response = await axios.put(
     API_URL + listingId,
-    { status: "closed" },
+    { status: "updated" },
     config
   );
 
   return response.data;
 };
+const deleteListing = async (listingId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(
+    API_URL + listingId,
+    { status: "deleted" },
+    config
+  );
+
+  return response.data;
+};
+
 const listingService = {
   createListing,
   getListings,
   getListing,
-  closeListing,
+  updateListing,
+  deleteListing,
 };
 
 export default listingService;
