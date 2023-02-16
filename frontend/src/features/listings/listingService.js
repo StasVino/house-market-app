@@ -58,6 +58,8 @@ const updateListing = async (listingId, token) => {
 
   return response.data;
 };
+
+// Delete listing
 const deleteListing = async (listingId, token) => {
   const config = {
     headers: {
