@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import listingService from "./listingService";
-// NOTE: use a extractErrorMessage function to save some repetition
+// NOTE: use a extractErrorMessage function to save some repetition update
 import { extractErrorMessage } from "../../utils";
 
 const initialState = {
@@ -47,18 +47,32 @@ export const getListing = createAsyncThunk(
   }
 );
 
-// Close listing
-export const closeListing = createAsyncThunk(
-  "listings/close",
+// Update listing
+export const updateListing = createAsyncThunk(
+  "listings/update",
   async (listingId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await listingService.closeListing(listingId, token);
+      return await listingService.updateListing(listingId, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
   }
 );
+
+export const deleteListing = createAsyncThunk(
+  "listings/delete",
+  async (listingId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await listingService.updateListing(listingId, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
+
 export const listingSlice = createSlice({
   name: "listing",
   initialState,
@@ -75,7 +89,7 @@ export const listingSlice = createSlice({
       .addCase(getListing.fulfilled, (state, action) => {
         state.listing = action.payload;
       })
-      .addCase(closeListing.fulfilled, (state, action) => {
+      .addCase(updateListing.fulfilled, (state, action) => {
         state.listing = action.payload;
         state.listings = state.listings.map((listing) =>
           listing._id === action.payload._id ? action.payload : listing
