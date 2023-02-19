@@ -4,13 +4,12 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, update } from "../features/auth/authSlice";
-import {} from "../features/listings/listingSlice";
+import { getListings } from "../features/listings/listingSlice";
 import ListingItem from "../components/ListingItem";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
 
 function Profile() {
-  const [loading, setLoading] = useState(true);
   const { listings } = useSelector((state) => state.listings);
   const [changeDetails, setChangeDetails] = useState(false);
   const { user } = useSelector((state) => state.auth);
@@ -24,6 +23,10 @@ function Profile() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getListings());
+  }, [dispatch]);
 
   const onSubmit = async () => {
     // NOTE: we can unwrap our AsyncThunkACtion here so no need for isError and
@@ -99,14 +102,14 @@ function Profile() {
           <p>Sell or rent your home</p>
           <img src={arrowRight} alt="arrow right" />
         </Link>
-        {!loading && listings?.length > 0 && (
+        {listings?.length > 0 && (
           <>
             <p className="listingText">Your Listings</p>
             <ul className="listingsList">
               {listings.map((listing) => (
                 <ListingItem
                   key={listing.id}
-                  listing={listing.data}
+                  listing={listing}
                   id={listing.id}
                 />
               ))}

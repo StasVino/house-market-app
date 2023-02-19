@@ -12,8 +12,8 @@ function ListingItem({ listing, id }) {
         className="categoryListingLink"
       >
         <div className="categoryListingDetails">
-          <p className="categoryListingLocation">{listing.location}</p>
           <p className="categoryListingName">{listing.name}</p>
+          <p className="categoryListingLocation">{listing.address}</p>
 
           <p className="categoryListingPrice">
             $
