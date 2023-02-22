@@ -39,9 +39,16 @@ function Category() {
           <ul className="categoryListings"></ul>
         </main>
         <ul className="categoryListings">
-          {listings.map((listing) => (
-            <ListingItem listing={listing} id={listing._id} key={listing._id} />
-          ))}
+          {listings.map(
+            (listing) =>
+              params.categoryName === listing.type && (
+                <ListingItem
+                  listing={listing}
+                  id={listing._id}
+                  key={listing._id}
+                />
+              )
+          )}
         </ul>
         <br />
         <br />
