@@ -8,8 +8,17 @@ const Listing = require("../models/listingModel");
 // @desc    Get user listing
 // @route   GET /api/listing
 // @access  Private
-const getListings = asyncHandler(async (req, res) => {
+const getUserListings = asyncHandler(async (req, res) => {
   const listings = await Listing.find({ user: req.user.id });
+
+  res.status(200).json(listings);
+});
+
+// @desc    Get user listing
+// @route   GET /api/listing
+// @access  Private
+const getAllListings = asyncHandler(async (req, res) => {
+  const listings = await Listing.find({});
 
   res.status(200).json(listings);
 });
@@ -122,7 +131,8 @@ const updateListing = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getListings,
+  getUserListings,
+  getAllListings,
   getListing,
   createListing,
   deleteListing,
