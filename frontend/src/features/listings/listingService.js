@@ -24,11 +24,10 @@ const getUserListings = async (token) => {
   };
 
   const response = await axios.get(API_URL, config);
-
   return response.data;
 };
 
-// Get user listings
+// Get all listings
 const getAllListings = async (token) => {
   const config = {
     headers: {

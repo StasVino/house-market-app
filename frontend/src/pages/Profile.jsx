@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, update } from "../features/auth/authSlice";
-import { getListings } from "../features/listings/listingSlice";
+import { getUserListings } from "../features/listings/listingSlice";
 import ListingItem from "../components/ListingItem";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
@@ -25,7 +25,7 @@ function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListings());
+    dispatch(getUserListings());
   }, [dispatch]);
 
   const onSubmit = async () => {

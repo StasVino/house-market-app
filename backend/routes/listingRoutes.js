@@ -12,7 +12,7 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").get(protect, getAllListings).post(protect, createListing);
-router.get("/me", protect, getUserListings);
+router.route("/getMe").get(protect, getUserListings);
 
 router
   .route("/:id")
