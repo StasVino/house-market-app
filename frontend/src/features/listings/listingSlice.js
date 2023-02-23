@@ -35,7 +35,7 @@ export const getAllListings = createAsyncThunk(
 );
 
 export const getUserListings = createAsyncThunk(
-  "listings/getUserAll",
+  "listings/getMe",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -93,6 +93,9 @@ export const listingSlice = createSlice({
         // NOTE: clear single listing on listings page, this replaces need for
         // loading state on individual listing
         state.listing = null;
+      })
+      .addCase(getUserListings.fulfilled, (state, action) => {
+        state.listing = action.payload;
       })
       .addCase(getAllListings.fulfilled, (state, action) => {
         state.listing = action.payload;
