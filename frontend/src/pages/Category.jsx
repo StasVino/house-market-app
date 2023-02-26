@@ -9,8 +9,8 @@ import ListingItem from "../components/ListingItem";
 function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {

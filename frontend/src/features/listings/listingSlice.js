@@ -97,8 +97,13 @@ export const listingSlice = createSlice({
       .addCase(getUserListings.fulfilled, (state, action) => {
         state.listing = action.payload;
       })
+      .addCase(getAllListings.pending, (state) => {
+        // NOTE: clear single listing on listings page, this replaces need for
+        // loading state on individual listing
+        state.listings = null;
+      })
       .addCase(getAllListings.fulfilled, (state, action) => {
-        state.listing = action.payload;
+        state.listings = action.payload;
       })
       .addCase(getListing.fulfilled, (state, action) => {
         state.listing = action.payload;
