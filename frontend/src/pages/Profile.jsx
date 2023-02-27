@@ -25,7 +25,7 @@ function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserListings());
+    dispatch(getUserListings(user));
   }, [dispatch]);
 
   const onSubmit = async () => {
@@ -108,9 +108,9 @@ function Profile() {
             <ul className="listingsList">
               {listings.map((listing) => (
                 <ListingItem
-                  key={listing.id}
                   listing={listing}
-                  id={listing.id}
+                  id={listing._id}
+                  key={listing._id}
                 />
               ))}
             </ul>

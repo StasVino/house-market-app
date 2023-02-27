@@ -19,6 +19,7 @@ const getUserListings = asyncHandler(async (req, res) => {
 // @access  Private
 const getAllListings = asyncHandler(async (req, res) => {
   const listings = await Listing.find({});
+  console.log(listings);
   res.status(200).json(listings);
 });
 
