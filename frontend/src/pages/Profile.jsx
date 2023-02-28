@@ -25,7 +25,7 @@ function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserListings(user));
+    dispatch(getUserListings());
   }, [dispatch]);
 
   const onSubmit = async () => {

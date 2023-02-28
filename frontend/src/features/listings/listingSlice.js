@@ -34,12 +34,13 @@ export const getAllListings = createAsyncThunk(
 );
 
 export const getUserListings = createAsyncThunk(
-  "listings/getMe",
-  async (_, thunkAPI) => {
+  "listings/profile",
+  async (userId, thunkAPI) => {
     try {
+      console.log(userId);
       const token = thunkAPI.getState().auth.user.token;
-      console.log("shelly");
-      return await listingService.getUserListings(token);
+
+      return await listingService.getUserListings(userId, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }

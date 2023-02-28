@@ -16,15 +16,15 @@ const createListing = async (listingData, token) => {
 };
 
 // Get user listings
-const getUserListings = async (userData, token) => {
+const getUserListings = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
+  console.log(token);
+  const response = await axios.get(API_URL + "profile", config);
   console.log("shell 2");
-  const response = await axios.get(API_URL, userData, config);
-
   return response.data;
 };
 
