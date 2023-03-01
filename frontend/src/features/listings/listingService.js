@@ -22,9 +22,7 @@ const getUserListings = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(token);
   const response = await axios.get(API_URL + "profile", config);
-  console.log("shell 2");
   return response.data;
 };
 
@@ -35,9 +33,7 @@ const getAllListings = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-
   const response = await axios.get(API_URL, config);
-
   return response.data;
 };
 

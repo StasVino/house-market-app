@@ -10,7 +10,7 @@ const Listing = require("../models/listingModel");
 // @access  Private
 const getUserListings = asyncHandler(async (req, res) => {
   const listings = await Listing.find({ user: req.params.Id });
-  console.log("shell");
+  console.log(req.params.Id);
   res.status(200).json(listings);
 });
 
@@ -19,7 +19,6 @@ const getUserListings = asyncHandler(async (req, res) => {
 // @access  Private
 const getAllListings = asyncHandler(async (req, res) => {
   const listings = await Listing.find({});
-  console.log("shell 2");
   res.status(200).json(listings);
 });
 

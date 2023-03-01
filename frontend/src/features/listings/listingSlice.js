@@ -35,12 +35,10 @@ export const getAllListings = createAsyncThunk(
 
 export const getUserListings = createAsyncThunk(
   "listings/profile",
-  async (userId, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      console.log(userId);
       const token = thunkAPI.getState().auth.user.token;
-
-      return await listingService.getUserListings(userId, token);
+      return await listingService.getUserListings(token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
@@ -105,6 +103,7 @@ export const listingSlice = createSlice({
         state.listings = null;
       })
       .addCase(getAllListings.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.listings = action.payload;
       })
       .addCase(getListing.fulfilled, (state, action) => {
