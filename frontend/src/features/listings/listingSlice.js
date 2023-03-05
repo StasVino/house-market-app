@@ -94,7 +94,6 @@ export const listingSlice = createSlice({
         state.listings = null;
       })
       .addCase(getUserListings.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.listings = action.payload;
       })
       .addCase(getAllListings.pending, (state) => {
@@ -103,7 +102,6 @@ export const listingSlice = createSlice({
         state.listings = null;
       })
       .addCase(getAllListings.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.listings = action.payload;
       })
       .addCase(getListing.fulfilled, (state, action) => {

@@ -25,7 +25,6 @@ const getUserListings = async (token) => {
   const response = await axios.get(API_URL + "profile", config);
   return response.data;
 };
-
 // Get all listings
 const getAllListings = async (token) => {
   const config = {
