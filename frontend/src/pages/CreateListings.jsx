@@ -20,6 +20,7 @@ function CreateListing() {
     offer: false,
     regularPrice: 0,
     discountedPrice: 0,
+    images: {},
   });
 
   const {
@@ -33,7 +34,7 @@ function CreateListing() {
     offer,
     regularPrice,
     discountedPrice,
-    images: {},
+    images,
   } = formData;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,6 +56,10 @@ function CreateListing() {
       return;
     }
 
+    const convertedImages = await Promise.all(
+      [...images].map((image) => console.log(image))
+    );
+
     dispatch(
       createListing({
         type,
@@ -67,7 +72,7 @@ function CreateListing() {
         offer,
         regularPrice,
         discountedPrice,
-        images: {},
+        convertedImages,
       })
     )
       .unwrap()
@@ -90,6 +95,7 @@ function CreateListing() {
 
     // Files
     if (e.target.files) {
+      console.log(e.target.files);
       setFormData((prevState) => ({
         ...prevState,
         images: e.target.files,
@@ -104,6 +110,22 @@ function CreateListing() {
       }));
     }
   };
+
+  // convert images to base64
+  //taken from akshay kashyap at https://github.com/akashyap2013/ImageToBase64/blob/master/react_app/src/App.jsx#L64
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
   if (loading) {
     return <Spinner />;
   }
