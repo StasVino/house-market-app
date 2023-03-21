@@ -51,6 +51,7 @@ function CreateListing() {
     }
 
     if (images.length > 6) {
+      console.log(images);
       setLoading(false);
       toast.error("Max 6 images");
       return;
@@ -95,7 +96,6 @@ function CreateListing() {
 
     // Files
     if (e.target.files) {
-      console.log(e.target.files);
       setFormData((prevState) => ({
         ...prevState,
         images: e.target.files,

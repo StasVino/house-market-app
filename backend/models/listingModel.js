@@ -48,6 +48,11 @@ const listingSchema = mongoose.Schema(
       type: Number,
       required: [true, "Please provide the discounted listing price"],
     },
+
+    img: {
+      data: Buffer,
+      contentType: String,
+    },
   },
   {
     timestamps: true,
