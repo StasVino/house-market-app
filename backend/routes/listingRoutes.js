@@ -10,6 +10,7 @@ const {
 } = require("../controllers/listingController");
 
 const { protect } = require("../middleware/authMiddleware");
+const { upload } = require("../middleware/uploadMiddleware");
 
 router.route("/").get(protect, getAllListings).post(protect, createListing);
 router.route("/profile").get(protect, getUserListings);
