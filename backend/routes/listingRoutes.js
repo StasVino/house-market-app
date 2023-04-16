@@ -11,6 +11,10 @@ const {
 
 const { protect } = require("../middleware/authMiddleware");
 
+//Re-route into images router
+//const imageRouter = require("./imageRoutes");
+//router.use("/:listingId/images", imageRouter);
+
 router.route("/").get(protect, getAllListings).post(protect, createListing);
 router.route("/profile").get(protect, getUserListings);
 
