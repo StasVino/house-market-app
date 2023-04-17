@@ -1,8 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Listing = require("../models/listingModel");
-const bodyParser = require("body-parser");
-const fs = require("fs");
-const multer = require("multer");
+
 // NOTE: no need to get the user, we already have them on req object from
 // protect middleware. The protect middleware already checks for valid user.
 

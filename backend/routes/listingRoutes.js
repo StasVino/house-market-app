@@ -10,7 +10,7 @@ const {
 } = require("../controllers/listingController");
 
 const { protect } = require("../middleware/authMiddleware");
-const { upload } = require("../middleware/uploadMiddleware");
+const upload = require("../middleware/uploadMiddleware");
 
 //Re-route into images router
 //const imageRouter = require("./imageRoutes");
