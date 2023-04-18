@@ -16,7 +16,10 @@ const upload = require("../middleware/uploadMiddleware");
 //const imageRouter = require("./imageRoutes");
 //router.use("/:listingId/images", imageRouter);
 
-router.route("/").get(protect, getAllListings).post(protect, createListing);
+router
+  .route("/")
+  .get(protect, getAllListings)
+  .post(upload.single("photo"), createListing);
 router.route("/profile").get(protect, getUserListings);
 
 router

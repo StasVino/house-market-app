@@ -91,13 +91,14 @@ function CreateListing() {
     }
 
     // Files
+
     if (e.target.files) {
       setFormData((prevState) => ({
         ...prevState,
         images: e.target.files,
       }));
     }
-
+    console.log(images);
     // Text/Booleans/Numbers
     if (!e.target.files) {
       setFormData((prevState) => ({
