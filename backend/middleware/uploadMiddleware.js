@@ -1,23 +1,21 @@
 const multer = require("multer");
 const asyncHandler = require("express-async-handler");
 const { GridFsStorage } = require("multer-gridfs-storage");
-console.log("sheery");
 const storage = new GridFsStorage({
   url: process.env.MONGO_URI,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
-    if (file.mimetype === "image/jpeg") {
-      return {
-        filename: "file_" + Date.now(),
-        bucketName: "photos",
-      };
-    } else {
-      return null;
-    }
+    console.log("sheery");
+
+    return {
+      filename: "file_" + Date.now(),
+      bucketName: "photos",
+    };
   },
 });
 
-module.exports = multer({ storage });
+upload = multer({ storage });
+module.exports = upload;
 
 // const storage = asyncHandler(async (req, res) =>
 //   multer.diskStorage({

@@ -55,7 +55,7 @@ const createListing = asyncHandler(async (req, res) => {
     regularPrice,
     discountedPrice,
   } = req.body;
-  console.log(req.images);
+  console.log(req.image);
   if (!name || !address) {
     res.status(400);
     throw new Error("Please enter a name and adress");

@@ -49,7 +49,6 @@ function CreateListing() {
       toast.error("Discounted price needs to be less than regular price");
       return;
     }
-    console.log(images);
     if (images.length > 6) {
       console.log(images);
       setLoading(false);

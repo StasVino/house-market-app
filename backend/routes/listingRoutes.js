@@ -19,7 +19,7 @@ const upload = require("../middleware/uploadMiddleware");
 router
   .route("/")
   .get(protect, getAllListings)
-  .post(protect, upload.array("images"), createListing);
+  .post(upload.single("images"), createListing);
 router.route("/profile").get(protect, getUserListings);
 
 router
