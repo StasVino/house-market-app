@@ -14,7 +14,7 @@ export const createListing = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       console.log(listingData);
-      return await listingService.createListing(listingData);
+      return await listingService.createListing(listingData, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }

@@ -49,7 +49,7 @@ function CreateListing() {
       toast.error("Discounted price needs to be less than regular price");
       return;
     }
-
+    console.log(images);
     if (images.length > 6) {
       console.log(images);
       setLoading(false);
@@ -59,16 +59,6 @@ function CreateListing() {
 
     dispatch(
       createListing({
-        type,
-        name,
-        bedrooms,
-        bathrooms,
-        parking,
-        furnished,
-        address,
-        offer,
-        regularPrice,
-        discountedPrice,
         images,
       })
     )
@@ -98,7 +88,7 @@ function CreateListing() {
         images: e.target.files,
       }));
     }
-    console.log(images);
+
     // Text/Booleans/Numbers
     if (!e.target.files) {
       setFormData((prevState) => ({

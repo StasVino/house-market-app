@@ -55,7 +55,7 @@ const createListing = asyncHandler(async (req, res) => {
     regularPrice,
     discountedPrice,
   } = req.body;
-  console.log(req.file);
+  console.log(req.images);
   if (!name || !address) {
     res.status(400);
     throw new Error("Please enter a name and adress");
@@ -74,8 +74,7 @@ const createListing = asyncHandler(async (req, res) => {
     discountedPrice,
     user: req.user.id,
   });
-  console.log("sherry");
-  console.log(listing);
+
   res.status(201).json(listing);
 });
 
