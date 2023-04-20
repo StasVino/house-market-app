@@ -50,8 +50,8 @@ const listingSchema = mongoose.Schema(
     },
 
     img: {
-      data: Buffer,
-      contentType: String,
+      type: String,
+      required: [true, "Please provide image of the house"],
     },
   },
   {
