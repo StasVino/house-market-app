@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const listingSchema = mongoose.Schema(
   {
     user: {
@@ -51,7 +50,6 @@ const listingSchema = mongoose.Schema(
 
     img: {
       type: String,
-      required: [true, "Please provide image of the house"],
     },
   },
   {

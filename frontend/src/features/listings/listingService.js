@@ -9,8 +9,8 @@ const createListing = async (listingData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(listingData.images[0]);
-  const response = await axios.post(API_URL, listingData.images[0], config);
+  console.log(listingData);
+  const response = await axios.post(API_URL, listingData, config);
   console.log(response);
   return response.data;
 };

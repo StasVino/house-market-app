@@ -58,6 +58,16 @@ function CreateListing() {
 
     dispatch(
       createListing({
+        type,
+        name,
+        bedrooms,
+        bathrooms,
+        parking,
+        furnished,
+        address,
+        offer,
+        regularPrice,
+        discountedPrice,
         images,
       })
     )
