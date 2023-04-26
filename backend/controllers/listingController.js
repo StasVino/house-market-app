@@ -55,8 +55,8 @@ const createListing = asyncHandler(async (req, res) => {
     regularPrice,
     discountedPrice,
   } = req.body;
+  const { path: image } = req.file;
   console.log(req.file);
-  console.log(__dirname);
 
   if (!name || !address) {
     res.status(400);
@@ -73,12 +73,7 @@ const createListing = asyncHandler(async (req, res) => {
     address,
     offer,
     regularPrice,
-    image: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
-      contentType: "image/png",
-    },
+    image,
     discountedPrice,
     user: req.user.id,
   });
