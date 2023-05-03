@@ -24,26 +24,17 @@ const getUserListings = async (token) => {
   return response.data;
 };
 // Get all listings
-const getAllListings = async (token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.get(API_URL, config);
+const getAllListings = async () => {
+  const response = await axios.get(API_URL);
+  console.log(response.data);
   return response.data;
 };
 
 // Get user listing
-const getListing = async (listingId, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+const getListing = async (listingId) => {
   console.log(listingId);
 
-  const response = await axios.get(API_URL + listingId, config);
+  const response = await axios.get(API_URL + listingId, listingId);
   console.log(response.data);
 
   return response.data;

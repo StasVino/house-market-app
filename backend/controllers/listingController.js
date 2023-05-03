@@ -24,15 +24,10 @@ const getAllListings = asyncHandler(async (req, res) => {
 // @access  Private
 const getListing = asyncHandler(async (req, res) => {
   const listing = await Listing.findById(req.params.id);
-  console.log(listing);
+
   if (!listing) {
     res.status(404);
     throw new Error("Listing not found");
-  }
-
-  if (listing.user.toString() !== req.user.id) {
-    res.status(401);
-    throw new Error("Not Authorized");
   }
 
   res.status(200).json(listing);

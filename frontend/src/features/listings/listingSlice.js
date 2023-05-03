@@ -25,8 +25,7 @@ export const getAllListings = createAsyncThunk(
   "listings/getAll",
   async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await listingService.getAllListings(token);
+      return await listingService.getAllListings();
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
@@ -50,9 +49,7 @@ export const getListing = createAsyncThunk(
   "listings/get",
   async (listingId, thunkAPI) => {
     try {
-      console.log(listingId);
-      const token = thunkAPI.getState().auth.user.token;
-      return await listingService.getListing(listingId, token);
+      return await listingService.getListing(listingId);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
@@ -105,11 +102,7 @@ export const listingSlice = createSlice({
       .addCase(getAllListings.fulfilled, (state, action) => {
         state.listings = action.payload;
       })
-      .addCase(getListing.pending, (state) => {
-        // NOTE: clear single listing on listings page, this replaces need for
-        // loading state on individual listing
-        state.listing = null;
-      })
+
       .addCase(getListing.fulfilled, (state, action) => {
         state.listing = action.payload;
       })

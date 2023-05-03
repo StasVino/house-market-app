@@ -14,13 +14,13 @@ const upload = require("../middleware/uploadMiddleware");
 
 router
   .route("/")
-  .get(protect, getAllListings)
+  .get(getAllListings)
   .post(protect, upload.single("image"), createListing);
 router.route("/profile").get(protect, getUserListings);
 
 router
   .route("/:id")
-  .get(protect, getListing)
+  .get(getListing)
   .delete(protect, deleteListing)
   .put(protect, updateListing);
 
