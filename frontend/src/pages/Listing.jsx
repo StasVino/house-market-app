@@ -17,9 +17,11 @@ function Listing() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { listingId } = useParams();
+  console.log(listing);
 
   useEffect(() => {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
+    console.log(listing);
   }, [listingId, dispatch]);
 
   if (!listing) {

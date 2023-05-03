@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Listing = require("../models/listingModel");
-const fs = require("fs");
 
 // NOTE: no need to get the user, we already have them on req object from
 // protect middleware. The protect middleware already checks for valid user.
@@ -24,8 +23,8 @@ const getAllListings = asyncHandler(async (req, res) => {
 // @route   GET /api/listings/:id
 // @access  Private
 const getListing = asyncHandler(async (req, res) => {
-  const listing = await listing.findById(req.params.id);
-
+  const listing = await Listing.findById(req.params.id);
+  console.log(listing);
   if (!listing) {
     res.status(404);
     throw new Error("Listing not found");
@@ -55,7 +54,7 @@ const createListing = asyncHandler(async (req, res) => {
     regularPrice,
     discountedPrice,
   } = req.body;
-  const { path: image } = req.file;
+  //const { path: image } = req.file;
   console.log(req.file);
 
   if (!name || !address) {

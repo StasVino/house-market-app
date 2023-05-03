@@ -50,12 +50,10 @@ function CreateListing() {
       return;
     }
     if (images.length > 6) {
-      console.log(images);
       setLoading(false);
       toast.error("Max 6 images");
       return;
     }
-
     dispatch(
       createListing({
         type,
