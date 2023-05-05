@@ -4,7 +4,10 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, update } from "../features/auth/authSlice";
-import { getUserListings } from "../features/listings/listingSlice";
+import {
+  getUserListings,
+  deleteListing,
+} from "../features/listings/listingSlice";
 import ListingItem from "../components/ListingItem";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
@@ -55,6 +58,20 @@ function Profile() {
     dispatch(logout());
     navigate("/");
   };
+
+  const onDelete = async (e) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      console.log();
+      dispatch(deleteListing(e))
+        .unwrap()
+        .then(() => {
+          toast.success("Listing Deleted");
+        })
+        .catch(toast.error);
+    }
+  };
+
+  const onEdit = (listingId) => navigate(`/edit-listing/${listingId}`);
 
   return (
     <div className="profile">
@@ -111,6 +128,8 @@ function Profile() {
                   listing={listing}
                   id={listing._id}
                   key={listing._id}
+                  onDelete={() => onDelete(listing._id)}
+                  onEdit={() => onEdit(listing._id)}
                 />
               ))}
             </ul>
