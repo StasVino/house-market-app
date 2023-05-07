@@ -37,6 +37,7 @@ export const getUserListings = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
+      console.log(token);
       return await listingService.getUserListings(token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));

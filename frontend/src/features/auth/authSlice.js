@@ -34,7 +34,8 @@ export const update = createAsyncThunk(
   "auth/update",
   async (user, thunkAPI) => {
     try {
-      return await authService.update(user);
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.update(user, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

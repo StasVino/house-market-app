@@ -52,7 +52,6 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
   // Find if user already exists
   const user = await User.findOne({ email });
 
@@ -72,14 +71,19 @@ const loginUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const { name, email } = req.body;
 
-  // Find if email already exists
+  // Find the user by the email
   const user = await User.findOne({ email });
 
   const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {
     new: true,
   });
 
-  res.status(200).json(updatedUser);
+  res.status(200).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    token: generateToken(updatedUser._id),
+  });
 });
 // @desc get current a user
 // @route /api/users/me
