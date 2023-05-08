@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Listing from "./pages/Listing";
+import EditListing from "./pages/EditListing";
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
             <Route
               path="//category/:categoryName/:listingId"
               element={<Listing />}
+            />
+            <Route
+              path="//category/:categoryName/:listingId/edit"
+              element={<EditListing />}
             />
           </Routes>
         </div>

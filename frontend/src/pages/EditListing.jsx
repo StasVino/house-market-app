@@ -1,13 +1,14 @@
-import { useState, useEffect, useRef } from "react";
-
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 
 function EditListing() {
   // eslint-disable-next-line
+  const { user } = useSelector((state) => state.auth);
+  const { listing } = useSelector((state) => state.listings);
   const [loading, setLoading] = useState(false);
-  const [listing, setListing] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
@@ -20,8 +21,6 @@ function EditListing() {
     regularPrice: 0,
     discountedPrice: 0,
     images: {},
-    latitude: 0,
-    longitude: 0,
   });
 
   const {
@@ -36,17 +35,14 @@ function EditListing() {
     regularPrice,
     discountedPrice,
     images,
-    latitude,
-    longitude,
   } = formData;
 
-  const auth = getAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const params = useParams();
 
   // Redirect if listing is not user's
   useEffect(() => {
-    if (listing && listing.userRef !== auth.currentUser.uid) {
+    if (listing && listing.user !== user) {
       toast.error("You can not edit that listing");
       navigate("/");
     }
@@ -105,9 +101,6 @@ function EditListing() {
       toast.error("Max 6 images");
       return;
     }
-
-    let geolocation = {};
-    let location;
 
     const onMutate = (e) => {
       let boolean = null;
