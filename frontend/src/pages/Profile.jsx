@@ -61,7 +61,6 @@ function Profile() {
 
   const onDelete = async (e) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      console.log();
       dispatch(deleteListing(e))
         .unwrap()
         .then(() => {
@@ -71,7 +70,8 @@ function Profile() {
     }
   };
 
-  const onEdit = (listingId) => navigate(`/edit-listing/${listingId}`);
+  const onEdit = (listing) =>
+    navigate(`/category/${listing.type}/${listing._id}/edit`);
 
   return (
     <div className="profile">
@@ -129,7 +129,7 @@ function Profile() {
                   id={listing._id}
                   key={listing._id}
                   onDelete={() => onDelete(listing._id)}
-                  onEdit={() => onEdit(listing._id)}
+                  onEdit={() => onEdit(listing)}
                 />
               ))}
             </ul>
