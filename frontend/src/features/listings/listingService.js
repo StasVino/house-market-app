@@ -26,16 +26,12 @@ const getUserListings = async (token) => {
 // Get all listings
 const getAllListings = async () => {
   const response = await axios.get(API_URL);
-  console.log(response.data);
   return response.data;
 };
 
 // Get user listing
 const getListing = async (listingId) => {
-  console.log(listingId);
-
   const response = await axios.get(API_URL + listingId, listingId);
-  console.log(response.data);
 
   return response.data;
 };

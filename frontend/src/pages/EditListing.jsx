@@ -6,7 +6,6 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { updateListing } from "../features/listings/listingSlice";
 import Spinner from "../components/Spinner";
 import { getListing } from "../features/listings/listingSlice";
-import shareIcon from "../assets/svg/shareIcon.svg";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function EditListing() {
@@ -14,19 +13,7 @@ function EditListing() {
   const { user } = useSelector((state) => state.auth);
   const { listing } = useSelector((state) => state.listings);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    type: "rent",
-    name: "",
-    bedrooms: 1,
-    bathrooms: 1,
-    parking: false,
-    furnished: false,
-    address: "",
-    offer: false,
-    regularPrice: 0,
-    discountedPrice: 0,
-    images: {},
-  });
+  const [formData, setFormData] = useState(listing);
 
   const {
     type,
@@ -40,7 +27,7 @@ function EditListing() {
     regularPrice,
     discountedPrice,
     images,
-  } = listing;
+  } = formData;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -48,7 +35,7 @@ function EditListing() {
 
   // Redirect if listing is not user's
   useEffect(() => {
-    if (listing && listing.user !== user) {
+    if (listing && listing.user !== user._id) {
       toast.error("You can not edit that listing");
       navigate("/");
     }
@@ -135,7 +122,7 @@ function EditListing() {
   return (
     <div className="profile">
       <header>
-        <p className="pageHeader">Edit Listing</p>
+        <p className="pageHeader">Edit the Listing</p>
       </header>
 
       <main>
@@ -265,33 +252,6 @@ function EditListing() {
             required
           />
 
-          {!geolocationEnabled && (
-            <div className="formLatLng flex">
-              <div>
-                <label className="formLabel">Latitude</label>
-                <input
-                  className="formInputSmall"
-                  type="number"
-                  id="latitude"
-                  value={latitude}
-                  onChange={onMutate}
-                  required
-                />
-              </div>
-              <div>
-                <label className="formLabel">Longitude</label>
-                <input
-                  className="formInputSmall"
-                  type="number"
-                  id="longitude"
-                  value={longitude}
-                  onChange={onMutate}
-                  required
-                />
-              </div>
-            </div>
-          )}
-
           <label className="formLabel">Offer</label>
           <div className="formButtons">
             <button
@@ -346,7 +306,6 @@ function EditListing() {
               />
             </>
           )}
-
           <label className="formLabel">Images</label>
           <p className="imagesInfo">
             The first image will be the cover (max 6).
@@ -362,7 +321,7 @@ function EditListing() {
             required
           />
           <button type="submit" className="primaryButton createListingButton">
-            Edit Listing
+            Create Listing
           </button>
         </form>
       </main>
