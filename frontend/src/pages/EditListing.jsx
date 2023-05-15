@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { updateListing } from "../features/listings/listingSlice";
 import Spinner from "../components/Spinner";
+import { getListing } from "../features/listings/listingSlice";
+import shareIcon from "../assets/svg/shareIcon.svg";
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function EditListing() {
   // eslint-disable-next-line
@@ -35,10 +40,11 @@ function EditListing() {
     regularPrice,
     discountedPrice,
     images,
-  } = formData;
+  } = listing;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { listingId } = useParams();
 
   // Redirect if listing is not user's
   useEffect(() => {
@@ -50,42 +56,14 @@ function EditListing() {
 
   // Fetch listing to edit
   useEffect(() => {
-    setLoading(true);
-    const fetchListing = async () => {
-      const docRef = doc(db, "listings", params.listingId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setListing(docSnap.data());
-        setFormData({ ...docSnap.data(), address: docSnap.data().location });
-        setLoading(false);
-      } else {
-        navigate("/");
-        toast.error("Listing does not exist");
-      }
-    };
-
-    fetchListing();
-  }, [params.listingId, navigate]);
-
-  // Sets userRef to logged in user
-  useEffect(() => {
-    if (isMounted) {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setFormData({ ...formData, userRef: user.uid });
-        } else {
-          navigate("/sign-in");
-        }
-      });
-    }
-
-    return () => {
-      isMounted.current = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMounted]);
+    dispatch(getListing(listingId)).unwrap().catch(toast.error);
+  }, [listingId, dispatch]);
 
   const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
     e.preventDefault();
 
     setLoading(true);
@@ -95,282 +73,301 @@ function EditListing() {
       toast.error("Discounted price needs to be less than regular price");
       return;
     }
-
     if (images.length > 6) {
       setLoading(false);
       toast.error("Max 6 images");
       return;
     }
+    dispatch(
+      updateListing({
+        type,
+        name,
+        bedrooms,
+        bathrooms,
+        parking,
+        furnished,
+        address,
+        offer,
+        regularPrice,
+        discountedPrice,
+        images,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        // We got a good response so navigate the user
+        navigate("/profile");
+        toast.success("New listing created!");
+      })
+      .catch(toast.error);
+  };
+  const onMutate = (e) => {
+    let boolean = null;
 
-    const onMutate = (e) => {
-      let boolean = null;
-
-      if (e.target.value === "true") {
-        boolean = true;
-      }
-      if (e.target.value === "false") {
-        boolean = false;
-      }
-
-      // Files
-      if (e.target.files) {
-        setFormData((prevState) => ({
-          ...prevState,
-          images: e.target.files,
-        }));
-      }
-
-      // Text/Booleans/Numbers
-      if (!e.target.files) {
-        setFormData((prevState) => ({
-          ...prevState,
-          [e.target.id]: boolean ?? e.target.value,
-        }));
-      }
-    };
-
-    if (loading) {
-      return <Spinner />;
+    if (e.target.value === "true") {
+      boolean = true;
+    }
+    if (e.target.value === "false") {
+      boolean = false;
     }
 
-    return (
-      <div className="profile">
-        <header>
-          <p className="pageHeader">Edit Listing</p>
-        </header>
+    // Files
+    if (e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: e.target.files,
+      }));
+    }
 
-        <main>
-          <form onSubmit={onSubmit}>
-            <label className="formLabel">Sell / Rent</label>
-            <div className="formButtons">
-              <button
-                type="button"
-                className={type === "sale" ? "formButtonActive" : "formButton"}
-                id="type"
-                value="sale"
-                onClick={onMutate}
-              >
-                Sell
-              </button>
-              <button
-                type="button"
-                className={type === "rent" ? "formButtonActive" : "formButton"}
-                id="type"
-                value="rent"
-                onClick={onMutate}
-              >
-                Rent
-              </button>
-            </div>
+    // Text/Booleans/Numbers
+    if (!e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.id]: boolean ?? e.target.value,
+      }));
+    }
+  };
 
-            <label className="formLabel">Name</label>
-            <input
-              className="formInputName"
-              type="text"
-              id="name"
-              value={name}
-              onChange={onMutate}
-              maxLength="32"
-              minLength="10"
-              required
-            />
+  if (loading) {
+    return <Spinner />;
+  }
 
-            <div className="formRooms flex">
-              <div>
-                <label className="formLabel">Bedrooms</label>
-                <input
-                  className="formInputSmall"
-                  type="number"
-                  id="bedrooms"
-                  value={bedrooms}
-                  onChange={onMutate}
-                  min="1"
-                  max="50"
-                  required
-                />
-              </div>
-              <div>
-                <label className="formLabel">Bathrooms</label>
-                <input
-                  className="formInputSmall"
-                  type="number"
-                  id="bathrooms"
-                  value={bathrooms}
-                  onChange={onMutate}
-                  min="1"
-                  max="50"
-                  required
-                />
-              </div>
-            </div>
+  return (
+    <div className="profile">
+      <header>
+        <p className="pageHeader">Edit Listing</p>
+      </header>
 
-            <label className="formLabel">Parking spot</label>
-            <div className="formButtons">
-              <button
-                className={parking ? "formButtonActive" : "formButton"}
-                type="button"
-                id="parking"
-                value={true}
-                onClick={onMutate}
-                min="1"
-                max="50"
-              >
-                Yes
-              </button>
-              <button
-                className={
-                  !parking && parking !== null
-                    ? "formButtonActive"
-                    : "formButton"
-                }
-                type="button"
-                id="parking"
-                value={false}
-                onClick={onMutate}
-              >
-                No
-              </button>
-            </div>
+      <main>
+        <form onSubmit={onSubmit}>
+          <label className="formLabel">Sell / Rent</label>
+          <div className="formButtons">
+            <button
+              type="button"
+              className={type === "sale" ? "formButtonActive" : "formButton"}
+              id="type"
+              value="sale"
+              onClick={onMutate}
+            >
+              Sell
+            </button>
+            <button
+              type="button"
+              className={type === "rent" ? "formButtonActive" : "formButton"}
+              id="type"
+              value="rent"
+              onClick={onMutate}
+            >
+              Rent
+            </button>
+          </div>
 
-            <label className="formLabel">Furnished</label>
-            <div className="formButtons">
-              <button
-                className={furnished ? "formButtonActive" : "formButton"}
-                type="button"
-                id="furnished"
-                value={true}
-                onClick={onMutate}
-              >
-                Yes
-              </button>
-              <button
-                className={
-                  !furnished && furnished !== null
-                    ? "formButtonActive"
-                    : "formButton"
-                }
-                type="button"
-                id="furnished"
-                value={false}
-                onClick={onMutate}
-              >
-                No
-              </button>
-            </div>
+          <label className="formLabel">Name</label>
+          <input
+            className="formInputName"
+            type="text"
+            id="name"
+            value={name}
+            onChange={onMutate}
+            maxLength="32"
+            minLength="10"
+            required
+          />
 
-            <label className="formLabel">Address</label>
-            <textarea
-              className="formInputAddress"
-              type="text"
-              id="address"
-              value={address}
-              onChange={onMutate}
-              required
-            />
-
-            {!geolocationEnabled && (
-              <div className="formLatLng flex">
-                <div>
-                  <label className="formLabel">Latitude</label>
-                  <input
-                    className="formInputSmall"
-                    type="number"
-                    id="latitude"
-                    value={latitude}
-                    onChange={onMutate}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="formLabel">Longitude</label>
-                  <input
-                    className="formInputSmall"
-                    type="number"
-                    id="longitude"
-                    value={longitude}
-                    onChange={onMutate}
-                    required
-                  />
-                </div>
-              </div>
-            )}
-
-            <label className="formLabel">Offer</label>
-            <div className="formButtons">
-              <button
-                className={offer ? "formButtonActive" : "formButton"}
-                type="button"
-                id="offer"
-                value={true}
-                onClick={onMutate}
-              >
-                Yes
-              </button>
-              <button
-                className={
-                  !offer && offer !== null ? "formButtonActive" : "formButton"
-                }
-                type="button"
-                id="offer"
-                value={false}
-                onClick={onMutate}
-              >
-                No
-              </button>
-            </div>
-
-            <label className="formLabel">Regular Price</label>
-            <div className="formPriceDiv">
+          <div className="formRooms flex">
+            <div>
+              <label className="formLabel">Bedrooms</label>
               <input
                 className="formInputSmall"
                 type="number"
-                id="regularPrice"
-                value={regularPrice}
+                id="bedrooms"
+                value={bedrooms}
                 onChange={onMutate}
-                min="50"
-                max="750000000"
+                min="1"
+                max="50"
                 required
               />
-              {type === "rent" && <p className="formPriceText">$ / Month</p>}
             </div>
+            <div>
+              <label className="formLabel">Bathrooms</label>
+              <input
+                className="formInputSmall"
+                type="number"
+                id="bathrooms"
+                value={bathrooms}
+                onChange={onMutate}
+                min="1"
+                max="50"
+                required
+              />
+            </div>
+          </div>
 
-            {offer && (
-              <>
-                <label className="formLabel">Discounted Price</label>
+          <label className="formLabel">Parking spot</label>
+          <div className="formButtons">
+            <button
+              className={parking ? "formButtonActive" : "formButton"}
+              type="button"
+              id="parking"
+              value={true}
+              onClick={onMutate}
+              min="1"
+              max="50"
+            >
+              Yes
+            </button>
+            <button
+              className={
+                !parking && parking !== null ? "formButtonActive" : "formButton"
+              }
+              type="button"
+              id="parking"
+              value={false}
+              onClick={onMutate}
+            >
+              No
+            </button>
+          </div>
+
+          <label className="formLabel">Furnished</label>
+          <div className="formButtons">
+            <button
+              className={furnished ? "formButtonActive" : "formButton"}
+              type="button"
+              id="furnished"
+              value={true}
+              onClick={onMutate}
+            >
+              Yes
+            </button>
+            <button
+              className={
+                !furnished && furnished !== null
+                  ? "formButtonActive"
+                  : "formButton"
+              }
+              type="button"
+              id="furnished"
+              value={false}
+              onClick={onMutate}
+            >
+              No
+            </button>
+          </div>
+
+          <label className="formLabel">Address</label>
+          <textarea
+            className="formInputAddress"
+            type="text"
+            id="address"
+            value={address}
+            onChange={onMutate}
+            required
+          />
+
+          {!geolocationEnabled && (
+            <div className="formLatLng flex">
+              <div>
+                <label className="formLabel">Latitude</label>
                 <input
                   className="formInputSmall"
                   type="number"
-                  id="discountedPrice"
-                  value={discountedPrice}
+                  id="latitude"
+                  value={latitude}
                   onChange={onMutate}
-                  min="50"
-                  max="750000000"
-                  required={offer}
+                  required
                 />
-              </>
-            )}
+              </div>
+              <div>
+                <label className="formLabel">Longitude</label>
+                <input
+                  className="formInputSmall"
+                  type="number"
+                  id="longitude"
+                  value={longitude}
+                  onChange={onMutate}
+                  required
+                />
+              </div>
+            </div>
+          )}
 
-            <label className="formLabel">Images</label>
-            <p className="imagesInfo">
-              The first image will be the cover (max 6).
-            </p>
+          <label className="formLabel">Offer</label>
+          <div className="formButtons">
+            <button
+              className={offer ? "formButtonActive" : "formButton"}
+              type="button"
+              id="offer"
+              value={true}
+              onClick={onMutate}
+            >
+              Yes
+            </button>
+            <button
+              className={
+                !offer && offer !== null ? "formButtonActive" : "formButton"
+              }
+              type="button"
+              id="offer"
+              value={false}
+              onClick={onMutate}
+            >
+              No
+            </button>
+          </div>
+
+          <label className="formLabel">Regular Price</label>
+          <div className="formPriceDiv">
             <input
-              className="formInputFile"
-              type="file"
-              id="images"
+              className="formInputSmall"
+              type="number"
+              id="regularPrice"
+              value={regularPrice}
               onChange={onMutate}
-              max="6"
-              accept=".jpg,.png,.jpeg"
-              multiple
+              min="50"
+              max="750000000"
               required
             />
-            <button type="submit" className="primaryButton createListingButton">
-              Edit Listing
-            </button>
-          </form>
-        </main>
-      </div>
-    );
-  };
+            {type === "rent" && <p className="formPriceText">$ / Month</p>}
+          </div>
+
+          {offer && (
+            <>
+              <label className="formLabel">Discounted Price</label>
+              <input
+                className="formInputSmall"
+                type="number"
+                id="discountedPrice"
+                value={discountedPrice}
+                onChange={onMutate}
+                min="50"
+                max="750000000"
+                required={offer}
+              />
+            </>
+          )}
+
+          <label className="formLabel">Images</label>
+          <p className="imagesInfo">
+            The first image will be the cover (max 6).
+          </p>
+          <input
+            className="formInputFile"
+            type="file"
+            id="images"
+            onChange={onMutate}
+            max="6"
+            accept=".jpg,.png,.jpeg"
+            multiple
+            required
+          />
+          <button type="submit" className="primaryButton createListingButton">
+            Edit Listing
+          </button>
+        </form>
+      </main>
+    </div>
+  );
 }
+
 export default EditListing;
