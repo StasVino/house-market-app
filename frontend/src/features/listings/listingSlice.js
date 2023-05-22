@@ -59,10 +59,10 @@ export const getListing = createAsyncThunk(
 // Update listing
 export const updateListing = createAsyncThunk(
   "listings/update",
-  async (listingId, thunkAPI) => {
+  async (listingData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await listingService.updateListing(listingId, token);
+      return await listingService.updateListing(listingData, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }

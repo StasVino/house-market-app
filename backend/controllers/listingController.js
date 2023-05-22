@@ -101,7 +101,8 @@ const deleteListing = asyncHandler(async (req, res) => {
 // @access  Private
 const updateListing = asyncHandler(async (req, res) => {
   const listing = await listing.findById(req.params.id);
-
+  console.log(listing);
+  console.log(req.params);
   if (!listing) {
     res.status(404);
     throw new Error("listing not found");

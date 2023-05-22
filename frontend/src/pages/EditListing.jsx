@@ -78,6 +78,7 @@ function EditListing() {
         regularPrice,
         discountedPrice,
         images,
+        listingId,
       })
     )
       .unwrap()

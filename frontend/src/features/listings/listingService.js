@@ -10,6 +10,7 @@ const createListing = async (listingData, token) => {
     },
   };
   const response = await axios.post(API_URL, listingData, config);
+  console.log(response);
   return response.data;
 };
 
@@ -37,18 +38,14 @@ const getListing = async (listingId) => {
 };
 
 // Update listing
-const updateListing = async (listingId, token) => {
+const updateListing = async (listingData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-
-  const response = await axios.put(
-    API_URL + listingId,
-    { status: "updated" },
-    config
-  );
+  console.log(listingData);
+  const response = await axios.put(API_URL + "update", listingData, config);
 
   return response.data;
 };
