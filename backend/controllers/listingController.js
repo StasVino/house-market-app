@@ -100,9 +100,9 @@ const deleteListing = asyncHandler(async (req, res) => {
 // @route   PUT /api/listings/:id
 // @access  Private
 const updateListing = asyncHandler(async (req, res) => {
-  const listing = await listing.findById(req.params.id);
+  console.log(req);
+  const listing = await Listing.findById(req.body.listingId);
   console.log(listing);
-  console.log(req.params);
   if (!listing) {
     res.status(404);
     throw new Error("listing not found");
@@ -114,7 +114,7 @@ const updateListing = asyncHandler(async (req, res) => {
   }
 
   const updatedListing = await Listing.findByIdAndUpdate(
-    req.params.id,
+    req.body.listingId,
     req.body,
     {
       new: true,

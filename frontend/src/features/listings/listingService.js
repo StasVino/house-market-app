@@ -33,7 +33,7 @@ const getAllListings = async () => {
 // Get user listing
 const getListing = async (listingId) => {
   const response = await axios.get(API_URL + listingId, listingId);
-
+  console.log(response);
   return response.data;
 };
 
@@ -44,9 +44,9 @@ const updateListing = async (listingData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(listingData);
-  const response = await axios.put(API_URL + "update", listingData, config);
 
+  const response = await axios.put(API_URL + "update", listingData, config);
+  console.log(response);
   return response.data;
 };
 
