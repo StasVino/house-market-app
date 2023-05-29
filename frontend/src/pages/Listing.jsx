@@ -58,7 +58,7 @@ function Listing() {
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </p>
-        <p className="listingLocation">{listing.location}</p>
+        <p className="listingAdress">{listing.address}</p>
         <p className="listingType">
           For {listing.type === "rent" ? "Rent" : "Sale"}
         </p>
@@ -83,7 +83,7 @@ function Listing() {
           <li>{listing.furnished && "Furnished"}</li>
         </ul>
 
-        <p className="listingLocationTitle">Location</p>
+        <p className="listingLocationTitle">Address</p>
 
         {/* {auth.currentUser?.uid !== listing.userRef && (
           <Link
