@@ -12,6 +12,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Listing from "./pages/Listing";
 import EditListing from "./pages/EditListing";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
               path="//category/:categoryName/:listingId/edit"
               element={<EditListing />}
             />
+            <Route path="/contact/:landlordId" element={<Contact />} />
           </Routes>
         </div>
         <Navbar />

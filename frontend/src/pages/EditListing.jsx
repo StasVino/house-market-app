@@ -10,9 +10,13 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function EditListing() {
   // eslint-disable-next-line
-  const { user } = useSelector((state) => state.auth);
   const { listing } = useSelector((state) => state.listings);
+  const { user } = useSelector((state) => state.auth);
+  const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { listingId } = useParams();
   const [formData, setFormData] = useState(listing);
   const {
     type,
@@ -27,20 +31,13 @@ function EditListing() {
     discountedPrice,
     images,
   } = formData;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { listingId } = useParams();
 
-  // Redirect if listing is not user's
+  // Redirect if listing is not user's, and fetch listing to edit
   useEffect(() => {
     if (listing && listing.user !== user._id) {
       toast.error("You can not edit that listing");
       navigate("/");
     }
-  });
-
-  // Fetch listing to edit
-  useEffect(() => {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
   }, [listingId, dispatch]);
 

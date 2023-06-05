@@ -12,6 +12,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function Listing() {
   const { listing } = useSelector((state) => state.listings);
+  const { user } = useSelector((state) => state.auth);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
 
   const navigate = useNavigate();
@@ -85,14 +86,14 @@ function Listing() {
 
         <p className="listingLocationTitle">Address</p>
 
-        {/* {auth.currentUser?.uid !== listing.userRef && (
+        {user !== listing.user && (
           <Link
-            to={`/contact/${listing.userRef}?listingName=${listing.name}`}
+            to={`/contact/${listing.user}?listingName=${listing.name}`}
             className="primaryButton"
           >
             Contact Landlord
           </Link>
-        )} */}
+        )}
       </div>
     </main>
   );
