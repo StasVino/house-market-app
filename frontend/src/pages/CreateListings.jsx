@@ -21,6 +21,8 @@ function CreateListing() {
     regularPrice: 0,
     discountedPrice: 0,
     images: {},
+    latitude: 0,
+    longitude: 0,
   });
 
   const {
@@ -34,6 +36,8 @@ function CreateListing() {
     offer,
     regularPrice,
     discountedPrice,
+    latitude,
+    longitude,
     images,
   } = formData;
   const dispatch = useDispatch();
@@ -66,6 +70,8 @@ function CreateListing() {
         offer,
         regularPrice,
         discountedPrice,
+        latitude,
+        longitude,
         images,
       })
     )

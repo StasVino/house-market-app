@@ -43,12 +43,8 @@ const updateListing = async (listingId, listingData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(listingId);
-  const response = await axios.put(
-    API_URL + listingId + "edit",
-    listingData,
-    config
-  );
+  console.log(listingData);
+  const response = await axios.put(API_URL + listingId, listingData, config);
   console.log(response);
   return response.data;
 };

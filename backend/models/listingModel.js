@@ -47,7 +47,12 @@ const listingSchema = mongoose.Schema(
       type: Number,
       required: [true, "Please provide the discounted listing price"],
     },
-
+    latitude: {
+      type: Number,
+    },
+    longitude: {
+      type: Number,
+    },
     // image: {
     //   type: String,
     // },

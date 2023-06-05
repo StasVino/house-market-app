@@ -14,7 +14,6 @@ function EditListing() {
   const { listing } = useSelector((state) => state.listings);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(listing);
-
   const {
     type,
     name,
@@ -28,7 +27,6 @@ function EditListing() {
     discountedPrice,
     images,
   } = formData;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { listingId } = useParams();
@@ -47,10 +45,6 @@ function EditListing() {
   }, [listingId, dispatch]);
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-
     e.preventDefault();
 
     setLoading(true);
@@ -113,6 +107,7 @@ function EditListing() {
         ...prevState,
         [e.target.id]: boolean ?? e.target.value,
       }));
+      console.log(e.target.value);
     }
   };
 
@@ -322,7 +317,7 @@ function EditListing() {
             required
           />
           <button type="submit" className="primaryButton createListingButton">
-            Create Listing
+            Update Listing
           </button>
         </form>
       </main>
