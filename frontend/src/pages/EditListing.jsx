@@ -17,32 +17,28 @@ function EditListing() {
   const dispatch = useDispatch();
   const { listingId } = useParams();
 
-  // Redirect if listing is not user's, and fetch listing to edit
+  // Redirect if listing is not user's
   useEffect(() => {
-    console.log(listingId);
     if (listing && listing.user !== user._id) {
       toast.error("You can not edit that listing");
       navigate("/");
-    } else {
-      dispatch(getListing(listingId)).unwrap().catch(toast.error);
-      console.log(listing);
     }
-  }, [listingId, dispatch]);
+  });
+  console.log(listing);
+  console.log(user);
 
   const [formData, setFormData] = useState({
-    type: "rent",
-    name: "",
-    bedrooms: 1,
-    bathrooms: 1,
-    parking: false,
-    furnished: false,
-    address: "",
-    offer: false,
-    regularPrice: 0,
-    discountedPrice: 0,
-    images: {},
-    latitude: 0,
-    longitude: 0,
+    type: listing.type,
+    name: listing.name,
+    bedrooms: listing.bedrooms,
+    bathrooms: listing.bathrooms,
+    parking: listing.parking,
+    furnished: listing.furnished,
+    address: listing.furnished,
+    offer: listing.offer,
+    regularPrice: listing.regularPrice,
+    discountedPrice: listing.discountedPrice,
+    images: listing.images,
   });
   const {
     type,
@@ -55,9 +51,13 @@ function EditListing() {
     offer,
     regularPrice,
     discountedPrice,
+    latitude,
+    longitude,
     images,
   } = formData;
-
+  if (!listing) {
+    return <Spinner />;
+  }
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,7 +86,6 @@ function EditListing() {
         regularPrice,
         discountedPrice,
         images,
-        listingId,
       })
     )
       .unwrap()

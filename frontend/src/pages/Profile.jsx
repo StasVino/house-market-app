@@ -7,10 +7,12 @@ import { logout, update } from "../features/auth/authSlice";
 import {
   getUserListings,
   deleteListing,
+  getListing,
 } from "../features/listings/listingSlice";
 import ListingItem from "../components/ListingItem";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
+import Spinner from "../components/Spinner";
 
 function Profile() {
   const { listings } = useSelector((state) => state.listings);
@@ -23,7 +25,6 @@ function Profile() {
   });
 
   const { name, email } = formData;
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -70,8 +71,11 @@ function Profile() {
     }
   };
 
-  const onEdit = (listing) =>
+  const onEdit = (listing) => {
+    dispatch(getListing(listing._id)).unwrap().catch(toast.error);
+
     navigate(`/category/${listing.type}/${listing._id}/edit`);
+  };
 
   return (
     <div className="profile">
