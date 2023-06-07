@@ -12,12 +12,38 @@ function EditListing() {
   // eslint-disable-next-line
   const { listing } = useSelector((state) => state.listings);
   const { user } = useSelector((state) => state.auth);
-  const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { listingId } = useParams();
-  const [formData, setFormData] = useState(listing);
+
+  // Redirect if listing is not user's, and fetch listing to edit
+  useEffect(() => {
+    console.log(listingId);
+    if (listing && listing.user !== user._id) {
+      toast.error("You can not edit that listing");
+      navigate("/");
+    } else {
+      dispatch(getListing(listingId)).unwrap().catch(toast.error);
+      console.log(listing);
+    }
+  }, [listingId, dispatch]);
+
+  const [formData, setFormData] = useState({
+    type: "rent",
+    name: "",
+    bedrooms: 1,
+    bathrooms: 1,
+    parking: false,
+    furnished: false,
+    address: "",
+    offer: false,
+    regularPrice: 0,
+    discountedPrice: 0,
+    images: {},
+    latitude: 0,
+    longitude: 0,
+  });
   const {
     type,
     name,
@@ -31,15 +57,6 @@ function EditListing() {
     discountedPrice,
     images,
   } = formData;
-
-  // Redirect if listing is not user's, and fetch listing to edit
-  useEffect(() => {
-    if (listing && listing.user !== user._id) {
-      toast.error("You can not edit that listing");
-      navigate("/");
-    }
-    dispatch(getListing(listingId)).unwrap().catch(toast.error);
-  }, [listingId, dispatch]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
