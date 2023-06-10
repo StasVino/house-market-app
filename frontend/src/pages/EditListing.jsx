@@ -23,23 +23,38 @@ function EditListing() {
       toast.error("You can not edit that listing");
       navigate("/");
     }
-  });
+    dispatch(getListing(listingId)).unwrap().catch(toast.error);
+  }, [listingId, dispatch]);
   console.log(listing);
   console.log(user);
-
   const [formData, setFormData] = useState({
-    type: listing.type,
-    name: listing.name,
-    bedrooms: listing.bedrooms,
-    bathrooms: listing.bathrooms,
-    parking: listing.parking,
-    furnished: listing.furnished,
-    address: listing.furnished,
-    offer: listing.offer,
-    regularPrice: listing.regularPrice,
-    discountedPrice: listing.discountedPrice,
-    images: listing.images,
+    type: "rent",
+    name: "",
+    bedrooms: 1,
+    bathrooms: 1,
+    parking: false,
+    furnished: false,
+    address: "",
+    offer: false,
+    regularPrice: 0,
+    discountedPrice: 0,
+    images: {},
+    latitude: 0,
+    longitude: 0,
   });
+  // const [formData, setFormData] = useState({
+  //   type: listing.type,
+  //   name: listing.name,
+  //   bedrooms: listing.bedrooms,
+  //   bathrooms: listing.bathrooms,
+  //   parking: listing.parking,
+  //   furnished: listing.furnished,
+  //   address: listing.furnished,
+  //   offer: listing.offer,
+  //   regularPrice: listing.regularPrice,
+  //   discountedPrice: listing.discountedPrice,
+  //   images: listing.images,
+  // });
   const {
     type,
     name,
@@ -55,9 +70,7 @@ function EditListing() {
     longitude,
     images,
   } = formData;
-  if (!listing) {
-    return <Spinner />;
-  }
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -123,8 +136,7 @@ function EditListing() {
       console.log(e.target.value);
     }
   };
-
-  if (loading) {
+  if (!listing) {
     return <Spinner />;
   }
 
