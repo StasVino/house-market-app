@@ -72,6 +72,7 @@ function Profile() {
   };
 
   const onEdit = (listing) => {
+    dispatch(getListing(listing._id)).unwrap().catch(toast.error);
     navigate(`/category/${listing.type}/${listing._id}/edit`);
   };
 

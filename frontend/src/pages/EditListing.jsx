@@ -12,21 +12,10 @@ function EditListing() {
   // eslint-disable-next-line
   const { listing } = useSelector((state) => state.listings);
   const { user } = useSelector((state) => state.auth);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { listingId } = useParams();
-
-  // Redirect if listing is not user's
-  useEffect(() => {
-    if (listing && listing.user !== user._id) {
-      toast.error("You can not edit that listing");
-      navigate("/");
-    }
-    dispatch(getListing(listingId)).unwrap().catch(toast.error);
-  }, [listingId, dispatch]);
-  console.log(listing);
-  console.log(user);
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
@@ -42,19 +31,7 @@ function EditListing() {
     latitude: 0,
     longitude: 0,
   });
-  // const [formData, setFormData] = useState({
-  //   type: listing.type,
-  //   name: listing.name,
-  //   bedrooms: listing.bedrooms,
-  //   bathrooms: listing.bathrooms,
-  //   parking: listing.parking,
-  //   furnished: listing.furnished,
-  //   address: listing.furnished,
-  //   offer: listing.offer,
-  //   regularPrice: listing.regularPrice,
-  //   discountedPrice: listing.discountedPrice,
-  //   images: listing.images,
-  // });
+
   const {
     type,
     name,
@@ -66,10 +43,21 @@ function EditListing() {
     offer,
     regularPrice,
     discountedPrice,
+    images,
     latitude,
     longitude,
-    images,
   } = formData;
+
+  // Redirect if listing is not user's
+  useEffect(() => {
+    if (listing && listing.user !== user._id) {
+      toast.error("You can not edit that listing");
+      navigate("/");
+    }
+    dispatch(getListing(listingId)).unwrap().catch(toast.error);
+  }, [listingId, dispatch]);
+
+  useEffect(() => {});
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -136,10 +124,12 @@ function EditListing() {
       console.log(e.target.value);
     }
   };
+  console.log(formData);
   if (!listing) {
     return <Spinner />;
   }
 
+  console.log(formData);
   return (
     <div className="profile">
       <header>
