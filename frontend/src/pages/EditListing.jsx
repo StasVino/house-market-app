@@ -57,7 +57,10 @@ function EditListing() {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
   }, [listingId, dispatch]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    setFormData({ ...listing });
+    console.log(formData);
+  }, [listing]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -97,6 +100,7 @@ function EditListing() {
       })
       .catch(toast.error);
   };
+
   const onMutate = (e) => {
     let boolean = null;
 
@@ -124,12 +128,11 @@ function EditListing() {
       console.log(e.target.value);
     }
   };
-  console.log(formData);
+
   if (!listing) {
     return <Spinner />;
   }
 
-  console.log(formData);
   return (
     <div className="profile">
       <header>

@@ -44,7 +44,7 @@ export const getUserListings = createAsyncThunk(
   }
 );
 
-// Get user listing
+// Get listing
 export const getListing = createAsyncThunk(
   "listings/get",
   async (listingId, thunkAPI) => {
@@ -103,7 +103,11 @@ export const listingSlice = createSlice({
       .addCase(getAllListings.fulfilled, (state, action) => {
         state.listings = action.payload;
       })
-
+      .addCase(getListing.pending, (state) => {
+        // NOTE: clear single listing on listings page, this replaces need for
+        // loading state on individual listing
+        state.listing = null;
+      })
       .addCase(getListing.fulfilled, (state, action) => {
         state.listing = action.payload;
       })
