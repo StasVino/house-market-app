@@ -13,7 +13,7 @@ function Contact() {
 
   useEffect(() => {
     const getLandlord = async () => {};
-
+    console.log(params);
     getLandlord();
   }, [params.landlordId]);
 
