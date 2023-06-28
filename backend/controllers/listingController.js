@@ -40,6 +40,8 @@ const createListing = asyncHandler(async (req, res) => {
   const {
     type,
     name,
+    landlordName,
+    landlordEmail,
     bedrooms,
     bathrooms,
     parking,
@@ -50,7 +52,6 @@ const createListing = asyncHandler(async (req, res) => {
     discountedPrice,
   } = req.body;
   //const { path: image } = req.file;
-  console.log(req.file);
 
   if (!name || !address) {
     res.status(400);
@@ -60,6 +61,8 @@ const createListing = asyncHandler(async (req, res) => {
   const listing = await Listing.create({
     type,
     name,
+    landlordName,
+    landlordEmail,
     bedrooms,
     bathrooms,
     parking,

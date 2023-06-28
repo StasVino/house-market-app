@@ -12,6 +12,8 @@ function CreateListing() {
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
+    landlordName: user.name,
+    landlordEmail: user.email,
     bedrooms: 1,
     bathrooms: 1,
     parking: false,
@@ -28,6 +30,8 @@ function CreateListing() {
   const {
     type,
     name,
+    landlordName,
+    landlordEmail,
     bedrooms,
     bathrooms,
     parking,
@@ -62,6 +66,8 @@ function CreateListing() {
       createListing({
         type,
         name,
+        landlordName,
+        landlordEmail,
         bedrooms,
         bathrooms,
         parking,

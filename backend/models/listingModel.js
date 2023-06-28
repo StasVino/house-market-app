@@ -15,6 +15,16 @@ const listingSchema = mongoose.Schema(
       type: String,
       required: [true, "Please provide the name of the house you wish to list"],
     },
+    landlordName: {
+      type: String,
+      required: [true, "Please add landlord name"],
+      unique: true,
+    },
+    landlordEmail: {
+      type: String,
+      required: [true, "Please add an landlord email"],
+      unique: true,
+    },
     bedrooms: {
       type: Number,
       required: [true, "Please provide number of bedrooms"],
