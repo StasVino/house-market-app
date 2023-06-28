@@ -52,10 +52,9 @@ const createListing = asyncHandler(async (req, res) => {
     discountedPrice,
   } = req.body;
   //const { path: image } = req.file;
-
   if (!name || !address) {
     res.status(400);
-    throw new Error("Please enter a name and adress");
+    throw new Error("Please enter a condo name and adress");
   }
 
   const listing = await Listing.create({
@@ -70,7 +69,6 @@ const createListing = asyncHandler(async (req, res) => {
     address,
     offer,
     regularPrice,
-    image,
     discountedPrice,
     user: req.user.id,
   });

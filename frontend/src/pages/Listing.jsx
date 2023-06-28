@@ -14,7 +14,6 @@ function Listing() {
   const { listing } = useSelector((state) => state.listings);
   const { user } = useSelector((state) => state.auth);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { listingId } = useParams();
@@ -86,7 +85,7 @@ function Listing() {
 
         <p className="listingLocationTitle">Address</p>
 
-        {user !== listing.user && (
+        {user._id !== listing.user && (
           <Link
             to={`/contact/${listing.user}?listingName=${listing.name}`}
             className="primaryButton"

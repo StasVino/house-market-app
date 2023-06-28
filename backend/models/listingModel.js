@@ -9,7 +9,7 @@ const listingSchema = mongoose.Schema(
     type: {
       type: String,
       required: [true, "Sell or Rent?"],
-      enum: ["sell", "rent"],
+      enum: ["sale", "rent"],
     },
     name: {
       type: String,
