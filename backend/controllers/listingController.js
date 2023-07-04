@@ -50,6 +50,7 @@ const createListing = asyncHandler(async (req, res) => {
     offer,
     regularPrice,
     discountedPrice,
+    images,
   } = req.body;
   //const { path: image } = req.file;
   if (!name || !address) {
@@ -70,6 +71,7 @@ const createListing = asyncHandler(async (req, res) => {
     offer,
     regularPrice,
     discountedPrice,
+    images,
     user: req.user.id,
   });
 
