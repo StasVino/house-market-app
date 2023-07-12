@@ -50,7 +50,7 @@ function CreateListing() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("hey");
+
     setLoading(true);
 
     if (discountedPrice >= regularPrice) {
@@ -89,7 +89,8 @@ function CreateListing() {
       // geolocation.lat = latitude;
       // geolocation.lng = longitude;
     }
-
+    console.log(latitude);
+    console.log(longitude);
     dispatch(
       createListing({
         type,

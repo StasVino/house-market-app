@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Helmet } from "react-helmet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
@@ -29,9 +30,22 @@ function Listing() {
 
   return (
     <main>
-      <header>
+      <Helmet>
         <title>{listing.name}</title>
-      </header>
+      </Helmet>
+      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        {/* {listing.images.map((index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                background: `url(${listing.images[index]}) center no-repeat`,
+                backgroundSize: "cover",
+              }}
+              className="swiperSlideDiv"
+            ></div>
+          </SwiperSlide>
+        ))} */}
+      </Swiper>
 
       <div
         className="shareIconDiv"
@@ -85,7 +99,23 @@ function Listing() {
         </ul>
 
         <p className="listingLocationTitle">Address</p>
+        <div className="leafletContainer">
+          <MapContainer
+            style={{ height: "100%", width: "100%" }}
+            center={[listing.latitude, listing.longitude]}
+            zoom={13}
+            scrollWheelZoom={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+            />
 
+            <Marker position={[listing.latitude, listing.longitude]}>
+              <Popup>{listing.location}</Popup>
+            </Marker>
+          </MapContainer>
+        </div>
         {user._id !== listing.user && (
           <Link
             to={`/contact/${listing.user}?listingName=${listing.name}`}
