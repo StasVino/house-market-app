@@ -49,6 +49,8 @@ const createListing = asyncHandler(async (req, res) => {
     address,
     offer,
     regularPrice,
+    latitude,
+    longitude,
     discountedPrice,
     images,
   } = req.body;
@@ -72,6 +74,8 @@ const createListing = asyncHandler(async (req, res) => {
     regularPrice,
     discountedPrice,
     images,
+    latitude,
+    longitude,
     user: req.user.id,
   });
 
@@ -88,7 +92,8 @@ const deleteListing = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Listing not found");
   }
-
+  console.log(req.user.id);
+  console.log(listing.user);
   if (listing.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("Not Authorized");

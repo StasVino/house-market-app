@@ -55,7 +55,7 @@ const deleteListing = async (listingId, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-
+  console.log(listingId);
   const response = await axios.put(
     API_URL + listingId,
     { status: "deleted" },
