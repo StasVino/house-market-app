@@ -60,9 +60,9 @@ function Profile() {
     navigate("/");
   };
 
-  const onDelete = async (e) => {
+  const onDelete = async (listingId) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deleteListing(e))
+      dispatch(deleteListing(listingId))
         .unwrap()
         .then(() => {
           toast.success("Listing Deleted");

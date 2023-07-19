@@ -116,6 +116,12 @@ export const listingSlice = createSlice({
         state.listings = state.listings.map((listing) =>
           listing._id === action.payload._id ? action.payload : listing
         );
+      })
+      .addCase(deleteListing.fulfilled, (state, action) => {
+        state.listing = action.payload;
+        state.listings = state.listings.map((listing) =>
+          listing._id === action.payload._id ? action.payload : listing
+        );
       });
   },
 });
