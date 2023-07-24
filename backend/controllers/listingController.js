@@ -87,6 +87,7 @@ const createListing = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteListing = asyncHandler(async (req, res) => {
   const listing = await Listing.findById(req.params.id);
+  console.log(listing);
 
   if (!listing) {
     res.status(404);

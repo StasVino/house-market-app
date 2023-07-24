@@ -75,7 +75,8 @@ export const deleteListing = createAsyncThunk(
   async (listingId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await listingService.updateListing(listingId, token);
+      console.log(token);
+      return await listingService.deleteListing(listingId, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
@@ -117,11 +118,11 @@ export const listingSlice = createSlice({
           listing._id === action.payload._id ? action.payload : listing
         );
       })
+      .addCase(deleteListing.pending, (state, action) => {
+        state.listing = null;
+      })
       .addCase(deleteListing.fulfilled, (state, action) => {
-        state.listing = action.payload;
-        state.listings = state.listings.map((listing) =>
-          listing._id === action.payload._id ? action.payload : listing
-        );
+        state.listings = action.payload;
       });
   },
 });

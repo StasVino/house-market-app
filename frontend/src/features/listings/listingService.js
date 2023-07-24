@@ -56,11 +56,7 @@ const deleteListing = async (listingId, token) => {
     },
   };
   console.log(listingId);
-  const response = await axios.delete(
-    API_URL + listingId,
-    { status: "deleted" },
-    config
-  );
+  const response = await axios.delete(API_URL + listingId, listingId, config);
   console.log(response);
   return response.data;
 };
