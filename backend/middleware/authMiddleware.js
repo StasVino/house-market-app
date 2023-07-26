@@ -17,7 +17,6 @@ const protect = asyncHandler(async (req, res, next) => {
       req.user = await User.findById(decoded.id).select("-password");
       // NOTE: We need to check if a user was found
       // https://www.udemy.com/course/react-front-to-back-2022/learn/lecture/30591026#questions/17843570
-      console.log(req.user);
       if (!req.user) {
         res.status(401);
         throw new Error("Not authorized");

@@ -42,6 +42,7 @@ function App() {
               path="//category/:categoryName/:listingId/edit"
               element={<EditListing />}
             />
+
             <Route path="/contact/:landlordId" element={<Contact />} />
           </Routes>
         </div>

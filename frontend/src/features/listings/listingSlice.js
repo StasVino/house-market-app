@@ -118,10 +118,13 @@ export const listingSlice = createSlice({
           listing._id === action.payload._id ? action.payload : listing
         );
       })
-      .addCase(deleteListing.pending, (state, action) => {
+      .addCase(deleteListing.pending, (state) => {
+        console.log(state.listing);
         state.listing = null;
       })
       .addCase(deleteListing.fulfilled, (state, action) => {
+        console.log(state.listing);
+        console.log(actioin.payload);
         state.listings = action.payload;
       });
   },
