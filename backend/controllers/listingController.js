@@ -87,7 +87,6 @@ const createListing = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteListing = asyncHandler(async (req, res) => {
   const listing = await Listing.findById(req.params.id);
-  console.log(listing);
 
   if (!listing) {
     res.status(404);
@@ -99,9 +98,8 @@ const deleteListing = asyncHandler(async (req, res) => {
     throw new Error("Not Authorized");
   }
 
-  await listing.remove();
-
-  res.status(200).json({ success: true });
+  Listing.findByIdAndDelete(req.params.id);
+  res.status(200).json(listing);
 });
 
 // @desc    Update listing

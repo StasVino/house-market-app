@@ -123,9 +123,10 @@ export const listingSlice = createSlice({
         state.listing = null;
       })
       .addCase(deleteListing.fulfilled, (state, action) => {
-        console.log(state.listing);
-        console.log(actioin.payload);
-        state.listings = action.payload;
+        console.log(state.action);
+        state.listings = state.listings.map((listing) =>
+          listing._id === action.payload._id ? null : listing
+        );
       });
   },
 });
