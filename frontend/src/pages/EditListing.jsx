@@ -59,7 +59,6 @@ function EditListing() {
 
   useEffect(() => {
     setFormData({ ...listing });
-    console.log(formData);
   }, [listing]);
 
   const onSubmit = async (e) => {
@@ -125,7 +124,6 @@ function EditListing() {
         ...prevState,
         [e.target.id]: boolean ?? e.target.value,
       }));
-      console.log(e.target.value);
     }
   };
 

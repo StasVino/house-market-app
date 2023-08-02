@@ -117,9 +117,7 @@ export const listingSlice = createSlice({
           listing._id === action.payload._id ? action.payload : listing
         );
       })
-      .addCase(deleteListing.pending, (state) => {
-        state.listing = null;
-      })
+
       .addCase(deleteListing.fulfilled, (state, action) => {
         console.log(action.payload);
         state.listings = state.listings.map((listing) =>

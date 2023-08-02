@@ -45,6 +45,8 @@ const updateListing = async (listingId, listingData, token) => {
     },
   };
   const response = await axios.put(API_URL + listingId, listingData, config);
+  console.log(response.data);
+
   return response.data;
 };
 
@@ -54,8 +56,13 @@ const deleteListing = async (listingId, token) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    data: { listingId },
   };
-  const response = await axios.delete(API_URL + listingId, listingId, config);
+  const response = await axios.delete(
+    API_URL + listingId,
+
+    config
+  );
   console.log(response);
   return response.data;
 };

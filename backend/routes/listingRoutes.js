@@ -21,7 +21,7 @@ router.route("/profile").get(protect, getUserListings);
 router
   .route("/:id")
   .get(getListing)
-  .delete(deleteListing)
+  .delete(protect, deleteListing)
   .put(protect, updateListing);
 
 module.exports = router;
