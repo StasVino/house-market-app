@@ -91,15 +91,13 @@ const deleteListing = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Listing not found");
   }
-  console.log(req.params.id);
   if (listing.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("Not Authorized");
   }
 
-  const deletedListing = Listing.findByIdAndDelete(req.params.id);
-  console.log(deletedListing);
-  res.status(200).json(deletedListing);
+  await listing.remove();
+  res.status(200).json({ success: true });
 });
 
 // @desc    Update listing
