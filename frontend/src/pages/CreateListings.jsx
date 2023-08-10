@@ -89,8 +89,7 @@ function CreateListing() {
       // geolocation.lat = latitude;
       // geolocation.lng = longitude;
     }
-    console.log(latitude);
-    console.log(longitude);
+
     dispatch(
       createListing({
         type,

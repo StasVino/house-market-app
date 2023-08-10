@@ -117,12 +117,15 @@ export const listingSlice = createSlice({
           listing._id === action.payload._id ? action.payload : listing
         );
       })
-
+      // .addCase(deleteListing.pending, (state, action) => {
+      //   state.listings = null;
+      // })
       .addCase(deleteListing.fulfilled, (state, action) => {
         console.log(action.payload);
-        state.listings = state.listings.map((listing) =>
-          listing._id === action.payload._id ? null : listing
-        );
+        state.listings.map((listing) => {
+          console.log(listing._id);
+        });
+        state.listings.filter((listing) => listing._id !== action.payload);
       });
   },
 });

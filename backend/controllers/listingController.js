@@ -97,7 +97,7 @@ const deleteListing = asyncHandler(async (req, res) => {
   }
 
   await listing.remove();
-  res.status(200).json({ success: true });
+  res.status(200).json(req.params.id);
 });
 
 // @desc    Update listing
