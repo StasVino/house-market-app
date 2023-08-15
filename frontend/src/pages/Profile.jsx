@@ -64,7 +64,9 @@ function Profile() {
     if (window.confirm("Are you sure you want to delete?")) {
       dispatch(deleteListing(listingId))
         .unwrap()
-        .then(dispatch(getUserListings()))
+        .then(async () => {
+          dispatch(getUserListings());
+        })
         .then(() => {
           toast.success("Listing Deleted");
         })
