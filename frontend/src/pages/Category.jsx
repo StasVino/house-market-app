@@ -8,6 +8,7 @@ import ListingItem from "../components/ListingItem";
 
 function Category() {
   const { listings } = useSelector((state) => state.listings);
+  const [loading, setLoading] = useState(true);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   const dispatch = useDispatch();
@@ -18,7 +19,19 @@ function Category() {
   }, [dispatch]);
 
   // Pagination / Load More
-  const onFetchMoreListings = async () => {};
+  const onFetchMoreListings = async () => {
+    // Get reference
+    const listingsRef = listings;
+
+    // Create a query
+    const q = query(
+      listingsRef,
+      where("type", "==", params.categoryName),
+      orderBy("timestamp", "desc"),
+      startAfter(lastFetchedListing),
+      limit(10)
+    );
+  };
 
   if (!listings) {
     return <Spinner />;
