@@ -48,6 +48,7 @@ const updateListing = async (listingId, listingData, token) => {
 };
 
 // Delete listing
+// axios.delete doesnt take data so we pass it in the config
 const deleteListing = async (listingId, token) => {
   const config = {
     headers: {
