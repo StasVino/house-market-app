@@ -7,7 +7,7 @@ import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
 
 function Offers() {
-  const [listings, setListings] = useState(null);
+  const { listings } = useSelector((state) => state.listings);
   const [loading, setLoading] = useState(true);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
@@ -17,6 +17,9 @@ function Offers() {
     dispatch(getAllListings());
   }, [dispatch]);
 
+  if (!listings) {
+    return <Spinner />;
+  }
   return (
     <div className="category">
       <header>
@@ -25,21 +28,18 @@ function Offers() {
 
       {listings.length > 0 ? (
         <>
-          <main>
-            <ul className="categoryListings">
-              {listings.map((listing) => {
-                console.log(listings.length);
-                console.log(listing.offer);
+          <ul className="categoryListings">
+            {listings.map(
+              (listing) =>
                 listing.offer === true && (
                   <ListingItem
-                    listing={listing.data}
-                    id={listing.id}
-                    key={listing.id}
+                    listing={listing}
+                    id={listing._id}
+                    key={listing._id}
                   />
-                );
-              })}
-            </ul>
-          </main>
+                )
+            )}
+          </ul>
 
           <br />
           <br />
