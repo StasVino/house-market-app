@@ -33,8 +33,8 @@ function Listing() {
       <Helmet>
         <title>{listing.name}</title>
       </Helmet>
-      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
-        {/* {listing.images.map((index) => (
+      {/* <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        {listing.images.map((index) => (
           <SwiperSlide key={index}>
             <div
               style={{
@@ -44,8 +44,8 @@ function Listing() {
               className="swiperSlideDiv"
             ></div>
           </SwiperSlide>
-        ))} */}
-      </Swiper>
+        ))}
+      </Swiper> */}
 
       <div
         className="shareIconDiv"
@@ -100,7 +100,7 @@ function Listing() {
 
         <p className="listingLocationTitle">Address</p>
         <div className="leafletContainer">
-          <MapContainer
+          {/* <MapContainer
             style={{ height: "100%", width: "100%" }}
             center={[listing.latitude, listing.longitude]}
             zoom={13}
@@ -114,7 +114,7 @@ function Listing() {
             <Marker position={[listing.latitude, listing.longitude]}>
               <Popup>{listing.location}</Popup>
             </Marker>
-          </MapContainer>
+          </MapContainer> */}
         </div>
         {user._id !== listing.user && (
           <Link
