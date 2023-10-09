@@ -8,30 +8,19 @@ import ListingItem from "../components/ListingItem";
 
 function Category() {
   const { listings } = useSelector((state) => state.listings);
-  const [loading, setLoading] = useState(true);
+  const [load, setLoad] = useState(10);
+
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getAllListings());
+    dispatch(getAllListings({ params, load }));
   }, [dispatch]);
 
   // Pagination / Load More
-  const onFetchMoreListings = async () => {
-    // Get reference
-    const listingsRef = listings;
-
-    // Create a query
-    const q = query(
-      listingsRef,
-      where("type", "==", params.categoryName),
-      orderBy("timestamp", "desc"),
-      startAfter(lastFetchedListing),
-      limit(10)
-    );
-  };
+  const onFetchMoreListings = async () => {};
 
   if (!listings) {
     return <Spinner />;

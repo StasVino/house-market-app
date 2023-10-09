@@ -20,17 +20,21 @@ const getUserListings = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
+
   const response = await axios.get(API_URL + "profile", config);
   return response.data;
 };
 // Get all listings
-const getAllListings = async () => {
-  const response = await axios.get(API_URL);
+const getAllListings = async (listingsLoadParams) => {
+  console.log(listingsLoadParams);
+  const response = await axios.get(API_URL, listingsLoadParams);
   return response.data;
 };
 
 // Get user listing
 const getListing = async (listingId) => {
+  console.log(listingId);
+
   const response = await axios.get(API_URL + listingId, listingId);
   return response.data;
 };

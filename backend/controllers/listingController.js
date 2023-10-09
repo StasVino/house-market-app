@@ -15,7 +15,8 @@ const getUserListings = asyncHandler(async (req, res) => {
 // @desc    Get all listings
 // @route   GET /api/listings
 const getAllListings = asyncHandler(async (req, res) => {
-  const listings = await Listing.find({});
+  console.log(req.params);
+  const listings = await Listing.find({ type: req.categoryName });
   res.status(200).json(listings);
 });
 

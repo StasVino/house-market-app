@@ -23,9 +23,10 @@ export const createListing = createAsyncThunk(
 // Get user listings
 export const getAllListings = createAsyncThunk(
   "listings/getAll",
-  async (_, thunkAPI) => {
+  async (listingsLoadParams, thunkAPI) => {
     try {
-      return await listingService.getAllListings();
+      console.log(listingsLoadParams);
+      return await listingService.getAllListings(listingsLoadParams);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
@@ -117,14 +118,8 @@ export const listingSlice = createSlice({
           listing._id === action.payload._id ? action.payload : listing
         );
       })
-      // .addCase(deleteListing.pending, (state, action) => {
-      //   state.listings = null;
-      // })
+
       .addCase(deleteListing.fulfilled, (state, action) => {
-        console.log(action.payload);
-        state.listings.map((listing) => {
-          console.log(listing._id);
-        });
         state.listings.filter((listing) => listing._id !== action.payload);
       });
   },
