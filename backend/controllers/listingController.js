@@ -25,7 +25,7 @@ const getAllListings = asyncHandler(async (req, res) => {
 // @access  Private
 const getListing = asyncHandler(async (req, res) => {
   const listing = await Listing.findById(req.params.id);
-
+  console.log(req.params);
   if (!listing) {
     res.status(404);
     throw new Error("Listing not found");

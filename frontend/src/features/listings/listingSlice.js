@@ -25,7 +25,6 @@ export const getAllListings = createAsyncThunk(
   "listings/getAll",
   async (listingsLoadParams, thunkAPI) => {
     try {
-      console.log(listingsLoadParams);
       return await listingService.getAllListings(listingsLoadParams);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));

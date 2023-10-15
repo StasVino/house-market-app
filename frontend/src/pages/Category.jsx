@@ -16,8 +16,8 @@ function Category() {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getAllListings({ params, load }));
-  }, [dispatch]);
+    dispatch(getAllListings(params.categoryName));
+  }, [params, dispatch]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {};
