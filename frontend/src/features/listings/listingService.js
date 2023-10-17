@@ -20,15 +20,15 @@ const getUserListings = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-
   const response = await axios.get(API_URL + "profile", config);
+  console.log(response.data);
   return response.data;
 };
 // Get all listings
 const getAllListings = async (listingsLoadParams) => {
   console.log(listingsLoadParams);
-  const response = await axios.get(API_URL + "listings", listingsLoadParams);
-  console.log(response.data.args);
+  const response = await axios.get(API_URL + "category", listingsLoadParams);
+  console.log(response.data);
   return response.data;
 };
 
