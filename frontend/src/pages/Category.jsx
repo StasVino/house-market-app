@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllListings } from "../features/listings/listingSlice";
+import { getCategoryListings } from "../features/listings/listingSlice";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
@@ -16,7 +16,7 @@ function Category() {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getAllListings(params.categoryName));
+    dispatch(getCategoryListings(params.categoryName));
   }, [params, dispatch]);
 
   // Pagination / Load More

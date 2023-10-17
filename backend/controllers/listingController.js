@@ -9,15 +9,14 @@ const Listing = require("../models/listingModel");
 // @access  Private
 const getUserListings = asyncHandler(async (req, res) => {
   const listings = await Listing.find({ user: req.user.id });
-  console.log(req.user);
   res.status(200).json(listings);
 });
 
 // @desc    Get all listings
 // @route   GET /api/listings
-const getAllListings = asyncHandler(async (req, res) => {
+const getCategoryListings = asyncHandler(async (req, res) => {
   console.log(req.params);
-  const listings = await Listing.find({ type: req.categoryName });
+  const listings = await Listing.find({ type: req.params.name });
   res.status(200).json(listings);
 });
 
@@ -130,7 +129,7 @@ const updateListing = asyncHandler(async (req, res) => {
 
 module.exports = {
   getUserListings,
-  getAllListings,
+  getCategoryListings,
   getListing,
   createListing,
   deleteListing,

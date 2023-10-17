@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getUserListings,
-  getAllListings,
+  getCategoryListings,
   getListing,
   createListing,
   deleteListing,
@@ -14,7 +14,7 @@ const upload = require("../middleware/uploadMiddleware");
 
 router
   .route("/category/:name")
-  .get(getAllListings)
+  .get(getCategoryListings)
   .post(protect, upload.single("image"), createListing);
 router.route("/profile").get(protect, getUserListings);
 

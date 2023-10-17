@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllListings } from "../features/listings/listingSlice";
+import { getCategoryListings } from "../features/listings/listingSlice";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
@@ -14,7 +14,7 @@ function Offers() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllListings());
+    dispatch(getCategoryListings());
   }, [dispatch]);
 
   if (!listings) {

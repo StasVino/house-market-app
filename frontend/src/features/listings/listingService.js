@@ -25,9 +25,12 @@ const getUserListings = async (token) => {
   return response.data;
 };
 // Get all listings
-const getAllListings = async (listingsLoadParams) => {
+const getCategoryListings = async (listingsLoadParams) => {
   console.log(listingsLoadParams);
-  const response = await axios.get(API_URL + "category", listingsLoadParams);
+  const response = await axios.get(
+    API_URL + "category/" + listingsLoadParams,
+    listingsLoadParams
+  );
   console.log(response.data);
   return response.data;
 };
@@ -72,7 +75,7 @@ const deleteListing = async (listingId, token) => {
 const listingService = {
   createListing,
   getUserListings,
-  getAllListings,
+  getCategoryListings,
   getListing,
   updateListing,
   deleteListing,
