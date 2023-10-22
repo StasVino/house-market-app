@@ -16,7 +16,7 @@ const getUserListings = asyncHandler(async (req, res) => {
 // @route   GET /api/listings
 const getCategoryListings = asyncHandler(async (req, res) => {
   console.log(req.params);
-  const listings = await Listing.find({ type: req.params.name });
+  const listings = await Listing.find({ type: req.params.name }).limit(10);
   res.status(200).json(listings);
 });
 
@@ -25,7 +25,6 @@ const getCategoryListings = asyncHandler(async (req, res) => {
 // @access  Private
 const getListing = asyncHandler(async (req, res) => {
   const listing = await Listing.findById(req.params.id);
-  console.log(req.params);
   if (!listing) {
     res.status(404);
     throw new Error("Listing not found");

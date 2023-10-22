@@ -16,6 +16,7 @@ function Category() {
   const params = useParams();
 
   useEffect(() => {
+    const name = params.categoryName;
     dispatch(getCategoryListings(params.categoryName));
   }, [params, dispatch]);
 
