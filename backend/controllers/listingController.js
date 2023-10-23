@@ -15,8 +15,10 @@ const getUserListings = asyncHandler(async (req, res) => {
 // @desc    Get all listings
 // @route   GET /api/listings
 const getCategoryListings = asyncHandler(async (req, res) => {
+  const name = req.params.name.split(" ")[0];
+  const skip = req.params.name.split(" ")[1];
   console.log(req.params);
-  const listings = await Listing.find({ type: req.params.name }).limit(10);
+  const listings = await Listing.find({ type: name }).skip(skip).limit(10);
   res.status(200).json(listings);
 });
 

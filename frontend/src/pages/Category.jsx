@@ -8,7 +8,7 @@ import ListingItem from "../components/ListingItem";
 
 function Category() {
   const { listings } = useSelector((state) => state.listings);
-  const [load, setLoad] = useState(10);
+  const [load, setLoad] = useState(0);
 
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
@@ -17,7 +17,7 @@ function Category() {
 
   useEffect(() => {
     const name = params.categoryName;
-    dispatch(getCategoryListings(params.categoryName));
+    dispatch(getCategoryListings(params.categoryName + " " + load));
   }, [params, dispatch]);
 
   // Pagination / Load More
