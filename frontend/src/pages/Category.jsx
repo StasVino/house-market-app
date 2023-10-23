@@ -10,7 +10,7 @@ function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [load, setLoad] = useState(0);
 
-  const [lastFetchedListing, setLastFetchedListing] = useState(null);
+  const [lastFetchedListing, setLastFetchedListing] = useState(true);
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -21,7 +21,10 @@ function Category() {
   }, [params, dispatch]);
 
   // Pagination / Load More
-  const onFetchMoreListings = async () => {};
+  const onFetchMoreListings = async () => {
+    setLoad(load + 10);
+    dispatch(getCategoryListings(params.categoryName + " " + load));
+  };
 
   if (!listings) {
     return <Spinner />;
