@@ -9,7 +9,7 @@ import ListingItem from "../components/ListingItem";
 function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [load, setLoad] = useState(0);
-
+  const [currentListing, setCurrnetListing] = useState();
   const [lastFetchedListing, setLastFetchedListing] = useState(true);
 
   const dispatch = useDispatch();
@@ -20,16 +20,20 @@ function Category() {
     dispatch(getCategoryListings(params.categoryName + " " + load));
   }, [params, dispatch]);
 
+  useEffect(() => {
+    setCurrnetListing(listings);
+  }, [listings]);
+
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     setLoad(load + 10);
+    console.log(load);
     dispatch(getCategoryListings(params.categoryName + " " + load));
   };
 
-  if (!listings) {
+  if (!currentListing) {
     return <Spinner />;
   }
-
   return (
     <div className="category">
       <header>
@@ -45,7 +49,7 @@ function Category() {
           <ul className="categoryListings"></ul>
         </main>
         <ul className="categoryListings">
-          {listings.map(
+          {currentListing.map(
             (listing) =>
               params.categoryName === listing.type && (
                 <ListingItem
