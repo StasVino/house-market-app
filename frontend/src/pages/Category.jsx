@@ -9,7 +9,7 @@ import ListingItem from "../components/ListingItem";
 function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [load, setLoad] = useState(0);
-  const [currentListing, setCurrnetListing] = useState();
+  const [currentListing, setCurrnetListing] = useState(null);
   const [lastFetchedListing, setLastFetchedListing] = useState(true);
 
   const dispatch = useDispatch();
@@ -22,13 +22,16 @@ function Category() {
 
   useEffect(() => {
     setCurrnetListing(listings);
+    console.log("sherry");
   }, [listings]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
+    const currentLoad = load + 10;
+
+    dispatch(getCategoryListings(params.categoryName + " " + currentLoad));
+    setLastFetchedListing(currentListing);
     setLoad(load + 10);
-    console.log(load);
-    dispatch(getCategoryListings(params.categoryName + " " + load));
   };
 
   if (!currentListing) {

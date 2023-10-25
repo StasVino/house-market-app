@@ -21,17 +21,14 @@ const getUserListings = async (token) => {
     },
   };
   const response = await axios.get(API_URL + "profile", config);
-  console.log(response.data);
   return response.data;
 };
 // Get all listings
 const getCategoryListings = async (listingsLoadParams) => {
-  console.log(listingsLoadParams);
   const response = await axios.get(
     API_URL + "category/" + listingsLoadParams,
     listingsLoadParams
   );
-  console.log(response.data);
   return response.data;
 };
 
