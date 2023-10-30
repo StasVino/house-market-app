@@ -10,29 +10,28 @@ function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [load, setLoad] = useState(0);
   const [currentListing, setCurrnetListing] = useState(null);
+  const [prevListing, setPrevListing] = useState(true);
   const [lastFetchedListing, setLastFetchedListing] = useState(true);
 
   const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {
-    const name = params.categoryName;
     dispatch(getCategoryListings(params.categoryName + " " + load));
   }, [params, dispatch]);
 
   useEffect(() => {
     setCurrnetListing(listings);
     console.log(currentListing);
-  }, [listings]);
+  }, [listings, currentListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     const currentLoad = load + 10;
-
     dispatch(getCategoryListings(params.categoryName + " " + currentLoad));
-
-    setLastFetchedListing(currentListing);
-    console.log(currentListing);
+    setCurrnetListing((prevState) => [...prevState, ...listings]);
+    //setLastFetchedListing(currentListing);
+    console.log(currentListing.length);
     setLoad(currentLoad);
   };
 
