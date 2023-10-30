@@ -22,7 +22,7 @@ function Category() {
 
   useEffect(() => {
     setCurrnetListing(listings);
-    console.log("sherry");
+    console.log(currentListing);
   }, [listings]);
 
   // Pagination / Load More
@@ -30,13 +30,16 @@ function Category() {
     const currentLoad = load + 10;
 
     dispatch(getCategoryListings(params.categoryName + " " + currentLoad));
+
     setLastFetchedListing(currentListing);
-    setLoad(load + 10);
+    console.log(currentListing);
+    setLoad(currentLoad);
   };
 
   if (!currentListing) {
     return <Spinner />;
   }
+
   return (
     <div className="category">
       <header>
