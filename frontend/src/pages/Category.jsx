@@ -18,12 +18,12 @@ function Category() {
 
   useEffect(() => {
     dispatch(getCategoryListings(params.categoryName + " " + load));
-  }, [params, dispatch]);
+    setCurrnetListing(listings);
+  }, [params, listings, dispatch]);
 
   useEffect(() => {
-    setCurrnetListing(listings);
     console.log(currentListing);
-  }, [listings, currentListing]);
+  }, [currentListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
