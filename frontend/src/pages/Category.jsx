@@ -11,27 +11,32 @@ function Category() {
   const [load, setLoad] = useState(0);
   const [currentListing, setCurrnetListing] = useState(null);
   const [prevListing, setPrevListing] = useState(true);
-  const [lastFetchedListing, setLastFetchedListing] = useState(true);
+  const [lastListing, setLastListing] = useState(true);
 
   const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {
     dispatch(getCategoryListings(params.categoryName + " " + load));
-    setCurrnetListing(listings);
-  }, [params, listings, dispatch]);
+
+    console.log(currentListing);
+  }, [params, setCurrnetListing, dispatch]);
 
   useEffect(() => {
+    setCurrnetListing(listings);
+
     console.log(currentListing);
-  }, [currentListing]);
+  }, [listings]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
+    // load the next 10 pages
     const currentLoad = load + 10;
     dispatch(getCategoryListings(params.categoryName + " " + currentLoad));
-    setCurrnetListing((prevState) => [...prevState, ...listings]);
+
+    //setCurrnetListing((prevState) => [...prevState, ...listings]);
+    console.log(currentListing);
     //setLastFetchedListing(currentListing);
-    console.log(currentListing.length);
     setLoad(currentLoad);
   };
 
@@ -67,7 +72,7 @@ function Category() {
         </ul>
         <br />
         <br />
-        {lastFetchedListing && (
+        {lastListing && (
           <p className="loadMore" onClick={onFetchMoreListings}>
             Load More
           </p>
