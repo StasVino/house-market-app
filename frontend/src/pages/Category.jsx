@@ -11,20 +11,22 @@ function Category() {
   const [load, setLoad] = useState(0);
   const [currentListing, setCurrnetListing] = useState(null);
   const [prevListing, setPrevListing] = useState(true);
-  const [lastListing, setLastListing] = useState(true);
+  const [lastListing, setLastListing] = useState(false);
 
   const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getCategoryListings(params.categoryName + " " + load));
-
-    console.log(currentListing);
-  }, [params, setCurrnetListing, dispatch]);
+    dispatch(getCategoryListings(params.categoryName + " " + load))
+      .unwrap()
+      .catch(toast.error);
+  }, [params, dispatch]);
 
   useEffect(() => {
     setCurrnetListing(listings);
 
+    // if there are no more listing to fetch
+    currentListing == null ? setLastListing(true) : setLastListing(false);
     console.log(currentListing);
   }, [listings]);
 
@@ -72,7 +74,7 @@ function Category() {
         </ul>
         <br />
         <br />
-        {lastListing && (
+        {!lastListing && (
           <p className="loadMore" onClick={onFetchMoreListings}>
             Load More
           </p>

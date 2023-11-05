@@ -8,7 +8,7 @@ import ListingItem from "../components/ListingItem";
 
 function Offers() {
   const { listings } = useSelector((state) => state.listings);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(0);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   const dispatch = useDispatch();
