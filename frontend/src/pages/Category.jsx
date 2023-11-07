@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategoryListings } from "../features/listings/listingSlice";
+import { getListings } from "../features/listings/listingSlice";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
@@ -17,7 +17,7 @@ function Category() {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getCategoryListings(params.categoryName + " " + load))
+    dispatch(getListings(params.categoryName + " " + load))
       .unwrap()
       .catch(toast.error);
   }, [params, dispatch]);
@@ -34,7 +34,7 @@ function Category() {
   const onFetchMoreListings = async () => {
     // load the next 10 pages
     const currentLoad = load + 10;
-    dispatch(getCategoryListings(params.categoryName + " " + currentLoad));
+    dispatch(getListings(params.categoryName + " " + currentLoad));
 
     //setCurrnetListing((prevState) => [...prevState, ...listings]);
     console.log(currentListing);

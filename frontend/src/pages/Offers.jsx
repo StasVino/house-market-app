@@ -1,55 +1,87 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategoryListings } from "../features/listings/listingSlice";
+import { getListings } from "../features/listings/listingSlice";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
 
-function Offers() {
+function Category() {
   const { listings } = useSelector((state) => state.listings);
-  const [loading, setLoading] = useState(0);
-  const [lastFetchedListing, setLastFetchedListing] = useState(null);
+  const [load, setLoad] = useState(0);
+  const [currentListing, setCurrnetListing] = useState(null);
+  const [prevListing, setPrevListing] = useState(true);
+  const [lastListing, setLastListing] = useState(false);
 
   const dispatch = useDispatch();
+  const params = useParams();
 
   useEffect(() => {
-    dispatch(getCategoryListings());
-  }, [dispatch]);
+    dispatch(getListings("offers " + load))
+      .unwrap()
+      .catch(toast.error);
+  }, [params, dispatch]);
 
-  if (!listings) {
+  useEffect(() => {
+    setCurrnetListing(listings);
+
+    // if there are no more listing to fetch
+    currentListing == null ? setLastListing(true) : setLastListing(false);
+    console.log(currentListing);
+  }, [listings]);
+
+  // Pagination / Load More
+  const onFetchMoreListings = async () => {
+    // load the next 10 pages
+    const currentLoad = load + 10;
+    dispatch(getListings("offers " + currentLoad));
+
+    //setCurrnetListing((prevState) => [...prevState, ...listings]);
+    console.log(currentListing);
+    //setLastFetchedListing(currentListing);
+    setLoad(currentLoad);
+  };
+
+  if (!currentListing) {
     return <Spinner />;
   }
+
   return (
     <div className="category">
       <header>
-        <p className="pageHeader">Offers</p>
+        <p className="pageHeader">
+          {params.categoryName === "rent"
+            ? "Places for rent"
+            : "Places for sale"}
+        </p>
       </header>
 
-      {listings.length > 0 ? (
-        <>
-          <ul className="categoryListings">
-            {listings.map(
-              (listing) =>
-                listing.offer === true && (
-                  <ListingItem
-                    listing={listing}
-                    id={listing._id}
-                    key={listing._id}
-                  />
-                )
-            )}
-          </ul>
-
-          <br />
-          <br />
-          {lastFetchedListing}
-        </>
-      ) : (
-        <p>There are no current offers </p>
-      )}
+      <>
+        <main>
+          <ul className="categoryListings"></ul>
+        </main>
+        <ul className="categoryListings">
+          {currentListing.map(
+            (listing) =>
+              params.categoryName === listing.type && (
+                <ListingItem
+                  listing={listing}
+                  id={listing._id}
+                  key={listing._id}
+                />
+              )
+          )}
+        </ul>
+        <br />
+        <br />
+        {!lastListing && (
+          <p className="loadMore" onClick={onFetchMoreListings}>
+            Load More
+          </p>
+        )}
+      </>
     </div>
   );
 }
 
-export default Offers;
+export default Category;
