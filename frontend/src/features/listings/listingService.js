@@ -34,6 +34,17 @@ const getListings = async (listingsLoadParams) => {
   return response.data;
 };
 
+// Get offer listings
+const getOfferListings = async (listingsLoadParams) => {
+  console.log(listingsLoadParams);
+
+  const response = await axios.get(
+    API_URL + "category/" + listingsLoadParams,
+    listingsLoadParams
+  );
+  return response.data;
+};
+
 // Get user listing
 const getListing = async (listingId) => {
   const response = await axios.get(API_URL + listingId, listingId);
@@ -72,6 +83,7 @@ const deleteListing = async (listingId, token) => {
 const listingService = {
   createListing,
   getUserListings,
+  getOfferListings,
   getListings,
   getListing,
   updateListing,

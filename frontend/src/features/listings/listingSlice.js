@@ -22,10 +22,21 @@ export const createListing = createAsyncThunk(
 
 // Get listings based on rent/sale/offers
 export const getListings = createAsyncThunk(
-  "listings/getAll",
+  "listings/getCategory",
   async (listingsLoadParams, thunkAPI) => {
     try {
       return await listingService.getListings(listingsLoadParams);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
+export const getOfferListings = createAsyncThunk(
+  "listings/getOffers",
+  async (listingsLoadParams, thunkAPI) => {
+    try {
+      return await listingService.getOfferListings(listingsLoadParams);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
@@ -102,6 +113,14 @@ export const listingSlice = createSlice({
         state.listings = null;
       })
       .addCase(getListings.fulfilled, (state, action) => {
+        state.listings = action.payload;
+      })
+      .addCase(getOfferListings.pending, (state) => {
+        // NOTE: clear single listing on listings page, this replaces need for
+        // loading state on individual listing
+        state.listings = null;
+      })
+      .addCase(getOfferListings.fulfilled, (state, action) => {
         state.listings = action.payload;
       })
       .addCase(getListing.pending, (state) => {

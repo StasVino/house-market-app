@@ -20,6 +20,15 @@ const getCategoryListings = asyncHandler(async (req, res) => {
   const listings = await Listing.find({ type: name }).skip(skip).limit(10);
   res.status(200).json(listings);
 });
+// @desc    Get listings by type
+// @route   GET /api/listings/category/:name
+const getOfferListings = asyncHandler(async (req, res) => {
+  console.log(req.params);
+  const name = req.params.name.split(" ")[0];
+  const skip = req.params.name.split(" ")[1];
+  const listings = await Listing.find({ type: name }).skip(skip).limit(10);
+  res.status(200).json(listings);
+});
 
 // @desc    Get user listing
 // @route   GET /api/listings/:id
@@ -130,6 +139,7 @@ const updateListing = asyncHandler(async (req, res) => {
 module.exports = {
   getUserListings,
   getCategoryListings,
+  getOfferListings,
   getListing,
   createListing,
   deleteListing,
