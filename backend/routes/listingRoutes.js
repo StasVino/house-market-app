@@ -14,8 +14,8 @@ const { protect } = require("../middleware/authMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
 router.route("/").post(protect, upload.single("image"), createListing);
-router.route("/category/:name").get(getCategoryListings);
-router.route("/offers/:name").get(getOfferListings);
+router.route("/category/:page").get(getCategoryListings);
+router.route("/offers/:page").get(getOfferListings);
 router.route("/profile").get(protect, getUserListings);
 
 router

@@ -10,7 +10,6 @@ function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [load, setLoad] = useState(0);
   const [currentListing, setCurrnetListing] = useState(null);
-  const [prevListing, setPrevListing] = useState(true);
   const [lastListing, setLastListing] = useState(false);
 
   const dispatch = useDispatch();
@@ -26,7 +25,7 @@ function Category() {
     setCurrnetListing(listings);
 
     // if there are no more listing to fetch
-    currentListing == null ? setLastListing(true) : setLastListing(false);
+    currentListing === null && setLastListing(true);
     console.log(currentListing);
   }, [listings]);
 
@@ -36,9 +35,6 @@ function Category() {
     const currentLoad = load + 10;
     dispatch(getListings(params.categoryName + " " + currentLoad));
 
-    //setCurrnetListing((prevState) => [...prevState, ...listings]);
-    console.log(currentListing);
-    //setLastFetchedListing(currentListing);
     setLoad(currentLoad);
   };
 
@@ -61,22 +57,19 @@ function Category() {
           <ul className="categoryListings"></ul>
         </main>
         <ul className="categoryListings">
-          {currentListing.map(
-            (listing) =>
-              params.categoryName === listing.type && (
-                <ListingItem
-                  listing={listing}
-                  id={listing._id}
-                  key={listing._id}
-                />
-              )
-          )}
+          {currentListing.map((listing) => (
+            <ListingItem listing={listing} id={listing._id} key={listing._id} />
+          ))}
         </ul>
         <br />
         <br />
-        {!lastListing && (
+        {lastListing === false ? (
           <p className="loadMore" onClick={onFetchMoreListings}>
             Load More
+          </p>
+        ) : (
+          <p className="noLoad" onClick={onFetchMoreListings}>
+            No more listings to load
           </p>
         )}
       </>

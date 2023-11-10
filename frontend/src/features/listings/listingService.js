@@ -39,7 +39,7 @@ const getOfferListings = async (listingsLoadParams) => {
   console.log(listingsLoadParams);
 
   const response = await axios.get(
-    API_URL + "category/" + listingsLoadParams,
+    API_URL + "offers/" + listingsLoadParams,
     listingsLoadParams
   );
   return response.data;

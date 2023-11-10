@@ -10,35 +10,27 @@ function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [load, setLoad] = useState(0);
   const [currentListing, setCurrnetListing] = useState(null);
-  const [prevListing, setPrevListing] = useState(true);
   const [lastListing, setLastListing] = useState(false);
 
   const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getOfferListings("offers " + load))
-      .unwrap()
-      .catch(toast.error);
+    dispatch(getOfferListings(load)).unwrap().catch(toast.error);
   }, [params, dispatch]);
 
   useEffect(() => {
     setCurrnetListing(listings);
-
     // if there are no more listing to fetch
-    currentListing == null ? setLastListing(true) : setLastListing(false);
-    console.log(currentListing);
+    currentListing === null && setLastListing(true);
   }, [listings]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     // load the next 10 pages
     const currentLoad = load + 10;
-    dispatch(getOfferListings("offers " + currentLoad));
+    dispatch(getOfferListings(currentLoad));
 
-    //setCurrnetListing((prevState) => [...prevState, ...listings]);
-    console.log(currentListing);
-    //setLastFetchedListing(currentListing);
     setLoad(currentLoad);
   };
 
@@ -49,11 +41,7 @@ function Category() {
   return (
     <div className="category">
       <header>
-        <p className="pageHeader">
-          {params.categoryName === "rent"
-            ? "Places for rent"
-            : "Places for sale"}
-        </p>
+        <p className="pageHeader">Special Offers</p>
       </header>
 
       <>
@@ -61,22 +49,19 @@ function Category() {
           <ul className="categoryListings"></ul>
         </main>
         <ul className="categoryListings">
-          {currentListing.map(
-            (listing) =>
-              params.categoryName === listing.type && (
-                <ListingItem
-                  listing={listing}
-                  id={listing._id}
-                  key={listing._id}
-                />
-              )
-          )}
+          {currentListing.map((listing) => (
+            <ListingItem listing={listing} id={listing._id} key={listing._id} />
+          ))}
         </ul>
         <br />
         <br />
-        {!lastListing && (
+        {lastListing === false ? (
           <p className="loadMore" onClick={onFetchMoreListings}>
             Load More
+          </p>
+        ) : (
+          <p className="noLoad" onClick={onFetchMoreListings}>
+            No more listings to load
           </p>
         )}
       </>
