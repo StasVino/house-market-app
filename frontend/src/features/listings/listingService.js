@@ -25,8 +25,6 @@ const getUserListings = async (token) => {
 };
 // Get all listings
 const getListings = async (listingsLoadParams) => {
-  console.log(listingsLoadParams);
-
   const response = await axios.get(
     API_URL + "category/" + listingsLoadParams,
     listingsLoadParams

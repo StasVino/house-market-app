@@ -20,16 +20,16 @@ function Category() {
   }, [params, dispatch]);
 
   useEffect(() => {
-    setCurrnetListing(listings);
+    listings && setCurrnetListing(listings);
     // if there are no more listing to fetch
-    currentListing === null && setLastListing(true);
-  }, [listings]);
+    currentListing === null ? setLastListing(true) : setLastListing(false);
+  }, [listings, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     // load the next 10 pages
     const currentLoad = load + 10;
-    dispatch(getOfferListings(currentLoad));
+    dispatch(getOfferListings(currentLoad)).unwrap().catch(toast.error);
 
     setLoad(currentLoad);
   };

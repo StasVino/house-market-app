@@ -25,9 +25,9 @@ function Category() {
     setCurrnetListing(listings);
 
     // if there are no more listing to fetch
-    currentListing === null && setLastListing(true);
+    currentListing === null ? setLastListing(true) : setLastListing(false);
     console.log(currentListing);
-  }, [listings]);
+  }, [listings, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
