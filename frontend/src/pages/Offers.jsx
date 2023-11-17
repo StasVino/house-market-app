@@ -20,7 +20,8 @@ function Category() {
   }, [params, dispatch]);
 
   useEffect(() => {
-    listings && setCurrnetListing(listings);
+    setCurrnetListing(listings);
+
     // if there are no more listing to fetch
     currentListing === null ? setLastListing(true) : setLastListing(false);
   }, [listings, setLastListing]);

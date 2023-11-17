@@ -26,7 +26,6 @@ function Category() {
 
     // if there are no more listing to fetch
     currentListing === null ? setLastListing(true) : setLastListing(false);
-    console.log(currentListing);
   }, [listings, setLastListing]);
 
   // Pagination / Load More
@@ -68,7 +67,7 @@ function Category() {
             Load More
           </p>
         ) : (
-          <p className="noLoad" onClick={onFetchMoreListings}>
+          <p className="noLoad" disabled={true}>
             No more listings to load
           </p>
         )}
