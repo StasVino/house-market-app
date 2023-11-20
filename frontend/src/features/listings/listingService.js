@@ -34,8 +34,6 @@ const getListings = async (listingsLoadParams) => {
 
 // Get offer listings
 const getOfferListings = async (listingsLoadParams) => {
-  console.log(listingsLoadParams);
-
   const response = await axios.get(
     API_URL + "offers/" + listingsLoadParams,
     listingsLoadParams

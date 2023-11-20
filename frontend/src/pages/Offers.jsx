@@ -20,16 +20,24 @@ function Category() {
   }, [params, dispatch]);
 
   useEffect(() => {
-    setCurrnetListing(listings);
+    if (listings) {
+      if (listings.length != 0) {
+        setCurrnetListing(listings);
+        setLastListing(false);
+      }
+    } else {
+      setLastListing(true);
+    }
 
     // if there are no more listing to fetch
-    currentListing === null ? setLastListing(true) : setLastListing(false);
+    //currentListing === null ? setLastListing(true) : setLastListing(false);
   }, [listings, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     // load the next 10 pages
     const currentLoad = load + 10;
+
     dispatch(getOfferListings(currentLoad)).unwrap().catch(toast.error);
 
     setLoad(currentLoad);
@@ -61,9 +69,7 @@ function Category() {
             Load More
           </p>
         ) : (
-          <p className="noLoad" onClick={onFetchMoreListings}>
-            No more listings to load
-          </p>
+          <p className="noLoad">No more listings to load</p>
         )}
       </>
     </div>

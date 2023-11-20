@@ -22,10 +22,17 @@ function Category() {
   }, [params, dispatch]);
 
   useEffect(() => {
-    setCurrnetListing(listings);
+    if (listings) {
+      if (listings.length != 0) {
+        setCurrnetListing(listings);
+        setLastListing(false);
+      }
+    } else {
+      setLastListing(true);
+    }
 
     // if there are no more listing to fetch
-    currentListing === null ? setLastListing(true) : setLastListing(false);
+    //currentListing === null ? setLastListing(true) : setLastListing(false);
   }, [listings, setLastListing]);
 
   // Pagination / Load More
