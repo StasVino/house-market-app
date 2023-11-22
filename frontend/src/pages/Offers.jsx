@@ -10,6 +10,8 @@ function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [load, setLoad] = useState(0);
   const [currentListing, setCurrnetListing] = useState(null);
+  const [prevListing, setPrevListing] = useState([]);
+
   const [lastListing, setLastListing] = useState(false);
 
   const dispatch = useDispatch();
@@ -21,8 +23,8 @@ function Category() {
 
   useEffect(() => {
     if (listings) {
-      if (listings.length != 0) {
-        setCurrnetListing(listings);
+      if (listings.length !== 0) {
+        setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
       }
     } else {
@@ -37,7 +39,7 @@ function Category() {
   const onFetchMoreListings = async () => {
     // load the next 10 pages
     const currentLoad = load + 10;
-
+    setPrevListing(currentListing);
     dispatch(getOfferListings(currentLoad)).unwrap().catch(toast.error);
 
     setLoad(currentLoad);
