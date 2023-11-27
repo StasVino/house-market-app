@@ -19,7 +19,7 @@ function Category() {
 
   useEffect(() => {
     dispatch(getOfferListings(load)).unwrap().catch(toast.error);
-  }, [params, dispatch]);
+  }, [params, load, dispatch]);
 
   useEffect(() => {
     if (listings) {
@@ -33,7 +33,7 @@ function Category() {
 
     // if there are no more listing to fetch
     //currentListing === null ? setLastListing(true) : setLastListing(false);
-  }, [listings, setLastListing]);
+  }, [listings, setCurrnetListing, prevListing, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
