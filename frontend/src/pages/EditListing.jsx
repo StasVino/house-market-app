@@ -332,7 +332,11 @@ function EditListing() {
             multiple
             required
           />
-          <button type="submit" className="primaryButton createListingButton">
+          <button
+            type="submit"
+            onClick={onSubmit}
+            className="primaryButton createListingButton"
+          >
             Update Listing
           </button>
         </form>

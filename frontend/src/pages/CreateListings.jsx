@@ -50,7 +50,6 @@ function CreateListing() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     if (discountedPrice >= regularPrice) {

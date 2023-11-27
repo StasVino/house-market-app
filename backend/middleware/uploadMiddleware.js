@@ -2,6 +2,7 @@ const multer = require("multer");
 const asyncHandler = require("express-async-handler");
 
 const storage = multer.diskStorage({
+  console.log("this is uploadMiddleware")
   destination: (req, file, cb) => {
     cb(null, "uploads/");
   },
