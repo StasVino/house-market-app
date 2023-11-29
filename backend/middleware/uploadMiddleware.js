@@ -2,21 +2,17 @@ const multer = require("multer");
 const asyncHandler = require("express-async-handler");
 
 const storage = multer.diskStorage({
-  console.log("this is uploadMiddleware")
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "./uploads");
   },
   filename: (req, file, cb) => {
-    console.log("this is upload middleware", file);
+    console.log("this is upload");
     cb(null, file.originalname + Date.now());
   },
 });
 
 const upload = multer({
-  storage,
-  limits: {
-    fileSize: 1024 * 1024 * 2,
-  },
+  storage: storage,
 });
 
 module.exports = upload;
