@@ -10,7 +10,7 @@ const createListing = async (listingData, token) => {
       "Content-Type": "multipart/form-data",
     },
   };
-  console.log(listingData.images[0]);
+  console.log(listingData);
   const response = await axios.post(API_URL, listingData, config);
   console.log(response);
   return response.data;

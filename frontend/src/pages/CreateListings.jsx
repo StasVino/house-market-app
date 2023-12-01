@@ -47,6 +47,7 @@ function CreateListing() {
   } = formData;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const reader = new FileReader();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -57,14 +58,14 @@ function CreateListing() {
       toast.error("Discounted price needs to be less than regular price");
       return;
     }
-    console.log(images);
-    if (images.length > 6) {
-      setLoading(false);
-      toast.error("Max 6 images");
-      return;
-    }
-    let location = {};
 
+    // if (images.length > 6) {
+    //   setLoading(false);
+    //   toast.error("Max 6 images");
+    //   return;
+    // }
+    let location = {};
+    console.log(images);
     if (geolocationEnabled) {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
@@ -130,10 +131,18 @@ function CreateListing() {
     // Files
 
     if (e.target.files) {
-      setFormData((prevState) => ({
-        ...prevState,
-        images: e.target.files,
-      }));
+      // Converting to base64
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        console.log(reader.result);
+        setFormData((prevState) => ({
+          ...prevState,
+          images: reader.result,
+        }));
+      };
+      reader.onerror = (error) => {
+        toast.error("Error", error);
+      };
     }
 
     // Text/Booleans/Numbers
