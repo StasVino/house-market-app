@@ -23,6 +23,7 @@ function Listing() {
   useEffect(() => {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
   }, [listingId, dispatch]);
+  console.log(listing);
 
   if (!listing) {
     return <Spinner />;
@@ -33,7 +34,7 @@ function Listing() {
       <Helmet>
         <title>{listing.name}</title>
       </Helmet>
-      {/* <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
         {listing.images.map((index) => (
           <SwiperSlide key={index}>
             <div
@@ -45,7 +46,7 @@ function Listing() {
             ></div>
           </SwiperSlide>
         ))}
-      </Swiper> */}
+      </Swiper>
 
       <div
         className="shareIconDiv"

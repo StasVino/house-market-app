@@ -62,7 +62,6 @@ const createListing = asyncHandler(async (req, res) => {
     discountedPrice,
     images,
   } = req.body;
-  console.log(req.body);
   //const { path: image } = req.file;
   if (!name || !address) {
     res.status(400);

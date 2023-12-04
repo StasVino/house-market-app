@@ -13,8 +13,11 @@ function EditListing() {
   const { listing } = useSelector((state) => state.listings);
   const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const reader = new FileReader();
+
   const { listingId } = useParams();
   const [formData, setFormData] = useState({
     type: "rent",
@@ -112,11 +115,19 @@ function EditListing() {
 
     // Files
     if (e.target.files) {
-      setFormData((prevState) => ({
-        ...prevState,
-        images: e.target.files,
-      }));
+      // Converting to base64
+      reader.readAsDataURL(e.target.files);
+      reader.onload = () => {
+        setFormData((prevState) => ({
+          ...prevState,
+          images: reader.result,
+        }));
+      };
+      reader.onerror = (error) => {
+        toast.error("Error", error);
+      };
     }
+    console.log(images);
 
     // Text/Booleans/Numbers
     if (!e.target.files) {

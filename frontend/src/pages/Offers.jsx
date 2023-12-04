@@ -11,7 +11,6 @@ function Category() {
   const [load, setLoad] = useState(0);
   const [currentListing, setCurrnetListing] = useState(null);
   const [prevListing, setPrevListing] = useState([]);
-
   const [lastListing, setLastListing] = useState(false);
 
   const dispatch = useDispatch();

@@ -63,7 +63,7 @@ const listingSchema = mongoose.Schema(
     longitude: {
       type: Number,
     },
-    images: {},
+    images: { data: Buffer, contentType: String },
   },
   {
     timestamps: true,

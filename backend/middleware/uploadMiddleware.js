@@ -3,11 +3,12 @@ const asyncHandler = require("express-async-handler");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./uploads");
+    cb(null, "uploads");
   },
   filename: (req, file, cb) => {
     console.log("this is upload");
-    cb(null, file.originalname + Date.now());
+    console.log(file.originalname);
+    cb(null, file.originalname + "-" + Date.now());
   },
 });
 

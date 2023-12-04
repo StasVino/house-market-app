@@ -40,7 +40,7 @@ function Category() {
   const onFetchMoreListings = async () => {
     // load the next 10 pages
     const currentLoad = load + 10;
-
+    setPrevListing(currentListing);
     dispatch(getListings(params.categoryName + " " + currentLoad));
 
     setLoad(currentLoad);
