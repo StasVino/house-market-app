@@ -131,7 +131,7 @@ function CreateListing() {
     // Files
     if (e.target.files) {
       // Converting to base64
-      reader.readAsDataURL(e.target.files);
+      reader.readAsDataURL(e.target.files[0]);
       console.log(reader.result);
       reader.onload = () => {
         setFormData((prevState) => ({

@@ -98,7 +98,7 @@ function EditListing() {
       .then(() => {
         // We got a good response so navigate the user
         navigate("/profile");
-        toast.success("New listing created!");
+        toast.success("The listing has been edited!");
       })
       .catch(toast.error);
   };
@@ -116,7 +116,7 @@ function EditListing() {
     // Files
     if (e.target.files) {
       // Converting to base64
-      reader.readAsDataURL(e.target.files);
+      reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
         setFormData((prevState) => ({
           ...prevState,
