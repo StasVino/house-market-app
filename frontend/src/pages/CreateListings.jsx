@@ -132,7 +132,7 @@ function CreateListing() {
     if (e.target.files) {
       // Converting to base64
       reader.readAsDataURL(e.target.files[0]);
-      console.log(reader.result);
+      console.log(e.target.files[0]);
       reader.onload = () => {
         setFormData((prevState) => ({
           ...prevState,
@@ -143,6 +143,7 @@ function CreateListing() {
         toast.error("Error", error);
       };
     }
+    console.log(images);
     // Text/Booleans/Numbers
     if (!e.target.files) {
       setFormData((prevState) => ({

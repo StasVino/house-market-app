@@ -58,7 +58,7 @@ function EditListing() {
       navigate("/");
     }
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
-  }, [listingId, dispatch]);
+  }, [listingId, dispatch, listing]);
 
   useEffect(() => {
     setFormData({ ...listing });
