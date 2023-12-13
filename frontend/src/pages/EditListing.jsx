@@ -58,7 +58,7 @@ function EditListing() {
       navigate("/");
     }
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
-  }, [listingId, dispatch, listing]);
+  }, [listingId, dispatch]);
 
   useEffect(() => {
     setFormData({ ...listing });
@@ -74,11 +74,15 @@ function EditListing() {
       toast.error("Discounted price needs to be less than regular price");
       return;
     }
+    console.log("1");
+    console.log(images);
     if (images.length > 6) {
+      console.log("2");
       setLoading(false);
       toast.error("Max 6 images");
       return;
     }
+
     dispatch(
       updateListing({
         type,
@@ -115,6 +119,7 @@ function EditListing() {
 
     // Files
     if (e.target.files) {
+      console.log(e.target.files[0]);
       // Converting to base64
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {

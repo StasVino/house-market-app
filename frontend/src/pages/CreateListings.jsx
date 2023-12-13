@@ -59,11 +59,12 @@ function CreateListing() {
       return;
     }
 
-    // if (images.length > 6) {
-    //   setLoading(false);
-    //   toast.error("Max 6 images");
-    //   return;
-    // }
+    if (images.length > 6) {
+      console.log("1");
+      setLoading(false);
+      toast.error("Max 6 images");
+      return;
+    }
     let location = {};
     console.log(images);
     if (geolocationEnabled) {
@@ -129,19 +130,22 @@ function CreateListing() {
     }
 
     // Files
+    console.log(e.target.files);
     if (e.target.files) {
-      // Converting to base64
-      reader.readAsDataURL(e.target.files[0]);
-      console.log(e.target.files[0]);
-      reader.onload = () => {
-        setFormData((prevState) => ({
-          ...prevState,
-          images: reader.result,
-        }));
-      };
-      reader.onerror = (error) => {
-        toast.error("Error", error);
-      };
+      Array.from(e.target.files).map((img) => {
+        console.log(img);
+        // Converting to base64
+        reader.readAsDataURL(img);
+        reader.onload = () => {
+          setFormData((prevState) => ({
+            ...prevState,
+            images: reader.result,
+          }));
+        };
+        reader.onerror = (error) => {
+          toast.error("Error", error);
+        };
+      });
     }
     console.log(images);
     // Text/Booleans/Numbers
