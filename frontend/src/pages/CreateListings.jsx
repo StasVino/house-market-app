@@ -23,7 +23,7 @@ function CreateListing() {
     offer: false,
     regularPrice: 0,
     discountedPrice: 0,
-    images: {},
+    images: [],
     latitude: 0,
     longitude: 0,
   });
@@ -47,7 +47,7 @@ function CreateListing() {
   } = formData;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reader = new FileReader();
+  //const reader = new FileReader();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -59,12 +59,12 @@ function CreateListing() {
       return;
     }
 
-    if (images.length > 6) {
-      console.log("1");
-      setLoading(false);
-      toast.error("Max 6 images");
-      return;
-    }
+    // if (images.length > 6) {
+    //   console.log("1");
+    //   setLoading(false);
+    //   toast.error("Max 6 images");
+    //   return;
+    // }
     let location = {};
     console.log(images);
     if (geolocationEnabled) {
@@ -131,22 +131,28 @@ function CreateListing() {
 
     // Files
     console.log(e.target.files);
+
     if (e.target.files) {
+      let files = [];
       Array.from(e.target.files).map((img) => {
-        console.log(img);
+        let reader = new FileReader();
+
         // Converting to base64
         reader.readAsDataURL(img);
         reader.onload = () => {
-          setFormData((prevState) => ({
-            ...prevState,
-            images: reader.result,
-          }));
+          files.push(reader.result);
         };
+        //console.log(reader.result);
         reader.onerror = (error) => {
           toast.error("Error", error);
         };
       });
+      setFormData((prevState) => ({
+        ...prevState,
+        images: files,
+      }));
     }
+
     console.log(images);
     // Text/Booleans/Numbers
     if (!e.target.files) {
