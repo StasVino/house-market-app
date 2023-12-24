@@ -74,8 +74,7 @@ function EditListing() {
       toast.error("Discounted price needs to be less than regular price");
       return;
     }
-    console.log("1");
-    console.log(images);
+
     if (images.length > 6) {
       console.log("2");
       setLoading(false);
@@ -119,20 +118,25 @@ function EditListing() {
 
     // Files
     if (e.target.files) {
-      console.log(e.target.files[0]);
-      // Converting to base64
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
-        setFormData((prevState) => ({
-          ...prevState,
-          images: reader.result,
-        }));
-      };
-      reader.onerror = (error) => {
-        toast.error("Error", error);
-      };
+      let files = [];
+      Array.from(e.target.files).map((img) => {
+        let reader = new FileReader();
+
+        // Converting to base64
+        reader.readAsDataURL(img);
+        reader.onload = () => {
+          files.push(reader.result);
+        };
+        //console.log(reader.result);
+        reader.onerror = (error) => {
+          toast.error("Error", error);
+        };
+      });
+      setFormData((prevState) => ({
+        ...prevState,
+        images: files,
+      }));
     }
-    console.log(images);
 
     // Text/Booleans/Numbers
     if (!e.target.files) {

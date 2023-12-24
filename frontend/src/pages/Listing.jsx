@@ -23,7 +23,6 @@ function Listing() {
   useEffect(() => {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
   }, [listingId, dispatch]);
-  console.log(listing);
 
   if (!listing) {
     return <Spinner />;

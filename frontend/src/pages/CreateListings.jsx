@@ -59,14 +59,12 @@ function CreateListing() {
       return;
     }
 
-    // if (images.length > 6) {
-    //   console.log("1");
-    //   setLoading(false);
-    //   toast.error("Max 6 images");
-    //   return;
-    // }
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error("Max 6 images");
+      return;
+    }
     let location = {};
-    console.log(images);
     if (geolocationEnabled) {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
@@ -130,7 +128,6 @@ function CreateListing() {
     }
 
     // Files
-    console.log(e.target.files);
 
     if (e.target.files) {
       let files = [];
@@ -153,7 +150,6 @@ function CreateListing() {
       }));
     }
 
-    console.log(images);
     // Text/Booleans/Numbers
     if (!e.target.files) {
       setFormData((prevState) => ({
