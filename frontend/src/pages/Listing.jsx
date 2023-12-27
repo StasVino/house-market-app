@@ -33,98 +33,6 @@ function Listing() {
       <Helmet>
         <title>{listing.name}</title>
       </Helmet>
-      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
-        {listing.images.map((index) => (
-          <SwiperSlide key={index}>
-            <div
-              style={{
-                background: `url(${listing.images[index]}) center no-repeat`,
-                backgroundSize: "cover",
-              }}
-              className="swiperSlideDiv"
-            ></div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      <div
-        className="shareIconDiv"
-        onClick={() => {
-          navigator.clipboard.writeText(window.location.href);
-          setShareLinkCopied(true);
-          setTimeout(() => {
-            setShareLinkCopied(false);
-          }, 2000);
-        }}
-      >
-        <img src={shareIcon} alt="" />
-      </div>
-
-      {shareLinkCopied && <p className="linkCopied">Link Copied!</p>}
-
-      <div className="listingDetails">
-        <p className="listingName">
-          {listing.name} - $
-          {listing.offer
-            ? listing.discountedPrice
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            : listing.regularPrice
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        </p>
-        <p className="listingAdress">{listing.address}</p>
-        <p className="listingType">
-          For {listing.type === "rent" ? "Rent" : "Sale"}
-        </p>
-        {listing.offer && (
-          <p className="discountPrice">
-            ${listing.regularPrice - listing.discountedPrice} discount
-          </p>
-        )}
-
-        <ul className="listingDetailsList">
-          <li>
-            {listing.bedrooms > 1
-              ? `${listing.bedrooms} Bedrooms`
-              : "1 Bedroom"}
-          </li>
-          <li>
-            {listing.bathrooms > 1
-              ? `${listing.bathrooms} Bathrooms`
-              : "1 Bathroom"}
-          </li>
-          <li>{listing.parking && "Parking Spot"}</li>
-          <li>{listing.furnished && "Furnished"}</li>
-        </ul>
-
-        <p className="listingLocationTitle">Address</p>
-        <div className="leafletContainer">
-          {/* <MapContainer
-            style={{ height: "100%", width: "100%" }}
-            center={[listing.latitude, listing.longitude]}
-            zoom={13}
-            scrollWheelZoom={false}
-          >
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
-            />
-
-            <Marker position={[listing.latitude, listing.longitude]}>
-              <Popup>{listing.location}</Popup>
-            </Marker>
-          </MapContainer> */}
-        </div>
-        {user._id !== listing.user && (
-          <Link
-            to={`/contact/${listing.user}?listingName=${listing.name}`}
-            className="primaryButton"
-          >
-            Contact Landlord
-          </Link>
-        )}
-      </div>
     </main>
   );
 }
@@ -132,3 +40,96 @@ function Listing() {
 export default Listing;
 
 // https://stackoverflow.com/questions/67552020/how-to-fix-error-failed-to-compile-node-modules-react-leaflet-core-esm-pat
+
+//     <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+//       {listing.images.map((index) => (
+//         <SwiperSlide key={index}>
+//           <div
+//             style={{
+//               background: `url(${listing.images[index]}) center no-repeat`,
+//               backgroundSize: "cover",
+//             }}
+//             className="swiperSlideDiv"
+//           ></div>
+//         </SwiperSlide>
+//       ))}
+//     </Swiper>
+
+//     <div
+//       className="shareIconDiv"
+//       onClick={() => {
+//         navigator.clipboard.writeText(window.location.href);
+//         setShareLinkCopied(true);
+//         setTimeout(() => {
+//           setShareLinkCopied(false);
+//         }, 2000);
+//       }}
+//     >
+//       <img src={shareIcon} alt="" />
+//     </div>
+
+//     {shareLinkCopied && <p className="linkCopied">Link Copied!</p>}
+
+//     <div className="listingDetails">
+//       <p className="listingName">
+//         {listing.name} - $
+//         {listing.offer
+//           ? listing.discountedPrice
+//               .toString()
+//               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+//           : listing.regularPrice
+//               .toString()
+//               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+//       </p>
+//       <p className="listingAdress">{listing.address}</p>
+//       <p className="listingType">
+//         For {listing.type === "rent" ? "Rent" : "Sale"}
+//       </p>
+//       {listing.offer && (
+//         <p className="discountPrice">
+//           ${listing.regularPrice - listing.discountedPrice} discount
+//         </p>
+//       )}
+
+//       <ul className="listingDetailsList">
+//         <li>
+//           {listing.bedrooms > 1
+//             ? `${listing.bedrooms} Bedrooms`
+//             : "1 Bedroom"}
+//         </li>
+//         <li>
+//           {listing.bathrooms > 1
+//             ? `${listing.bathrooms} Bathrooms`
+//             : "1 Bathroom"}
+//         </li>
+//         <li>{listing.parking && "Parking Spot"}</li>
+//         <li>{listing.furnished && "Furnished"}</li>
+//       </ul>
+
+//       <p className="listingLocationTitle">Address</p>
+//       <div className="leafletContainer">
+//         {/* <MapContainer
+//           style={{ height: "100%", width: "100%" }}
+//           center={[listing.latitude, listing.longitude]}
+//           zoom={13}
+//           scrollWheelZoom={false}
+//         >
+//           <TileLayer
+//             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+//             url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+//           />
+
+//           <Marker position={[listing.latitude, listing.longitude]}>
+//             <Popup>{listing.location}</Popup>
+//           </Marker>
+//         </MapContainer> */}
+//       </div>
+//       {user._id !== listing.user && (
+//         <Link
+//           to={`/contact/${listing.user}?listingName=${listing.name}`}
+//           className="primaryButton"
+//         >
+//           Contact Landlord
+//         </Link>
+//       )}
+//     </div>
