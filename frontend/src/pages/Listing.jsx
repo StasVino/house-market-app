@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
@@ -30,6 +30,10 @@ function Listing() {
 
   return (
     <main>
+      <Helmet>
+        <title>{listing.name}</title>
+      </Helmet>
+      <Swiper slidesPerView={1} pagination={{ clickable: true }}></Swiper>
       <div
         className="shareIconDiv"
         onClick={() => {
@@ -80,23 +84,7 @@ function Listing() {
         </ul>
         <p className="listingLocationTitle">Location</p>
 
-        <div className="leafletContainer">
-          <MapContainer
-            style={{ height: "100%", width: "100%" }}
-            //center={[listing.latitude, listing.longitude]}
-            zoom={13}
-            scrollWheelZoom={false}
-          >
-            {/* <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
-            />
-
-            <Marker position={[listing.latitude, listing.longitude]}>
-              <Popup>{listing.location}</Popup>
-            </Marker> */}
-          </MapContainer>
-        </div>
+        <div className="leafletContainer"></div>
       </div>
     </main>
   );
