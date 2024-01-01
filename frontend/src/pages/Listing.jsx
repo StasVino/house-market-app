@@ -36,7 +36,17 @@ function Listing() {
       <Swiper slidesPerView={1} pagination={{ clickable: true }}>
         {listing.images.map((image) => {
           <SwiperSlide>
-            <div></div>
+            <div>
+              <div
+                style={{
+                  background: image,
+                  backgroundSize: "cover",
+                }}
+                className="swiperSlideDiv"
+              >
+                <img src={image}></img>
+              </div>
+            </div>
           </SwiperSlide>;
         })}
       </Swiper>
@@ -90,7 +100,14 @@ function Listing() {
         </ul>
         <p className="listingLocationTitle">Location</p>
 
-        <div className="leafletContainer"></div>
+        <div className="leafletContainer">
+          <MapContainer
+            style={{ height: "100%", width: "100%" }}
+            center={[listing.latitude, listing.longitude]}
+            zoom={13}
+            scrollWheelZoom={false}
+          ></MapContainer>
+        </div>
       </div>
     </main>
   );
