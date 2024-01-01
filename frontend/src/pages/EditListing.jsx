@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { updateListing } from "../features/listings/listingSlice";
 import Spinner from "../components/Spinner";
 import { getListing } from "../features/listings/listingSlice";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function EditListing() {
   // eslint-disable-next-line

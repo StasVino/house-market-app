@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getListing } from "../features/listings/listingSlice";
 import Spinner from "../components/Spinner";
 import shareIcon from "../assets/svg/shareIcon.svg";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+//SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function Listing() {
   const { listing } = useSelector((state) => state.listings);
@@ -33,7 +33,13 @@ function Listing() {
       <Helmet>
         <title>{listing.name}</title>
       </Helmet>
-      <Swiper slidesPerView={1} pagination={{ clickable: true }}></Swiper>
+      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        {listing.images.map((image) => {
+          <SwiperSlide>
+            <div></div>
+          </SwiperSlide>;
+        })}
+      </Swiper>
       <div
         className="shareIconDiv"
         onClick={() => {
