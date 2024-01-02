@@ -36,17 +36,13 @@ function Listing() {
       <Swiper slidesPerView={1} pagination={{ clickable: true }}>
         {listing.images.map((image) => {
           <SwiperSlide>
-            <div>
-              <div
-                style={{
-                  background: image,
-                  backgroundSize: "cover",
-                }}
-                className="swiperSlideDiv"
-              >
-                <img src={image}></img>
-              </div>
-            </div>
+            <div
+              style={{
+                background: `url(${image}) center no-repeat`,
+                backgroundSize: "cover",
+              }}
+              className="swiperSlideDiv"
+            ></div>
           </SwiperSlide>;
         })}
       </Swiper>
@@ -106,7 +102,15 @@ function Listing() {
             center={[listing.latitude, listing.longitude]}
             zoom={13}
             scrollWheelZoom={false}
-          ></MapContainer>
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+            />
+            <Marker position={[listing.latitude, listing.longitude]}>
+              <Popup>{listing.adress}</Popup>
+            </Marker>
+          </MapContainer>
         </div>
       </div>
     </main>
