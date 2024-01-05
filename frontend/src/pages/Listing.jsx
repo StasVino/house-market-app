@@ -24,6 +24,11 @@ function Listing() {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
   }, [listingId, dispatch]);
 
+  useEffect(() => {
+    listing.images.map((image) => {
+      console.log(image);
+    });
+  }, []);
   if (!listing) {
     return <Spinner />;
   }
@@ -35,7 +40,7 @@ function Listing() {
       </Helmet>
       <Swiper slidesPerView={1} pagination={{ clickable: true }}>
         {listing.images.map((image) => {
-          <SwiperSlide>
+          <SwiperSlide key={image}>
             <div
               style={{
                 background: `url(${image}) center no-repeat`,
