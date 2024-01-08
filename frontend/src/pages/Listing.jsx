@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+} from "swiper/modules";
 import { Helmet } from "react-helmet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,11 +29,6 @@ function Listing() {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
   }, [listingId, dispatch]);
 
-  useEffect(() => {
-    listing.images.map((image) => {
-      console.log(image);
-    });
-  }, []);
   if (!listing) {
     return <Spinner />;
   }
@@ -38,18 +38,22 @@ function Listing() {
       <Helmet>
         <title>{listing.name}</title>
       </Helmet>
-      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
-        {listing.images.map((image) => {
-          <SwiperSlide key={image}>
-            <div
-              style={{
-                background: `url(${image}) center no-repeat`,
-                backgroundSize: "cover",
-              }}
-              className="swiperSlideDiv"
-            ></div>
-          </SwiperSlide>;
-        })}
+      <Swiper modules={[Pagination]} className="mySwiper" pagination={true}>
+        {listing.images.map((image) => (
+          <SwiperSlide>
+            <div>
+              <img
+                style={{
+                  background: "${image} center no-repeat",
+                  backgroundSize: "cover",
+                }}
+                src={image}
+                alt={listing.name}
+                className="categoryListingImg"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <div
         className="shareIconDiv"
