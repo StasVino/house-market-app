@@ -8,7 +8,6 @@ const protect = asyncHandler(async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-      console.log("this is upload middleware");
       // Get token from header
       token = req.headers.authorization.split(" ")[1];
       // Verify token

@@ -40,18 +40,12 @@ function Listing() {
       </Helmet>
       <Swiper modules={[Pagination]} className="mySwiper" pagination={true}>
         {listing.images.map((image) => (
-          <SwiperSlide>
-            <div>
-              <img
-                style={{
-                  background: "${image} center no-repeat",
-                  backgroundSize: "cover",
-                }}
-                src={image}
-                alt={listing.name}
-                className="categoryListingImg"
-              />
-            </div>
+          <SwiperSlide key={image}>
+            <img
+              src={image}
+              alt={listing.name}
+              className="swiperSlideDiv"
+            ></img>
           </SwiperSlide>
         ))}
       </Swiper>
