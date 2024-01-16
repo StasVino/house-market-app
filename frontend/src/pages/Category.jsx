@@ -76,7 +76,7 @@ function Category() {
             Load More
           </p>
         ) : (
-          <p className="noLoad" disabled={true}>
+          <p className="Load" disabled={true}>
             No more listings to load
           </p>
         )}
