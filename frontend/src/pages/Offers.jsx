@@ -59,12 +59,17 @@ function Category() {
       <>
         <main>
           <ul className="categoryListings"></ul>
+
+          <ul className="categoryListings">
+            {currentListing.map((listing) => (
+              <ListingItem
+                listing={listing}
+                id={listing._id}
+                key={listing._id}
+              />
+            ))}
+          </ul>
         </main>
-        <ul className="categoryListings">
-          {currentListing.map((listing) => (
-            <ListingItem listing={listing} id={listing._id} key={listing._id} />
-          ))}
-        </ul>
         <br />
         <br />
         {lastListing === false ? (

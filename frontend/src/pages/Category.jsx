@@ -8,7 +8,8 @@ import ListingItem from "../components/ListingItem";
 
 function Category() {
   const { listings } = useSelector((state) => state.listings);
-  const [load, setLoad] = useState(0);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [currentListing, setCurrnetListing] = useState(null);
   const [prevListing, setPrevListing] = useState([]);
   const [lastListing, setLastListing] = useState(false);
@@ -17,38 +18,38 @@ function Category() {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getListings(params.categoryName + " " + load))
+    dispatch(getListings(params.categoryName + " " + page))
       .unwrap()
       .catch(toast.error);
-  }, [params, dispatch]);
+    console.log("1");
+  }, [params, listings, dispatch]);
 
   useEffect(() => {
     if (listings) {
       if (listings.length !== 0) {
         setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
+        setLoading(false);
       }
     } else {
       setLastListing(true);
+      setLoading(false);
     }
-
+    console.log("2");
     // if there are no more listing to fetch
     //currentListing === null ? setLastListing(true) : setLastListing(false);
-  }, [listings, setLastListing]);
+  }, [listings, setLoading, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     // load the next 10 pages
-    const currentLoad = load + 10;
+    console.log("3");
+    const currentPage = page + 10;
     setPrevListing(currentListing);
-    dispatch(getListings(params.categoryName + " " + currentLoad));
+    dispatch(getListings(params.categoryName + " " + currentPage));
 
-    setLoad(currentLoad);
+    setPage(currentPage);
   };
-
-  if (!currentListing) {
-    return <Spinner />;
-  }
 
   return (
     <div className="category">
@@ -60,27 +61,36 @@ function Category() {
         </p>
       </header>
 
-      <>
-        <main>
-          <ul className="categoryListings"></ul>
-        </main>
-        <ul className="categoryListings">
-          {currentListing.map((listing) => (
-            <ListingItem listing={listing} id={listing._id} key={listing._id} />
-          ))}
-        </ul>
-        <br />
-        <br />
-        {lastListing === false ? (
-          <p className="loadMore" onClick={onFetchMoreListings}>
-            Load More
-          </p>
-        ) : (
-          <p className="Load" disabled={true}>
-            No more listings to load
-          </p>
-        )}
-      </>
+      {loading ? (
+        <Spinner />
+      ) : currentListing && currentListing.length > 0 ? (
+        <>
+          <main>
+            <ul className="categoryListings"></ul>
+
+            <ul className="categoryListings">
+              {currentListing.map((listing) => (
+                <ListingItem
+                  listing={listing}
+                  id={listing._id}
+                  key={listing._id}
+                />
+              ))}
+            </ul>
+          </main>
+          <br />
+          <br />
+          {lastListing === false ? (
+            <p className="loadMore" onClick={onFetchMoreListings}>
+              Load More
+            </p>
+          ) : (
+            <p className="Load">No more listings to load</p>
+          )}
+        </>
+      ) : (
+        <p>No listings for {params.categoryName}</p>
+      )}
     </div>
   );
 }

@@ -18,7 +18,11 @@ const getCategoryListings = asyncHandler(async (req, res) => {
   const name = req.params.page.split(" ")[0];
   const page = req.params.page.split(" ")[1];
   const listings = await Listing.find({ type: name }).skip(page).limit(10);
-  res.status(200).json(listings);
+  if (listings) {
+    res.status(200).json(listings);
+  } else {
+    res.status(200).json("No listings to load");
+  }
 });
 // @desc    Get listings by type
 // @route   GET /api/listings/offers
