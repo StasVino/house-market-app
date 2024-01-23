@@ -22,7 +22,6 @@ const listingSchema = mongoose.Schema(
     landlordEmail: {
       type: String,
       required: [true, "Please add an landlord email"],
-      unique: true,
     },
     bedrooms: {
       type: Number,

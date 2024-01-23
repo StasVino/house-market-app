@@ -22,31 +22,27 @@ function Category() {
     dispatch(getListings(params.categoryName + " " + page))
       .unwrap()
       .catch(toast.error);
-    console.log("1");
   }, [params, page, dispatch]);
 
   useEffect(() => {
-    console.log(listings);
     if (listings) {
       if (listings === "No listings to load") {
+        // if there are no more listing to fetch or category is empty
         setLoading(false);
         setLoadMore(false);
         setLastListing(true);
-      } else {
+      } else if (currentListing) {
         setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
         setLoadMore(false);
         setLoading(false);
       }
-    } // if there are no more listing to fetch or category is empty
-    console.log("2");
-    // if there are no more listing to fetch
-  }, [listings, setLoading, setLastListing]);
+    }
+  }, [listings, prevListing, setLoading]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     // load the next 10 pages
-    console.log("3");
     const currentPage = page + 10;
     setPrevListing(currentListing);
     //dispatch(getListings(params.categoryName + " " + currentPage));
@@ -69,8 +65,6 @@ function Category() {
       ) : currentListing && currentListing.length > 0 ? (
         <>
           <main>
-            <ul className="categoryListings"></ul>
-
             <ul className="categoryListings">
               {currentListing.map((listing) => (
                 <ListingItem
