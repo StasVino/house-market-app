@@ -31,6 +31,7 @@ const getListings = async (listingsLoadParams) => {
     API_URL + "category/" + listingsLoadParams,
     listingsLoadParams
   );
+  console.log(response);
   return response.data;
 };
 

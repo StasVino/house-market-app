@@ -18,7 +18,6 @@ const listingSchema = mongoose.Schema(
     landlordName: {
       type: String,
       required: [true, "Please add landlord name"],
-      unique: true,
     },
     landlordEmail: {
       type: String,
@@ -44,6 +43,7 @@ const listingSchema = mongoose.Schema(
     address: {
       type: String,
       required: [true, "Please provide the adress of the house"],
+      unique: true,
     },
     offer: {
       type: Boolean,

@@ -10,6 +10,7 @@ function Category() {
   const { listings } = useSelector((state) => state.listings);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loadMore, setLoadMore] = useState(false);
   const [currentListing, setCurrnetListing] = useState(null);
   const [prevListing, setPrevListing] = useState([]);
   const [lastListing, setLastListing] = useState(false);
@@ -22,22 +23,24 @@ function Category() {
       .unwrap()
       .catch(toast.error);
     console.log("1");
-  }, [params, listings, dispatch]);
+  }, [params, page, dispatch]);
 
   useEffect(() => {
+    console.log(listings);
     if (listings) {
-      if (listings.length !== 0) {
+      if (listings === "No listings to load") {
+        setLoading(false);
+        setLoadMore(false);
+        setLastListing(true);
+      } else {
         setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
+        setLoadMore(false);
         setLoading(false);
       }
-    } else {
-      setLastListing(true);
-      setLoading(false);
-    }
+    } // if there are no more listing to fetch or category is empty
     console.log("2");
     // if there are no more listing to fetch
-    //currentListing === null ? setLastListing(true) : setLastListing(false);
   }, [listings, setLoading, setLastListing]);
 
   // Pagination / Load More
@@ -46,8 +49,8 @@ function Category() {
     console.log("3");
     const currentPage = page + 10;
     setPrevListing(currentListing);
-    dispatch(getListings(params.categoryName + " " + currentPage));
-
+    //dispatch(getListings(params.categoryName + " " + currentPage));
+    setLoadMore(true);
     setPage(currentPage);
   };
 
@@ -84,6 +87,8 @@ function Category() {
             <p className="loadMore" onClick={onFetchMoreListings}>
               Load More
             </p>
+          ) : loadMore ? (
+            <p className="Load">Loading...</p>
           ) : (
             <p className="Load">No more listings to load</p>
           )}
