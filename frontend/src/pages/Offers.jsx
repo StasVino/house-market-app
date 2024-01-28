@@ -23,21 +23,20 @@ function Category() {
   }, [params, page, dispatch]);
 
   useEffect(() => {
-    if (listings) {
-      if (listings === "No listings to load") {
-        // if there are no more listing to fetch or category is empty
-
-        setLoading(false);
-        setLoadMore(false);
-        setLastListing(true);
-      } else {
+    if (listings === "No listings to load") {
+      // if there are no more listing to fetch or category is empty
+      setLoading(false);
+      setLoadMore(false);
+      setLastListing(true);
+    } else if (listings) {
+      {
         setCurrnetListing(prevListing.concat(listings));
-        setLastListing(false);
         setLoadMore(false);
+        setLastListing(false);
         setLoading(false);
       }
     }
-  }, [listings, setLoading, setLastListing]);
+  }, [listings, setLoading, loadMore, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
@@ -49,14 +48,14 @@ function Category() {
     setPage(currentPage);
   };
 
-  if (!currentListing) {
-    return <Spinner />;
-  }
-
   return (
     <div className="category">
       <header>
-        <p className="pageHeader">Special Offers</p>
+        <p className="pageHeader">
+          {params.categoryName === "rent"
+            ? "Places for rent"
+            : "Places for sale"}
+        </p>
       </header>
 
       {loading ? (
@@ -76,14 +75,16 @@ function Category() {
           </main>
           <br />
           <br />
-          {lastListing === false ? (
-            <p className="loadMore" onClick={onFetchMoreListings}>
-              Load More
-            </p>
-          ) : loadMore ? (
-            <p className="Load">Loading...</p>
-          ) : (
+          {lastListing ? (
             <p className="Load">No more listings to load</p>
+          ) : (
+            (loadMore ? (
+              <p className="Load">Loading...</p>
+            ) : (
+              <p className="loadMore" onClick={onFetchMoreListings}>
+                Load More
+              </p>
+            ))()
           )}
         </>
       ) : (

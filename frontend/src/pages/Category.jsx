@@ -77,14 +77,16 @@ function Category() {
           </main>
           <br />
           <br />
-          {lastListing === false ? (
-            <p className="loadMore" onClick={onFetchMoreListings}>
-              Load More
-            </p>
-          ) : loadMore ? (
-            <p className="Load">Loading...</p>
-          ) : (
+          {lastListing ? (
             <p className="Load">No more listings to load</p>
+          ) : (
+            (loadMore ? (
+              <p className="Load">Loading...</p>
+            ) : (
+              <p className="loadMore" onClick={onFetchMoreListings}>
+                Load More
+              </p>
+            ))()
           )}
         </>
       ) : (
