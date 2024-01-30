@@ -20,6 +20,7 @@ function Category() {
 
   useEffect(() => {
     dispatch(getOfferListings(page)).unwrap().catch(toast.error);
+    console.log("1");
   }, [params, page, dispatch]);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ function Category() {
         setLoading(false);
       }
     }
+    console.log(listings);
   }, [listings, setLoading, loadMore, setLastListing]);
 
   // Pagination / Load More
@@ -64,12 +66,8 @@ function Category() {
         <>
           <main>
             <ul className="categoryListings">
-              {currentListing.map((listing) => (
-                <ListingItem
-                  listing={listing}
-                  id={listing._id}
-                  key={listing._id}
-                />
+              {currentListing.map((listing, index) => (
+                <ListingItem listing={listing} key={index} />
               ))}
             </ul>
           </main>
@@ -77,14 +75,12 @@ function Category() {
           <br />
           {lastListing ? (
             <p className="Load">No more listings to load</p>
+          ) : loadMore ? (
+            <p className="Load">Loading...</p>
           ) : (
-            (loadMore ? (
-              <p className="Load">Loading...</p>
-            ) : (
-              <p className="loadMore" onClick={onFetchMoreListings}>
-                Load More
-              </p>
-            ))()
+            <p className="loadMore" onClick={onFetchMoreListings}>
+              Load More
+            </p>
           )}
         </>
       ) : (

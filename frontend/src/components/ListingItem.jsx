@@ -4,11 +4,11 @@ import { ReactComponent as EditIcon } from "../assets/svg/editIcon.svg";
 import bedIcon from "../assets/svg/bedIcon.svg";
 import bathtubIcon from "../assets/svg/bathtubIcon.svg";
 
-function ListingItem({ listing, id, onEdit, onDelete }) {
+function ListingItem({ listing, onEdit, onDelete }) {
   return (
     <li className="categoryListing">
       <Link
-        to={`/category/${listing.type}/${id}`}
+        to={`/category/${listing.type}/${listing.id}`}
         className="categoryListingLink"
       >
         <img

@@ -22,6 +22,7 @@ function Category() {
     dispatch(getListings(params.categoryName + " " + page))
       .unwrap()
       .catch(toast.error);
+    console.log("1");
   }, [params, page, dispatch]);
 
   useEffect(() => {
@@ -34,10 +35,11 @@ function Category() {
       } else if (currentListing) {
         setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
-        setLoadMore(false);
+        setLoadMore(true);
         setLoading(false);
       }
     }
+    console.log("1");
   }, [listings, prevListing, setLoading]);
 
   // Pagination / Load More
@@ -66,12 +68,8 @@ function Category() {
         <>
           <main>
             <ul className="categoryListings">
-              {currentListing.map((listing) => (
-                <ListingItem
-                  listing={listing}
-                  id={listing._id}
-                  key={listing._id}
-                />
+              {currentListing.map((listing, idex) => (
+                <ListingItem listing={listing} key={idex} />
               ))}
             </ul>
           </main>
@@ -79,18 +77,16 @@ function Category() {
           <br />
           {lastListing ? (
             <p className="Load">No more listings to load</p>
+          ) : loadMore ? (
+            <p className="Load">Loading...</p>
           ) : (
-            (loadMore ? (
-              <p className="Load">Loading...</p>
-            ) : (
-              <p className="loadMore" onClick={onFetchMoreListings}>
-                Load More
-              </p>
-            ))()
+            <p className="loadMore" onClick={onFetchMoreListings}>
+              Load More
+            </p>
           )}
         </>
       ) : (
-        <p>No listings for {params.categoryName}</p>
+        <p>No listings for Special offers</p>
       )}
     </div>
   );

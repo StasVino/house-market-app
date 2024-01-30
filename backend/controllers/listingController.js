@@ -30,7 +30,11 @@ const getCategoryListings = asyncHandler(async (req, res) => {
 const getOfferListings = asyncHandler(async (req, res) => {
   const page = req.params.page;
   const listings = await Listing.find({ offer: true }).skip(page).limit(10);
-  res.status(200).json(listings);
+  if (listings.length !== 0) {
+    res.status(200).json(listings);
+  } else {
+    res.status(200).json("No listings to load");
+  }
 });
 
 // @desc    Get user listing
