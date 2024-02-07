@@ -22,32 +22,32 @@ function Category() {
     dispatch(getListings(params.categoryName + " " + page))
       .unwrap()
       .catch(toast.error);
-    console.log("1");
-  }, [params, page, dispatch]);
+  }, [params, dispatch]);
 
   useEffect(() => {
     if (listings) {
       if (listings === "No listings to load") {
         // if there are no more listing to fetch or category is empty
+        setLastListing(true);
         setLoading(false);
         setLoadMore(false);
-        setLastListing(true);
-      } else if (currentListing) {
+      } else {
         setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
-        setLoadMore(true);
+        setLoadMore(false);
         setLoading(false);
       }
     }
-    console.log("1");
-  }, [listings, prevListing, setLoading]);
+    console.log(listings);
+    console.log(currentListing);
+  }, [listings, setLoading, loadMore, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     // load the next 10 pages
     const currentPage = page + 10;
     setPrevListing(currentListing);
-    //dispatch(getListings(params.categoryName + " " + currentPage));
+    dispatch(getListings(params.categoryName + " " + currentPage));
     setLoadMore(true);
     setPage(currentPage);
   };

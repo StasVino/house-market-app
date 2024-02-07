@@ -8,7 +8,7 @@ import { useEffect } from "react";
 function Explore() {
   const { listings } = useSelector((state) => state.listings);
 
-  useEffect((listings = null));
+  //useEffect((listings = null));
 
   return (
     <div className="explore">

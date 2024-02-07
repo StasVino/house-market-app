@@ -21,23 +21,24 @@ function Category() {
   useEffect(() => {
     dispatch(getOfferListings(page)).unwrap().catch(toast.error);
     console.log("1");
-  }, [params, page, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (listings === "No listings to load") {
-      // if there are no more listing to fetch or category is empty
-      setLoading(false);
-      setLoadMore(false);
-      setLastListing(true);
-    } else if (listings) {
-      {
-        setCurrnetListing(prevListing.concat(listings));
+    if (listings) {
+      if (listings === "No listings to load") {
+        // if there are no more listing to fetch or category is empty
+        setLastListing(true);
+        setLoading(false);
         setLoadMore(false);
+      } else {
+        setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
+        setLoadMore(false);
         setLoading(false);
       }
     }
     console.log(listings);
+    console.log(currentListing);
   }, [listings, setLoading, loadMore, setLastListing]);
 
   // Pagination / Load More
@@ -45,7 +46,9 @@ function Category() {
     // load the next 10 pages
     const currentPage = page + 10;
     setPrevListing(currentListing);
-    //dispatch(getListings(params.categoryName + " " + currentPage));
+    dispatch(getOfferListings(page + 10))
+      .unwrap()
+      .catch(toast.error);
     setLoadMore(true);
     setPage(currentPage);
   };
@@ -53,11 +56,7 @@ function Category() {
   return (
     <div className="category">
       <header>
-        <p className="pageHeader">
-          {params.categoryName === "rent"
-            ? "Places for rent"
-            : "Places for sale"}
-        </p>
+        <p className="pageHeader">Special Offers !</p>
       </header>
 
       {loading ? (

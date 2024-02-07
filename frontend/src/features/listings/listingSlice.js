@@ -8,6 +8,10 @@ const initialState = {
   listing: null,
 };
 
+export const ClearListing = async () => {
+  return null;
+};
+
 export const createListing = createAsyncThunk(
   "listings/create",
   async (listingData, thunkAPI) => {
@@ -104,9 +108,11 @@ export const listingSlice = createSlice({
         // loading state on individual listing
         state.listings = null;
       })
+
       .addCase(getUserListings.fulfilled, (state, action) => {
         state.listings = action.payload;
       })
+
       .addCase(getListings.pending, (state) => {
         // NOTE: clear single listing on listings page, this replaces need for
         // loading state on individual listing
@@ -137,7 +143,6 @@ export const listingSlice = createSlice({
           listing._id === action.payload._id ? action.payload : listing
         );
       })
-
       .addCase(deleteListing.fulfilled, (state, action) => {
         state.listings.filter((listing) => listing._id !== action.payload);
       });
