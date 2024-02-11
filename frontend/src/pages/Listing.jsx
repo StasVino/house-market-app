@@ -27,7 +27,7 @@ function Listing() {
 
   useEffect(() => {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
-  }, [listingId, dispatch]);
+  }, [listingId, listing, dispatch]);
 
   if (!listing) {
     return <Spinner />;

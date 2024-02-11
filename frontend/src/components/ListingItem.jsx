@@ -3,12 +3,17 @@ import { ReactComponent as DeleteIcon } from "../assets/svg/deleteIcon.svg";
 import { ReactComponent as EditIcon } from "../assets/svg/editIcon.svg";
 import bedIcon from "../assets/svg/bedIcon.svg";
 import bathtubIcon from "../assets/svg/bathtubIcon.svg";
+import { useEffect } from "react";
 
 function ListingItem({ listing, onEdit, onDelete }) {
+  useEffect(() => {
+    console.log(listing);
+  }, [listing]);
+
   return (
     <li className="categoryListing">
       <Link
-        to={`/category/${listing.type}/${listing.id}`}
+        to={`/category/${listing.type}/${listing._id}`}
         className="categoryListingLink"
       >
         <img
@@ -51,7 +56,7 @@ function ListingItem({ listing, onEdit, onDelete }) {
         <DeleteIcon
           className="removeIcon"
           fill="rgb(231, 76,60)"
-          onClick={() => onDelete(listing.id)}
+          onClick={() => onDelete(listing._id)}
         />
       )}
 

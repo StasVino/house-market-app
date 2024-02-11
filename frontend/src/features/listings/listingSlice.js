@@ -104,8 +104,6 @@ export const listingSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserListings.pending, (state) => {
-        // NOTE: clear single listing on listings page, this replaces need for
-        // loading state on individual listing
         state.listings = null;
       })
 
@@ -114,16 +112,12 @@ export const listingSlice = createSlice({
       })
 
       .addCase(getListings.pending, (state) => {
-        // NOTE: clear single listing on listings page, this replaces need for
-        // loading state on individual listing
         state.listings = null;
       })
       .addCase(getListings.fulfilled, (state, action) => {
         state.listings = action.payload;
       })
       .addCase(getOfferListings.pending, (state) => {
-        // NOTE: clear single listing on listings page, this replaces need for
-        // loading state on individual listing
         state.listings = null;
       })
       .addCase(getOfferListings.fulfilled, (state, action) => {
