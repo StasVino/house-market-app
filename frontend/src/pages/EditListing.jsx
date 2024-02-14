@@ -74,7 +74,6 @@ function EditListing() {
     }
 
     if (images.length > 6) {
-      console.log("2");
       setLoading(false);
       toast.error("Max 6 images");
       return;

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_URL = "/api/listings/";
+const { Readable } = require("stream");
 
 // Create new listing
 const createListing = async (listingData, token) => {
@@ -10,7 +11,6 @@ const createListing = async (listingData, token) => {
     },
   };
   const response = await axios.post(API_URL, listingData, config);
-  console.log(response);
   return response.data;
 };
 
