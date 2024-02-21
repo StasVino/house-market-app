@@ -39,7 +39,7 @@ function Category() {
     }
     console.log(listings);
     console.log(currentListing);
-  }, [listings, setLoading, loadMore, setLastListing]);
+  }, [listings, setLoading, setLastListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {
