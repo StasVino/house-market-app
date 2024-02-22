@@ -128,11 +128,10 @@ function Profile() {
           <>
             <p className="listingText">Your Listings</p>
             <ul className="listingsList">
-              {listings.map((listing) => (
+              {listings.map((listing, idex) => (
                 <ListingItem
                   listing={listing}
-                  id={listing._id}
-                  key={listing._id}
+                  key={idex}
                   onDelete={() => onDelete(listing._id)}
                   onEdit={() => onEdit(listing)}
                 />

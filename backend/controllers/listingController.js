@@ -4,7 +4,7 @@ const Listing = require("../models/listingModel");
 // NOTE: no need to get the user, we already have them on req object from
 // protect middleware. The protect middleware already checks for valid user.
 
-// @desc    create user listing
+// @desc    Get user listings
 // @route   GET /api/listing
 // @access  Private
 const getUserListings = asyncHandler(async (req, res) => {

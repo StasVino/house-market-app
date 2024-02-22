@@ -32,14 +32,15 @@ function Category() {
         setLoading(false);
         setLoadMore(false);
       } else {
-        setCurrnetListing(prevListing.concat(listings));
-        setLastListing(false);
-        setLoadMore(false);
-        setLoading(false);
+        if (currentListing) {
+          setCurrnetListing(prevListing.concat(listings));
+          setLastListing(false);
+          setLoadMore(false);
+          setLoading(false);
+        } else {
+        }
       }
     }
-    console.log(listings);
-    console.log(currentListing);
   }, [listings, setLoading, loadMore, setLastListing]);
 
   // Pagination / Load More

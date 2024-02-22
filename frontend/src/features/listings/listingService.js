@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const API_URL = "/api/listings/";
-const { Readable } = require("stream");
 
 // Create new listing
 const createListing = async (listingData, token) => {
