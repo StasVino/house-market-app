@@ -16,29 +16,34 @@ function Category() {
   const [lastListing, setLastListing] = useState(false);
 
   const dispatch = useDispatch();
-  const params = useParams();
 
   useEffect(() => {
     dispatch(getOfferListings(page)).unwrap().catch(toast.error);
-    console.log("1");
+    console.log("This is get listings");
   }, [dispatch]);
 
   useEffect(() => {
     if (listings) {
       if (listings === "No listings to load") {
-        // if there are no more listing to fetch or category is empty
+        // if  category is empty
         setLastListing(true);
         setLoading(false);
         setLoadMore(false);
       } else {
+        if (listings === "No more listings to load") {
+          if (!currentListing) {
+          } else {
+            setLastListing(true);
+            setLoading(false);
+            setLoadMore(false);
+          }
+        }
         setCurrnetListing(prevListing.concat(listings));
         setLastListing(false);
         setLoadMore(false);
         setLoading(false);
       }
     }
-    console.log(listings);
-    console.log(currentListing);
   }, [listings, setLoading, setLastListing]);
 
   // Pagination / Load More
@@ -83,7 +88,7 @@ function Category() {
           )}
         </>
       ) : (
-        <p>No listings for {params.categoryName}</p>
+        <p>No Special offers available </p>
       )}
     </div>
   );

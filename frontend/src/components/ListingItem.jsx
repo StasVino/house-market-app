@@ -6,10 +6,6 @@ import bathtubIcon from "../assets/svg/bathtubIcon.svg";
 import { useEffect } from "react";
 
 function ListingItem({ listing, onEdit, onDelete }) {
-  useEffect(() => {
-    console.log(listing);
-  }, [listing]);
-
   return (
     <li className="categoryListing">
       <Link

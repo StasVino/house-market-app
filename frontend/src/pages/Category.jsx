@@ -27,18 +27,23 @@ function Category() {
   useEffect(() => {
     if (listings) {
       if (listings === "No listings to load") {
-        // if there are no more listing to fetch or category is empty
+        // if  category is empty
         setLastListing(true);
         setLoading(false);
         setLoadMore(false);
       } else {
-        if (currentListing) {
-          setCurrnetListing(prevListing.concat(listings));
-          setLastListing(false);
-          setLoadMore(false);
-          setLoading(false);
-        } else {
+        if (listings === "No more listings to load") {
+          if (!currentListing) {
+          } else {
+            setLastListing(true);
+            setLoading(false);
+            setLoadMore(false);
+          }
         }
+        setCurrnetListing(prevListing.concat(listings));
+        setLastListing(false);
+        setLoadMore(false);
+        setLoading(false);
       }
     }
   }, [listings, setLoading, loadMore, setLastListing]);

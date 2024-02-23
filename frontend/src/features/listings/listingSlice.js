@@ -8,10 +8,6 @@ const initialState = {
   listing: null,
 };
 
-export const ClearListing = async () => {
-  return null;
-};
-
 export const createListing = createAsyncThunk(
   "listings/create",
   async (listingData, thunkAPI) => {
