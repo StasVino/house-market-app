@@ -19,10 +19,11 @@ function Category() {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getListings(params.categoryName + " " + page))
+    dispatch(getListings(params.categoryName + " " + 0))
       .unwrap()
       .catch(toast.error);
-  }, [params, dispatch]);
+    setCurrnetListing(listings);
+  }, [params, dispatch, setCurrnetListing]);
 
   useEffect(() => {
     if (listings) {
@@ -33,20 +34,21 @@ function Category() {
         setLoadMore(false);
       } else {
         if (listings === "No more listings to load") {
-          if (!currentListing) {
-          } else {
+          if (currentListing) {
             setLastListing(true);
             setLoading(false);
             setLoadMore(false);
+          } else {
           }
+        } else {
+          setCurrnetListing(prevListing.concat(listings));
+          setLastListing(false);
+          setLoadMore(false);
+          setLoading(false);
         }
-        setCurrnetListing(prevListing.concat(listings));
-        setLastListing(false);
-        setLoadMore(false);
-        setLoading(false);
       }
     }
-  }, [listings, setLoading, loadMore, setLastListing]);
+  }, [listings, setLoading, setLastListing, setCurrnetListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {

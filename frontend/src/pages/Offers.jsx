@@ -31,20 +31,21 @@ function Category() {
         setLoadMore(false);
       } else {
         if (listings === "No more listings to load") {
-          if (!currentListing) {
-          } else {
+          if (currentListing) {
             setLastListing(true);
             setLoading(false);
             setLoadMore(false);
+          } else {
           }
+        } else {
+          setCurrnetListing(prevListing.concat(listings));
+          setLastListing(false);
+          setLoadMore(false);
+          setLoading(false);
         }
-        setCurrnetListing(prevListing.concat(listings));
-        setLastListing(false);
-        setLoadMore(false);
-        setLoading(false);
       }
     }
-  }, [listings, setLoading, setLastListing]);
+  }, [listings, setLoading, setLastListing, setCurrnetListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {

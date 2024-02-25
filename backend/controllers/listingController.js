@@ -22,11 +22,8 @@ const getCategoryListings = asyncHandler(async (req, res) => {
   if (listings.length !== 0) {
     res.status(200).json(listings);
   } else {
-    if (page == 0) {
-      res.status(200).json("No listings to load");
-    } else {
-      res.status(200).json("No more listings to load");
-    }
+    //if there were no listings to load we prevent unnecessary loading
+    res.status(200).json("No listings to load");
   }
 });
 // @desc    Get listings by type
@@ -37,13 +34,8 @@ const getOfferListings = asyncHandler(async (req, res) => {
   if (listings.length !== 0) {
     res.status(200).json(listings);
   } else {
-    if (page == 0) {
-      //if there were no listings to load we prevent unnecessary loading
-      res.status(200).json("No listings to load");
-    } else {
-      // if we switch category this prevents immediate loading
-      res.status(200).json("No more listings to load");
-    }
+    //if there were no listings to load we prevent unnecessary loading
+    res.status(200).json("No listings to load");
   }
 });
 
