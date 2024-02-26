@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getOfferListings } from "../features/listings/listingSlice";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
+import { current } from "@reduxjs/toolkit";
 
 function Category() {
   const { listings } = useSelector((state) => state.listings);
@@ -20,29 +20,21 @@ function Category() {
   useEffect(() => {
     dispatch(getOfferListings(page)).unwrap().catch(toast.error);
     console.log("This is get listings");
-  }, [dispatch]);
+    setCurrnetListing(listings);
+  }, [dispatch, page]);
 
   useEffect(() => {
-    if (listings) {
+    if (currentListing) {
       if (listings === "No listings to load") {
         // if  category is empty
         setLastListing(true);
         setLoading(false);
         setLoadMore(false);
       } else {
-        if (listings === "No more listings to load") {
-          if (currentListing) {
-            setLastListing(true);
-            setLoading(false);
-            setLoadMore(false);
-          } else {
-          }
-        } else {
-          setCurrnetListing(prevListing.concat(listings));
-          setLastListing(false);
-          setLoadMore(false);
-          setLoading(false);
-        }
+        setCurrnetListing(prevListing.concat(listings));
+        setLastListing(false);
+        setLoadMore(false);
+        setLoading(false);
       }
     }
   }, [listings, setLoading, setLastListing, setCurrnetListing]);
@@ -52,9 +44,7 @@ function Category() {
     // load the next 10 pages
     const currentPage = page + 10;
     setPrevListing(currentListing);
-    dispatch(getOfferListings(page + 10))
-      .unwrap()
-      .catch(toast.error);
+    //dispatch(getOfferListings(currentPage)).unwrap().catch(toast.error);
     setLoadMore(true);
     setPage(currentPage);
   };

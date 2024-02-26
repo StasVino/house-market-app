@@ -19,33 +19,25 @@ function Category() {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getListings(params.categoryName + " " + 0))
+    dispatch(getListings(params.categoryName + " " + page))
       .unwrap()
       .catch(toast.error);
+    console.log("This is get listings");
     setCurrnetListing(listings);
-  }, [params, dispatch, setCurrnetListing]);
+  }, [dispatch, page]);
 
   useEffect(() => {
-    if (listings) {
+    if (currentListing) {
       if (listings === "No listings to load") {
         // if  category is empty
         setLastListing(true);
         setLoading(false);
         setLoadMore(false);
       } else {
-        if (listings === "No more listings to load") {
-          if (currentListing) {
-            setLastListing(true);
-            setLoading(false);
-            setLoadMore(false);
-          } else {
-          }
-        } else {
-          setCurrnetListing(prevListing.concat(listings));
-          setLastListing(false);
-          setLoadMore(false);
-          setLoading(false);
-        }
+        setCurrnetListing(prevListing.concat(listings));
+        setLastListing(false);
+        setLoadMore(false);
+        setLoading(false);
       }
     }
   }, [listings, setLoading, setLastListing, setCurrnetListing]);
@@ -55,7 +47,7 @@ function Category() {
     // load the next 10 pages
     const currentPage = page + 10;
     setPrevListing(currentListing);
-    dispatch(getListings(params.categoryName + " " + currentPage));
+    //dispatch(getListings(params.categoryName + " " + currentPage));
     setLoadMore(true);
     setPage(currentPage);
   };
@@ -94,7 +86,7 @@ function Category() {
           )}
         </>
       ) : (
-        <p>No listings for Special offers</p>
+        <p>No listings for {params.categoryName}</p>
       )}
     </div>
   );
