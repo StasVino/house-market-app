@@ -23,11 +23,10 @@ function Category() {
       .unwrap()
       .catch(toast.error);
     console.log("This is get listings");
-    setCurrnetListing(listings);
   }, [dispatch, page]);
 
   useEffect(() => {
-    if (currentListing) {
+    if (listings) {
       if (listings === "No listings to load") {
         // if  category is empty
         setLastListing(true);
@@ -38,6 +37,7 @@ function Category() {
         setLastListing(false);
         setLoadMore(false);
         setLoading(false);
+        console.log("Here!");
       }
     }
   }, [listings, setLoading, setLastListing, setCurrnetListing]);
@@ -47,7 +47,7 @@ function Category() {
     // load the next 10 pages
     const currentPage = page + 10;
     setPrevListing(currentListing);
-    //dispatch(getListings(params.categoryName + " " + currentPage));
+    dispatch(getListings(params.categoryName + " " + currentPage));
     setLoadMore(true);
     setPage(currentPage);
   };
@@ -64,7 +64,7 @@ function Category() {
 
       {loading ? (
         <Spinner />
-      ) : currentListing && currentListing.length > 0 ? (
+      ) : currentListing ? (
         <>
           <main>
             <ul className="categoryListings">
