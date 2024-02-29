@@ -5,6 +5,8 @@ import { extractErrorMessage } from "../../utils";
 
 const initialState = {
   listings: null,
+  offerListings: null,
+  userListings: null,
   listing: null,
 };
 
@@ -20,7 +22,7 @@ export const createListing = createAsyncThunk(
   }
 );
 
-// Get listings based on rent/sale/offers
+// Get listings based on rent/sale
 export const getListings = createAsyncThunk(
   "listings/getCategory",
   async (listingsLoadParams, thunkAPI) => {
@@ -100,11 +102,11 @@ export const listingSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserListings.pending, (state) => {
-        state.listings = null;
+        state.userListings = null;
       })
 
       .addCase(getUserListings.fulfilled, (state, action) => {
-        state.listings = action.payload;
+        state.userListings = action.payload;
       })
 
       .addCase(getListings.pending, (state) => {
@@ -114,10 +116,10 @@ export const listingSlice = createSlice({
         state.listings = action.payload;
       })
       .addCase(getOfferListings.pending, (state) => {
-        state.listings = null;
+        state.offerListings = null;
       })
       .addCase(getOfferListings.fulfilled, (state, action) => {
-        state.listings = action.payload;
+        state.offerListings = action.payload;
       })
       .addCase(getListing.pending, (state) => {
         // NOTE: clear single listing on listings page, this replaces need for

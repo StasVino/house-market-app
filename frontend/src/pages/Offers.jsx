@@ -7,7 +7,7 @@ import ListingItem from "../components/ListingItem";
 import { current } from "@reduxjs/toolkit";
 
 function Category() {
-  const { listings } = useSelector((state) => state.listings);
+  const { offerListings } = useSelector((state) => state.listings);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
@@ -19,30 +19,26 @@ function Category() {
 
   useEffect(() => {
     dispatch(getOfferListings(page)).unwrap().catch(toast.error);
-    console.log("This is get listings");
-    setCurrnetListing(listings);
-  }, [dispatch, setCurrnetListing, page]);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (listings) {
+    if (offerListings) {
       console.log("current");
-      if (listings === "No listings to load") {
+      if (offerListings === "No listings to load") {
         // if  there are not offers
         setLastListing(true);
         setLoading(false);
         setLoadMore(false);
         console.log("empty");
       } else {
-        if (currentListing) {
-          setCurrnetListing(prevListing.concat(listings));
-          setLastListing(false);
-          setLoadMore(false);
-          setLoading(false);
-          console.log("Here!");
-        }
+        setCurrnetListing(prevListing.concat(offerListings));
+        setLastListing(false);
+        setLoadMore(false);
+        setLoading(false);
+        console.log("Here!");
       }
     }
-  }, [listings, setLoading, setLastListing, setCurrnetListing]);
+  }, [offerListings, setLoading, setLastListing, setCurrnetListing]);
 
   // Pagination / Load More
   const onFetchMoreListings = async () => {

@@ -15,7 +15,7 @@ import homeIcon from "../assets/svg/homeIcon.svg";
 import Spinner from "../components/Spinner";
 
 function Profile() {
-  const { listings } = useSelector((state) => state.listings);
+  const { userListings } = useSelector((state) => state.listings);
   const [changeDetails, setChangeDetails] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
@@ -124,11 +124,11 @@ function Profile() {
           <p>Sell or rent your home</p>
           <img src={arrowRight} alt="arrow right" />
         </Link>
-        {listings?.length > 0 && (
+        {userListings?.length > 0 && (
           <>
             <p className="listingText">Your Listings</p>
             <ul className="listingsList">
-              {listings.map((listing, idex) => (
+              {userListings.map((listing, idex) => (
                 <ListingItem
                   listing={listing}
                   key={idex}
