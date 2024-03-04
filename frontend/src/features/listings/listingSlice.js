@@ -9,6 +9,9 @@ const initialState = {
   userListings: null,
   listing: null,
 };
+export const clearListings = createAsyncThunk("", async () => {
+  return null;
+});
 
 export const createListing = createAsyncThunk(
   "listings/create",
@@ -102,21 +105,31 @@ export const listingSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserListings.pending, (state) => {
+        state.offerListings = null;
+        state.listings = null;
         state.userListings = null;
       })
 
       .addCase(getUserListings.fulfilled, (state, action) => {
         state.userListings = action.payload;
       })
-
-      .addCase(getListings.pending, (state) => {
+      .addCase(clearListings.fulfilled, (state) => {
+        state.offerListings = null;
         state.listings = null;
+        state.userListings = null;
+      })
+      .addCase(getListings.pending, (state) => {
+        state.offerListings = null;
+        state.listings = null;
+        state.userListings = null;
       })
       .addCase(getListings.fulfilled, (state, action) => {
         state.listings = action.payload;
       })
       .addCase(getOfferListings.pending, (state) => {
         state.offerListings = null;
+        state.listings = null;
+        state.userListings = null;
       })
       .addCase(getOfferListings.fulfilled, (state, action) => {
         state.offerListings = action.payload;
