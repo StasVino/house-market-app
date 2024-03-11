@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-//import Slider from "../components/Slider";
+import { getListings } from "../features/listings/listingSlice";
 import rentCategoryImage from "../assets/jpg/rentCategoryImage.jpg";
 import sellCategoryImage from "../assets/jpg/sellCategoryImage.jpg";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,8 +7,6 @@ import { useEffect } from "react";
 
 function Explore() {
   const { listings } = useSelector((state) => state.listings);
-
-  //useEffect((listings = null));
 
   return (
     <div className="explore">

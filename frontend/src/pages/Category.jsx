@@ -22,8 +22,7 @@ function Category() {
     dispatch(getListings(params.categoryName + " " + page))
       .unwrap()
       .catch(toast.error);
-    console.log("This is get listings");
-  }, [dispatch, page]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (listings) {
@@ -37,7 +36,6 @@ function Category() {
         setLastListing(false);
         setLoadMore(false);
         setLoading(false);
-        console.log("Here!");
       }
     }
   }, [listings, setLoading, setLastListing, setCurrnetListing]);
@@ -47,7 +45,9 @@ function Category() {
     // load the next 10 pages
     const currentPage = page + 10;
     setPrevListing(currentListing);
-    dispatch(getListings(params.categoryName + " " + currentPage));
+    dispatch(getListings(params.categoryName + " " + currentPage))
+      .unwrap()
+      .catch(toast.error);
     setLoadMore(true);
     setPage(currentPage);
   };
