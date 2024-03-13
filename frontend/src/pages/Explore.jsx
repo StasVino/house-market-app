@@ -1,13 +1,19 @@
 import { Link } from "react-router-dom";
 import { getListings } from "../features/listings/listingSlice";
 import rentCategoryImage from "../assets/jpg/rentCategoryImage.jpg";
+
 import sellCategoryImage from "../assets/jpg/sellCategoryImage.jpg";
+import { clearListings } from "../features/listings/listingSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 function Explore() {
-  const { listings } = useSelector((state) => state.listings);
+  const dispatch = useDispatch();
 
+  const { listings } = useSelector((state) => state.listings);
+  useEffect(() => {
+    dispatch(clearListings());
+  }, [dispatch]);
   return (
     <div className="explore">
       <header>
