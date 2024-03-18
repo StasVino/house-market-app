@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === "production") {
   );
 } else {
   app.get("/", (req, res) => {
-    res.send("hello");
+    res.send(process.env.NODE_ENV);
   });
 }
 
