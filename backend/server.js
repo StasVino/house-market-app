@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const dotenv = require("dotenv").config();
 const colors = require("colors");
 const { errorHandler } = require("./middleware/errorMiddleware");
@@ -15,9 +16,23 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
-//Routes
+// Routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/listings", require("./routes/listingRoutes"));
+
+// Serve Frontend
+if (process.env.NODE_ENV === "production") {
+  // Set build folder as static
+  app.use(express.static.join(__dirname, "../frontend/build"));
+
+  app.get("*", (req, res) =>
+    res.sendFile(__dirname, "../", "frontend", "build", "index.html")
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("hello");
+  });
+}
 
 app.use(errorHandler);
 
