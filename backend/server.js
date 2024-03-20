@@ -23,14 +23,15 @@ app.use("/api/listings", require("./routes/listingRoutes"));
 // Serve Frontend
 if (process.env.NODE_ENV === "production") {
   // Set build folder as static
-  app.use(express.static.join(__dirname, "../frontend/build"));
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  app.get("*", (req, res) =>
-    res.sendFile(__dirname, "../", "frontend", "build", "index.html")
-  );
+  // FIX: below code fixes app crashing on refresh in deployment
+  app.get("*", (_, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+  });
 } else {
-  app.get("/", (req, res) => {
-    res.send(process.env.NODE_ENV);
+  app.get("/", (_, res) => {
+    res.status(200).json({ message: "Welcome to the Support Desk API" });
   });
 }
 
