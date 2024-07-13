@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./authService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import authService from './authService';
 
 // Get user from local storage
-const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem('user'));
 const initialState = {
   user: user ? user : null,
   isLoading: false,
@@ -10,7 +10,7 @@ const initialState = {
 
 // register new user
 export const register = createAsyncThunk(
-  "auth/register",
+  'auth/register',
   async (user, thunkAPI) => {
     try {
       return await authService.register(user);
@@ -21,17 +21,18 @@ export const register = createAsyncThunk(
 );
 
 // login user
-export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
+    console.log(error);
     return thunkAPI.rejectWithValue(error);
   }
 });
 
 //Update user
 export const update = createAsyncThunk(
-  "auth/update",
+  'auth/update',
   async (user, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -43,12 +44,12 @@ export const update = createAsyncThunk(
 );
 
 // Logout user
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout();
 });
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     logout: (state) => {

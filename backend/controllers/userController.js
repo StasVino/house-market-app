@@ -1,8 +1,8 @@
-const asyncHandler = require("express-async-handler");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const asyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const User = require("../models/userModel");
+const User = require('../models/userModel');
 
 // @desc Register a new user
 // @route /api/users
@@ -13,14 +13,14 @@ const registerUser = asyncHandler(async (req, res) => {
   // Validation
   if (!name || !email || !password) {
     res.status(400);
-    throw new Error("Please include all fields");
+    throw new Error('Please include all fields');
   }
   // Find if user already exists
   const userExist = await User.findOne({ email });
 
   if (userExist) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error('User already exists');
   }
 
   // Hash the password
@@ -43,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid user data");
+    throw new Error('Invalid user data');
   }
 });
 
@@ -53,8 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // Find if user already exists
-  const user = await User.findOne({ email });
-
+  const user = await User.findOne(email);
   // Check user and passwords match
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
@@ -65,14 +64,14 @@ const loginUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid email or password");
+    throw new Error('Invalid email or password');
   }
 });
 const updateUser = asyncHandler(async (req, res) => {
   const { name, email } = req.body;
 
   // Find the user by the email
-  const user = await User.findOne({ email });
+  const user = await User.findOne(email);
 
   const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {
     new: true,
@@ -100,7 +99,7 @@ const getMe = asyncHandler(async (req, res) => {
 // Generate token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET);
-  expireIn: "30d";
+  expireIn: '30d';
 };
 
 module.exports = {
