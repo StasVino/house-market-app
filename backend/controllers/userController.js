@@ -53,7 +53,9 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // Find if user already exists
-  const user = await User.findOne(email);
+  console.log(email);
+  const user = await User.findOne({ email: email });
+  console.log(user);
   // Check user and passwords match
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({

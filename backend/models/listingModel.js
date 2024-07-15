@@ -1,35 +1,35 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const listingSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
     type: {
       type: String,
-      required: [true, "Sell or Rent?"],
-      enum: ["sale", "rent"],
+      required: [true, 'Sell or Rent?'],
+      enum: ['sale', 'rent'],
     },
     name: {
       type: String,
-      required: [true, "Please provide the name of the house you wish to list"],
+      required: [true, 'Please provide the name of the house you wish to list'],
     },
     landlordName: {
       type: String,
-      required: [true, "Please add landlord name"],
+      required: [true, 'Please add landlord name'],
     },
     landlordEmail: {
       type: String,
-      required: [true, "Please add an landlord email"],
+      required: [true, 'Please add an landlord email'],
     },
     bedrooms: {
       type: Number,
-      required: [true, "Please provide number of bedrooms"],
+      required: [true, 'Please provide number of bedrooms'],
     },
     bathrooms: {
       type: Number,
-      required: [true, "Please provide number of bathrooms"],
+      required: [true, 'Please provide number of bathrooms'],
     },
     parking: {
       type: Boolean,
@@ -41,7 +41,7 @@ const listingSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      required: [true, "Please provide the adress of the house"],
+      required: [true, 'Please provide the adress of the house'],
       unique: true,
     },
     offer: {
@@ -50,11 +50,11 @@ const listingSchema = mongoose.Schema(
     },
     regularPrice: {
       type: Number,
-      required: [true, "Please provide the lising price"],
+      required: [true, 'Please provide the lising price'],
     },
     discountedPrice: {
       type: Number,
-      required: [true, "Please provide the discounted listing price"],
+      required: [true, 'Please provide the discounted listing price'],
     },
     latitude: {
       type: Number,
@@ -69,4 +69,4 @@ const listingSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Listing", listingSchema);
+module.exports = mongoose.model('Listing', listingSchema);

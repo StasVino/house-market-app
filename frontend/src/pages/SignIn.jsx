@@ -31,7 +31,6 @@ function Signin() {
       password,
     };
 
-    console.log(userData);
     dispatch(login(userData))
       .unwrap()
       .then((user) => {

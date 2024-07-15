@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = "/api/listings/";
+const API_URL = '/api/listings/';
 
 // Create new listing
 const createListing = async (listingData, token) => {
@@ -20,13 +20,13 @@ const getUserListings = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get(API_URL + "profile", config);
+  const response = await axios.get(API_URL + 'profile', config);
   return response.data;
 };
 // Get all listings
 const getListings = async (listingsLoadParams) => {
   const response = await axios.get(
-    API_URL + "category/" + listingsLoadParams,
+    API_URL + 'category/' + listingsLoadParams,
     listingsLoadParams
   );
   return response.data;
@@ -35,7 +35,7 @@ const getListings = async (listingsLoadParams) => {
 // Get offer listings
 const getOfferListings = async (listingsLoadParams) => {
   const response = await axios.get(
-    API_URL + "offers/" + listingsLoadParams,
+    API_URL + 'offers/' + listingsLoadParams,
     listingsLoadParams
   );
   return response.data;
