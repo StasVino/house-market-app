@@ -54,7 +54,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // Find if user already exists
   console.log(email);
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ email });
   console.log(user);
   // Check user and passwords match
   if (user && (await bcrypt.compare(password, user.password))) {
@@ -73,7 +73,7 @@ const updateUser = asyncHandler(async (req, res) => {
   const { name, email } = req.body;
 
   // Find the user by the email
-  const user = await User.findOne(email);
+  const user = await User.findOne({ email });
 
   const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {
     new: true,

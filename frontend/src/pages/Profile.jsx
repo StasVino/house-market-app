@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logout, update } from '../features/auth/authSlice';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout, update } from "../features/auth/authSlice";
 import {
   getUserListings,
   deleteListing,
   getListing,
-} from '../features/listings/listingSlice';
-import ListingItem from '../components/ListingItem';
-import arrowRight from '../assets/svg/keyboardArrowRightIcon.svg';
-import homeIcon from '../assets/svg/homeIcon.svg';
-import Spinner from '../components/Spinner';
+} from "../features/listings/listingSlice";
+import ListingItem from "../components/ListingItem";
+import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
+import homeIcon from "../assets/svg/homeIcon.svg";
+import Spinner from "../components/Spinner";
 
 function Profile() {
   const { userListings } = useSelector((state) => state.listings);
@@ -57,18 +57,18 @@ function Profile() {
 
   const onLogout = () => {
     dispatch(logout());
-    navigate('/');
+    navigate("/");
   };
 
   const onDelete = async (listingId) => {
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm("Are you sure you want to delete?")) {
       dispatch(deleteListing(listingId))
         .unwrap()
         .then(async () => {
           dispatch(getUserListings());
         })
         .then(() => {
-          toast.success('Listing Deleted');
+          toast.success("Listing Deleted");
         })
         .catch(toast.error);
     }
@@ -87,7 +87,7 @@ function Profile() {
         </button>
       </header>
       <main>
-        {' '}
+        {" "}
         <div className="profileDetailsHeader">
           <p className="profileDetailsText">Personal Details</p>
           <p
@@ -97,7 +97,7 @@ function Profile() {
               setChangeDetails((prevState) => !prevState);
             }}
           >
-            {changeDetails ? 'done' : 'change name'}
+            {changeDetails ? "done" : "change name"}
           </p>
         </div>
         <div className="profileCard">
@@ -105,7 +105,7 @@ function Profile() {
             <input
               type="text"
               id="name"
-              className={!changeDetails ? 'profileName' : 'profileNameActive'}
+              className={!changeDetails ? "profileName" : "profileNameActive"}
               disabled={!changeDetails}
               value={name}
               onChange={onChange}
@@ -113,7 +113,7 @@ function Profile() {
             <input
               type="email"
               id="email"
-              className={!changeDetails ? 'profileEmail' : 'profileEmailActive'}
+              className={!changeDetails ? "profileEmail" : "profileEmailActive"}
               disabled={true}
               value={email}
             />

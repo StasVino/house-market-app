@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../features/auth/authSlice';
-import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
-import visibilityIcon from '../assets/svg/visibilityIcon.svg';
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
+import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 function Signin() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const { email, password } = formData;
 
@@ -38,7 +38,7 @@ function Signin() {
         // getting a good response from our API or catch the AsyncThunkAction
         // rejection to show an error message
         toast.success(`Logged in as ${user.name}`);
-        navigate('/');
+        navigate("/");
       })
       .catch(toast.error);
   };
@@ -61,7 +61,7 @@ function Signin() {
             />
             <div className="passwordInputDiv">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 className="passwordInput"
                 placeholder="Password"
                 id="password"

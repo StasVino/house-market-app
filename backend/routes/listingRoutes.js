@@ -11,7 +11,6 @@ const {
 } = require("../controllers/listingController");
 
 const { protect } = require("../middleware/authMiddleware");
-//const upload = require("../middleware/uploadMiddleware");
 
 router.route("/").post(protect, createListing);
 router.route("/category/:page").get(getCategoryListings);

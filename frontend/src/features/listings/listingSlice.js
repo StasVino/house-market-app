@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import listingService from './listingService';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import listingService from "./listingService";
 // NOTE: use a extractErrorMessage function to save some repetition update
-import { extractErrorMessage } from '../../utils';
+import { extractErrorMessage } from "../../utils";
 
 const initialState = {
   listings: null,
@@ -9,12 +9,12 @@ const initialState = {
   userListings: null,
   listing: null,
 };
-export const clearListings = createAsyncThunk('', async () => {
+export const clearListings = createAsyncThunk("", async () => {
   return null;
 });
 
 export const createListing = createAsyncThunk(
-  'listings/create',
+  "listings/create",
   async (listingData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -27,7 +27,7 @@ export const createListing = createAsyncThunk(
 
 // Get listings based on rent/sale
 export const getListings = createAsyncThunk(
-  'listings/getCategory',
+  "listings/getCategory",
   async (listingsLoadParams, thunkAPI) => {
     try {
       return await listingService.getListings(listingsLoadParams);
@@ -38,7 +38,7 @@ export const getListings = createAsyncThunk(
 );
 
 export const getOfferListings = createAsyncThunk(
-  'listings/getOffers',
+  "listings/getOffers",
   async (listingsLoadParams, thunkAPI) => {
     try {
       return await listingService.getOfferListings(listingsLoadParams);
@@ -50,7 +50,7 @@ export const getOfferListings = createAsyncThunk(
 
 // Get user listings
 export const getUserListings = createAsyncThunk(
-  'listings/profile',
+  "listings/profile",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -63,7 +63,7 @@ export const getUserListings = createAsyncThunk(
 
 // Get listing
 export const getListing = createAsyncThunk(
-  'listings/get',
+  "listings/get",
   async (listingId, thunkAPI) => {
     try {
       return await listingService.getListing(listingId);
@@ -75,7 +75,7 @@ export const getListing = createAsyncThunk(
 
 // Update listing
 export const updateListing = createAsyncThunk(
-  'listings/edit',
+  "listings/edit",
   async (listingData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -88,7 +88,7 @@ export const updateListing = createAsyncThunk(
 );
 
 export const deleteListing = createAsyncThunk(
-  'listings/delete',
+  "listings/delete",
   async (listingId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -100,7 +100,7 @@ export const deleteListing = createAsyncThunk(
 );
 
 export const listingSlice = createSlice({
-  name: 'listing',
+  name: "listing",
   initialState,
   extraReducers: (builder) => {
     builder

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getOfferListings } from '../features/listings/listingSlice';
-import { toast } from 'react-toastify';
-import Spinner from '../components/Spinner';
-import ListingItem from '../components/ListingItem';
-import { current } from '@reduxjs/toolkit';
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getOfferListings } from "../features/listings/listingSlice";
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
+import ListingItem from "../components/ListingItem";
+import { current } from "@reduxjs/toolkit";
 
 function Category() {
   const { offerListings } = useSelector((state) => state.listings);
@@ -23,16 +23,19 @@ function Category() {
 
   useEffect(() => {
     if (offerListings) {
-      if (offerListings === 'No listings to load') {
+      console.log("current");
+      if (offerListings === "No listings to load") {
         // if  there are not offers
         setLastListing(true);
         setLoading(false);
         setLoadMore(false);
+        console.log("empty");
       } else {
         setCurrnetListing(prevListing.concat(offerListings));
         setLastListing(false);
         setLoadMore(false);
         setLoading(false);
+        console.log("Here!");
       }
     }
   }, [offerListings, setLoading, setLastListing, setCurrnetListing]);

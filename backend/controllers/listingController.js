@@ -18,6 +18,7 @@ const getCategoryListings = asyncHandler(async (req, res) => {
   const name = req.params.page.split(' ')[0];
   const page = req.params.page.split(' ')[1];
   const listings = await Listing.find({ type: name }).skip(page).limit(10);
+
   if (listings.length !== 0) {
     res.status(200).json(listings);
   } else {
