@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { createListing } from "../features/listings/listingSlice";
-import Spinner from "../components/Spinner";
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { createListing } from '../features/listings/listingSlice';
+import Spinner from '../components/Spinner';
 
 function CreateListing() {
   // eslint-disable-next-line
@@ -11,15 +11,15 @@ function CreateListing() {
   const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    type: "rent",
-    name: "",
+    type: 'rent',
+    name: '',
     landlordName: user.name,
     landlordEmail: user.email,
     bedrooms: 1,
     bathrooms: 1,
     parking: false,
     furnished: false,
-    address: "",
+    address: '',
     offer: false,
     regularPrice: 0,
     discountedPrice: 0,
@@ -55,13 +55,13 @@ function CreateListing() {
 
     if (discountedPrice >= regularPrice) {
       setLoading(false);
-      toast.error("Discounted price needs to be less than regular price");
+      toast.error('Discounted price needs to be less than regular price');
       return;
     }
 
     if (images.length > 6) {
       setLoading(false);
-      toast.error("Max 6 images");
+      toast.error('Max 6 images');
       return;
     }
     let location = {};
@@ -76,7 +76,7 @@ function CreateListing() {
       longitude = data.results[0]?.geometry.location.lng ?? 0;
 
       location =
-        data.status === "ZERO_RESULTS"
+        data.status === 'ZERO_RESULTS'
           ? undefined
           : data.results[0]?.formatted_address;
 
@@ -112,18 +112,18 @@ function CreateListing() {
       .unwrap()
       .then(() => {
         // We got a good response so navigate the user
-        navigate("/profile");
-        toast.success("New listing created!");
+        navigate('/profile');
+        toast.success('New listing created!');
       })
       .catch(toast.error);
   };
   const onMutate = (e) => {
     let boolean = null;
 
-    if (e.target.value === "true") {
+    if (e.target.value === 'true') {
       boolean = true;
     }
-    if (e.target.value === "false") {
+    if (e.target.value === 'false') {
       boolean = false;
     }
 
@@ -141,7 +141,7 @@ function CreateListing() {
         };
         //console.log(reader.result);
         reader.onerror = (error) => {
-          toast.error("Error", error);
+          toast.error('Error', error);
         };
       });
       setFormData((prevState) => ({
@@ -175,7 +175,7 @@ function CreateListing() {
           <div className="formButtons">
             <button
               type="button"
-              className={type === "sale" ? "formButtonActive" : "formButton"}
+              className={type === 'sale' ? 'formButtonActive' : 'formButton'}
               id="type"
               value="sale"
               onClick={onMutate}
@@ -184,7 +184,7 @@ function CreateListing() {
             </button>
             <button
               type="button"
-              className={type === "rent" ? "formButtonActive" : "formButton"}
+              className={type === 'rent' ? 'formButtonActive' : 'formButton'}
               id="type"
               value="rent"
               onClick={onMutate}
@@ -237,7 +237,7 @@ function CreateListing() {
           <label className="formLabel">Parking spot</label>
           <div className="formButtons">
             <button
-              className={parking ? "formButtonActive" : "formButton"}
+              className={parking ? 'formButtonActive' : 'formButton'}
               type="button"
               id="parking"
               value={true}
@@ -249,7 +249,7 @@ function CreateListing() {
             </button>
             <button
               className={
-                !parking && parking !== null ? "formButtonActive" : "formButton"
+                !parking && parking !== null ? 'formButtonActive' : 'formButton'
               }
               type="button"
               id="parking"
@@ -263,7 +263,7 @@ function CreateListing() {
           <label className="formLabel">Furnished</label>
           <div className="formButtons">
             <button
-              className={furnished ? "formButtonActive" : "formButton"}
+              className={furnished ? 'formButtonActive' : 'formButton'}
               type="button"
               id="furnished"
               value={true}
@@ -274,8 +274,8 @@ function CreateListing() {
             <button
               className={
                 !furnished && furnished !== null
-                  ? "formButtonActive"
-                  : "formButton"
+                  ? 'formButtonActive'
+                  : 'formButton'
               }
               type="button"
               id="furnished"
@@ -299,7 +299,7 @@ function CreateListing() {
           <label className="formLabel">Offer</label>
           <div className="formButtons">
             <button
-              className={offer ? "formButtonActive" : "formButton"}
+              className={offer ? 'formButtonActive' : 'formButton'}
               type="button"
               id="offer"
               value={true}
@@ -309,7 +309,7 @@ function CreateListing() {
             </button>
             <button
               className={
-                !offer && offer !== null ? "formButtonActive" : "formButton"
+                !offer && offer !== null ? 'formButtonActive' : 'formButton'
               }
               type="button"
               id="offer"
@@ -332,7 +332,7 @@ function CreateListing() {
               max="750000000"
               required
             />
-            {type === "rent" && <p className="formPriceText">$ / Month</p>}
+            {type === 'rent' && <p className="formPriceText">$ / Month</p>}
           </div>
 
           {offer && (
