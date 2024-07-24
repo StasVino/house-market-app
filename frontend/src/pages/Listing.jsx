@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import SwiperCore, { Pagination } from "swiper/modules";
-import { Helmet } from "react-helmet";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
-import { useSelector, useDispatch } from "react-redux";
-import { getListing } from "../features/listings/listingSlice";
-import Spinner from "../components/Spinner";
-import shareIcon from "../assets/svg/shareIcon.svg";
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import SwiperCore, { Pagination } from 'swiper/modules';
+import { Helmet } from 'react-helmet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { getListing } from '../features/listings/listingSlice';
+import Spinner from '../components/Spinner';
+import shareIcon from '../assets/svg/shareIcon.svg';
 //SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function Listing() {
@@ -40,7 +40,8 @@ function Listing() {
               src={image}
               alt={listing.name}
               className="swiperSlideDiv"
-            ></img>
+              loading="lazy"
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -64,14 +65,14 @@ function Listing() {
           {listing.offer
             ? listing.discountedPrice
                 .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
             : listing.regularPrice
                 .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         </p>
         <p className="listingLocation">{listing.location}</p>
         <p className="listingType">
-          For {listing.type === "rent" ? "Rent" : "Sale"}
+          For {listing.type === 'rent' ? 'Rent' : 'Sale'}
         </p>
         {listing.offer && (
           <p className="discountPrice">
@@ -82,21 +83,21 @@ function Listing() {
           <li>
             {listing.bedrooms > 1
               ? `${listing.bedrooms} Bedrooms`
-              : "1 Bedroom"}
+              : '1 Bedroom'}
           </li>
           <li>
             {listing.bathrooms > 1
               ? `${listing.bathrooms} Bathrooms`
-              : "1 Bathroom"}
+              : '1 Bathroom'}
           </li>
-          <li>{listing.parking && "Parking Spot"}</li>
-          <li>{listing.furnished && "Furnished"}</li>
+          <li>{listing.parking && 'Parking Spot'}</li>
+          <li>{listing.furnished && 'Furnished'}</li>
         </ul>
         <p className="listingLocationTitle">Location</p>
 
         <div className="leafletContainer">
           <MapContainer
-            style={{ height: "100%", width: "100%" }}
+            style={{ height: '100%', width: '100%' }}
             center={[listing.latitude, listing.longitude]}
             zoom={13}
             scrollWheelZoom={false}
