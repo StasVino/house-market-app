@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { setDefaults, fromAddress } from 'react-geocode';
 import SwiperCore, { Pagination } from 'swiper/modules';
 import { Helmet } from 'react-helmet';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
@@ -10,15 +12,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getListing } from '../features/listings/listingSlice';
 import Spinner from '../components/Spinner';
 import shareIcon from '../assets/svg/shareIcon.svg';
-//SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function Listing() {
   const { listing } = useSelector((state) => state.listings);
   const { user } = useSelector((state) => state.auth);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
-  const navigate = useNavigate();
+  const [viewport, setViewport] = useState({
+    latitude: 0,
+    longitode: 0,
+    zoom: 12,
+    width: '100%',
+    height: '500pc',
+  });
   const dispatch = useDispatch();
   const { listingId } = useParams();
+
+  setDefaults({
+    key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODEING_API_KEY,
+    language: 'en',
+    region: 'il',
+  });
 
   useEffect(() => {
     dispatch(getListing(listingId)).unwrap().catch(toast.error);
